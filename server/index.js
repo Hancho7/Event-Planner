@@ -2,7 +2,11 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const signUprouter = require('./routes/clientLogs') 
+
 const app = express();
+
+app.use('/clients', signUprouter)
 
 app.use(cors());
 app.use(express.json());
