@@ -1,5 +1,5 @@
 const db = require("../../models");
-const { sendEmail } = require("../../utils/services");
+const { sendEmail } = require("../../utils/communication");
 const { Users } = db;
 
 module.exports = {

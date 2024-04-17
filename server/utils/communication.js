@@ -3,7 +3,7 @@ const path = require("path");
 const ejs = require("ejs");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
-const { genericResponse } = require("../utils/response");
+const { genericResponse } = require("./response");
 require("dotenv").config();
 
 module.exports = {
