@@ -1,53 +1,51 @@
 "use strict";
+
+const { sequelize } = require("../models");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Clients", {
+    await queryInterface.createTable("Planners", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      client_id: {
-        allowNull: false,
-        unique: true,
-        primaryKey: true,
+      planner_id: {
         type: Sequelize.UUID,
+        unique: true,
+        allowNull: false,
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: null,
       },
       email: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
       },
       phone_number: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
-      },
-      phone_number_verified: {
+        primaryKey: true,
         allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
-      email_verified: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        unique: true,
       },
       password: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      ticket_id: {
-        allowNull: false,
-        primaryKey: true,
+      profile_picture: {
         type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
+      },
+      event_id: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true,
+        unique: true,
       },
       createdAt: {
         allowNull: false,
@@ -60,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Clients");
+    await queryInterface.dropTable("Planners");
   },
 };

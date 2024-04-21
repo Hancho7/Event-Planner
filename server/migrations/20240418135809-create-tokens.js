@@ -10,21 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       clientID: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         allowNull: true,
         references: {
           model: "Clients",
           key: "client_id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      plannerID: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        references: {
-          model: "Planners",
-          key: "planner_id",
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",

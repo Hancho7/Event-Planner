@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       },
       plannerID: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
         unique: true,
         references: {

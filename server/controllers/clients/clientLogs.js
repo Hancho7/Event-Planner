@@ -1,137 +1,171 @@
-const { where, Op } = require("sequelize");
+const { Op, sequelize } = require("sequelize");
 const db = require("../../models");
 const { sendEmail, sendSMS } = require("../../utils/communication");
-const { responseMiddleware, genericResponse } = require("../../utils/response");
+const { responseMiddleware } = require("../../utils/response");
+const { hashText } = require("../../utils/bcrypt");
 const generateRandomSixDigitNumber = require("../../utils/randomNumbers");
-const { hashText, compareHashes } = require("../../utils/bcrypt");
+const crypto = require("crypto");
 const { Users, Tokens } = db;
 
-module.exports = {
-  signUp: async (req, res) => {
-    const { name, email, phone_number, password } = req.body;
-    if (!name || !email || !phone_number || !password) {
-      return responseMiddleware(
-        res,
-        400,
-        "Please fill all the fields",
-        null,
-        "Error"
-      );
-    }
-    try {
-      const user = await Users.findOne({
-        where: {
-          [Op.or]: {
-            email: email,
-            phone_number: phone_number,
-          },
-        },
-      });
-      if (user) {
-        if (user.phone_number_verified && user.email_verified) {
-          return responseMiddleware(
-            res,
-            409,
-            "This account has already been verified",
-            "success"
-          );
-        } else {
-          const token = await Tokens.findOne({
-            where: { clientID: user.client_id },
-          });
-          if (token) {
-            const emailSent = await sendEmail(
-              user.email,
-              "Verification Email",
-              "clientVerification.ejs",
-              { clientName: user.name, verificationLink: token.tokenLink }
-            );
-            const smsSent = await sendSMS(
-              user.phone_number,
-              `Your verification code is ${token.smsCode}`
-            );
-            if (emailSent && smsSent) {
-              return responseMiddleware(
-                res,
-                "200",
-                "Both verification link and code are sent to your email and phone number respectively"
-              );
-            }
-            return responseMiddleware(res);
-          } else {
-            return responseMiddleware(
-              res,
-              "400",
-              "Please come back in 10 mins to sign up again ",
-              "Error signing up"
-            );
-          }
-        }
-      }
+//Function to validate the entries
+function validateSignUpData(reqBody) {
+  const { name, email, phone_number, password } = reqBody;
 
-      const hashedPassword = await hashText(password, 10);
+  // Check for missing fields
+  if (!name || !email || !phone_number || !password) {
+    return "Missing fields";
+  }
 
-      const newUser = await Users.build({
-        name: name,
+  // Regular expression patterns for email and phone number validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^\d{10}$/; // Assuming phone numbers are 10 digits
+
+  // Regular expression pattern for password validation
+  const passwordPattern =
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
+
+  // Check email format
+  if (!emailPattern.test(email)) {
+    return "Invalid email format";
+  }
+
+  // Check phone number format
+  if (!phonePattern.test(phone_number)) {
+    return "Invalid phone number format";
+  }
+
+  // Check name format (should not contain symbols or punctuation marks)
+  if (/[^\w\s]/.test(name)) {
+    return "Name should not contain symbols or punctuation marks";
+  }
+
+  // Check password format (should be 8 or more characters containing symbols, numbers, lowercase and uppercase letters)
+  if (!passwordPattern.test(password)) {
+    return "Password should be 8 or more characters containing symbols, numbers, lowercase and uppercase letters";
+  }
+
+  return null; // Return null if data is valid
+}
+
+// Function to check if a user with the given email or phone number already exists
+async function userExists(email, phone_number, transaction) {
+  return await Users.findOne({
+    where: {
+      [Op.or]: {
         email: email,
         phone_number: phone_number,
-        password: hashedPassword,
-      });
+      },
+    },
+    transaction, // Pass transaction object to ensure the query is executed within the transaction context
+  });
+}
 
-      const savedUser = await newUser.save();
-      if (!savedUser) {
-        return responseMiddleware();
-      } else {
-        const token = await Tokens.build({
-          clientID: user.client_id,
-          tokenLink: crypto.randomBytes(32).toString("hex"),
-          smsCode: generateRandomSixDigitNumber(),
-        });
+// Function to create a new user
+async function createUser(name, email, phone_number, password, transaction) {
+  const hashedPassword = await hashText(password);
+  return await Users.create(
+    {
+      name,
+      email,
+      phone_number,
+      password: hashedPassword,
+    },
+    { transaction }
+  ); // Pass transaction object to ensure the operation is executed within the transaction context
+}
 
-        const savedToken = await token.save();
-        if (savedToken) {
-          const emailSent = await sendEmail(
-            savedUser.email,
-            "Verification Link",
-            "clientVerification.ejs",
-            {
-              clientName: savedUser.name,
-              verificationLink: savedToken.tokenLink,
-            }
-          );
+// Function to generate verification token
+async function generateVerificationToken(clientID, transaction) {
+  return await Tokens.create(
+    {
+      clientID,
+      tokenLink: crypto.randomBytes(32).toString("hex"),
+      smsCode: generateRandomSixDigitNumber(),
+    },
+    { transaction }
+  ); // Pass transaction object to ensure the operation is executed within the transaction context
+}
 
-          const smsSent = await sendSMS(
-            savedUser.phone_number,
-            `Your verification code is ${savedToken.smsCode}`
-          );
+// Function to send verification email and SMS
+async function sendVerificationMessages(email, phone_number, token) {
+  await Promise.all([
+    sendEmail(
+      email,
+      "Verification Link",
+      `Please click on the following link to verify your account: ${token.tokenLink}`
+    ),
+    sendSMS(phone_number, `Your verification code is: ${token.smsCode}`),
+  ]);
+}
 
-          if (emailSent && smsSent) {
-            return responseMiddleware(
-              res,
-              "200",
-              "Both verification link and code are sent to your email and phone number respectively"
-            );
-          }
-        }
-      }
-    } catch (error) {
-      if (error instanceof Error) {
+// Function to handle user sign-up
+async function signUp(req, res) {
+  const { name, email, phone_number, password } = req.body;
+  const validationError = validateSignUpData({
+    name,
+    email,
+    phone_number,
+    password,
+  });
+  if (validationError) {
+    return responseMiddleware(res, 400, validationError, null, "Error");
+  }
+
+  const transaction = await sequelize.transaction(); // Declare transaction variable
+
+  try {
+    const existingUser = await userExists(email, phone_number, transaction);
+    if (existingUser) {
+      if (existingUser.phone_number_verified && existingUser.email_verified) {
+        // Rollback transaction
+        await transaction.rollback();
         return responseMiddleware(
           res,
-          500,
-          error.message,
-          null,
-          "Server Error"
+          409,
+          "This account has already been verified"
         );
+      } else {
+        const token = await generateVerificationToken(
+          existingUser.client_id,
+          transaction
+        );
+        await sendVerificationMessages(email, phone_number, token);
+        // Commit transaction
+        await transaction.commit();
+        return responseMiddleware(res, 200, "Verification link has been sent");
       }
-      return responseMiddleware(
-        res,
-        500,
-        "Something went wrong with server",
-        null,
-        "Server Error"
-      );
     }
-  },
-  signIn: async (req, res) => {},
-};
+
+    const newUser = await createUser(
+      name,
+      email,
+      phone_number,
+      password,
+      transaction
+    );
+    const token = await generateVerificationToken(
+      newUser.client_id,
+      transaction
+    );
+    await sendVerificationMessages(email, phone_number, token);
+    // Commit transaction
+    await transaction.commit();
+    return responseMiddleware(
+      res,
+      200,
+      "User created successfully. Verification link has been sent"
+    );
+  } catch (error) {
+    if (transaction) {
+      // Rollback transaction if an error occurs
+      await transaction.rollback();
+    }
+    if (error instanceof Error) {
+      return responseMiddleware(res, 500, error.message);
+    }
+    console.error("Error occurred during sign-up:", error);
+    return responseMiddleware(res, 500, "Internal Server Error");
+  }
+}
+
+module.exports = { signUp };
