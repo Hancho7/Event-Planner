@@ -48,12 +48,12 @@ function validateSignUpData(reqBody) {
 }
 
 // Function to check if a user with the given email or phone number already exists
-async function userExists(email, phone_number, transaction) {
+async function userExists(email, phoneNumber, transaction) {
   return await Clients.findOne({
     where: {
       [Op.or]: {
         email: email,
-        phone_number: phone_number,
+        phone_number: phoneNumber,
       },
     },
     transaction,
@@ -61,13 +61,13 @@ async function userExists(email, phone_number, transaction) {
 }
 
 // Function to create a new user
-async function createUser(name, email, phone_number, password, transaction) {
+async function createUser(name, email, phoneNumber, password, transaction) {
   const hashedPassword = await hashText(password);
   return await Clients.create(
     {
       name,
       email,
-      phone_number,
+      phoneNumber,
       password: hashedPassword,
     },
     { transaction }
@@ -87,14 +87,20 @@ async function generateVerificationToken(clientID, transaction) {
 }
 
 // Function to send verification email and SMS
-async function sendVerificationMessages(name, email, phone_number, token) {
+async function sendVerificationMessages(
+  name,
+  email,
+  phoneNumber,
+  token,
+  clientID
+) {
   const url = `http://localhost:5001/${clientID}/${token.tokenLink}`;
   await Promise.all([
     sendEmail(email, "eventPlannerVerification.ejs", {
       eventPlanner: name,
       verificationLink: url,
     }),
-    sendSMS(phone_number, `Your verification code is: ${token.smsCode}`),
+    sendSMS(phoneNumber, `Your verification code is: ${token.smsCode}`),
   ]);
 }
 
@@ -118,7 +124,7 @@ async function signUp(req, res) {
   try {
     const existingUser = await userExists(email, phone_number, transaction);
     if (existingUser) {
-      if (existingUser.phone_number_verified && existingUser.email_verified) {
+      if (existingUser.verified) {
         // Rollback transaction
         await transaction.rollback();
         return responseMiddleware(
@@ -131,7 +137,13 @@ async function signUp(req, res) {
           existingUser.client_id,
           transaction
         );
-        await sendVerificationMessages(name, email, phone_number, token);
+        await sendVerificationMessages(
+          name,
+          email,
+          phone_number,
+          token,
+          existingUser.client_id
+        );
         // Commit transaction
         await transaction.commit();
         return responseMiddleware(res, 200, "Verification link has been sent");
@@ -149,7 +161,12 @@ async function signUp(req, res) {
       newUser.client_id,
       transaction
     );
-    await sendVerificationMessages(email, phone_number, token);
+    await sendVerificationMessages(
+      email,
+      phone_number,
+      token,
+      newUser.client_id
+    );
     // Commit transaction
     await transaction.commit();
     return responseMiddleware(
