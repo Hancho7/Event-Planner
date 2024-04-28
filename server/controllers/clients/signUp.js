@@ -5,7 +5,7 @@ const { responseMiddleware } = require("../../utils/response");
 const { hashText } = require("../../utils/bcrypt");
 const generateRandomSixDigitNumber = require("../../utils/randomNumbers");
 const crypto = require("crypto");
-const { Users, Tokens } = db;
+const { Clients, Tokens } = db;
 
 //Function to validate the entries
 function validateSignUpData(reqBody) {
@@ -49,21 +49,21 @@ function validateSignUpData(reqBody) {
 
 // Function to check if a user with the given email or phone number already exists
 async function userExists(email, phone_number, transaction) {
-  return await Users.findOne({
+  return await Clients.findOne({
     where: {
       [Op.or]: {
         email: email,
         phone_number: phone_number,
       },
     },
-    transaction, // Pass transaction object to ensure the query is executed within the transaction context
+    transaction,
   });
 }
 
 // Function to create a new user
 async function createUser(name, email, phone_number, password, transaction) {
   const hashedPassword = await hashText(password);
-  return await Users.create(
+  return await Clients.create(
     {
       name,
       email,
@@ -71,7 +71,7 @@ async function createUser(name, email, phone_number, password, transaction) {
       password: hashedPassword,
     },
     { transaction }
-  ); // Pass transaction object to ensure the operation is executed within the transaction context
+  );
 }
 
 // Function to generate verification token
@@ -83,24 +83,26 @@ async function generateVerificationToken(clientID, transaction) {
       smsCode: generateRandomSixDigitNumber(),
     },
     { transaction }
-  ); // Pass transaction object to ensure the operation is executed within the transaction context
+  );
 }
 
 // Function to send verification email and SMS
-async function sendVerificationMessages(email, phone_number, token) {
+async function sendVerificationMessages(name, email, phone_number, token) {
+  const url = `http://localhost:5001/${clientID}/${token.tokenLink}`;
   await Promise.all([
-    sendEmail(
-      email,
-      "Verification Link",
-      `Please click on the following link to verify your account: ${token.tokenLink}`
-    ),
+    sendEmail(email, "eventPlannerVerification.ejs", {
+      eventPlanner: name,
+      verificationLink: url,
+    }),
     sendSMS(phone_number, `Your verification code is: ${token.smsCode}`),
   ]);
 }
 
 // Function to handle user sign-up
 async function signUp(req, res) {
+  console.log("req.body", req.body);
   const { name, email, phone_number, password } = req.body;
+
   const validationError = validateSignUpData({
     name,
     email,
@@ -129,7 +131,7 @@ async function signUp(req, res) {
           existingUser.client_id,
           transaction
         );
-        await sendVerificationMessages(email, phone_number, token);
+        await sendVerificationMessages(name, email, phone_number, token);
         // Commit transaction
         await transaction.commit();
         return responseMiddleware(res, 200, "Verification link has been sent");

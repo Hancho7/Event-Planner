@@ -34,12 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      phone_number_verified: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
-      email_verified: {
+      verified:{
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,

@@ -1,6 +1,6 @@
 module.exports = {
   responseMiddleware: (res, statusCode, message, data, status) => {
-    res.status(code).json({
+    res.status(statusCode).json({
       status: status,
       code: statusCode,
       message: message,
