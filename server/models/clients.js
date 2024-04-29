@@ -34,19 +34,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       verified:{
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       ticket_id: {
         type: DataTypes.STRING,
         allowNull: true,
-        primaryKey: true,
       },
     },
     {

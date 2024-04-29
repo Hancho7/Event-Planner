@@ -1,4 +1,4 @@
-const { Op, sequelize } = require("sequelize");
+const { Op, where } = require("sequelize");
 const db = require("../../models");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
@@ -62,12 +62,12 @@ async function userExists(email, phoneNumber, transaction) {
 
 // Function to create a new user
 async function createUser(name, email, phoneNumber, password, transaction) {
-  const hashedPassword = await hashText(password);
+  const hashedPassword = await hashText(password, 10);
   return await Clients.create(
     {
       name,
       email,
-      phoneNumber,
+      phone_number:phoneNumber,
       password: hashedPassword,
     },
     { transaction }
@@ -94,13 +94,22 @@ async function sendVerificationMessages(
   token,
   clientID
 ) {
+  let formattedPhoneNumber;
+  if (typeof phoneNumber === 'string') {
+    formattedPhoneNumber = `233${phoneNumber.slice(1)}`;
+  } else {
+    formattedPhoneNumber = `233${phoneNumber.toString().slice(1)}`;
+  }
   const url = `http://localhost:5001/${clientID}/${token.tokenLink}`;
   await Promise.all([
     sendEmail(email, "eventPlannerVerification.ejs", {
       eventPlanner: name,
       verificationLink: url,
     }),
-    sendSMS(phoneNumber, `Your verification code is: ${token.smsCode}`),
+    sendSMS(
+      formattedPhoneNumber,
+      `Your verification code is: ${token.smsCode}`
+    ),
   ]);
 }
 
@@ -115,14 +124,16 @@ async function signUp(req, res) {
     phone_number,
     password,
   });
+  console.log('validationError', validationError)
   if (validationError) {
     return responseMiddleware(res, 400, validationError, null, "Error");
   }
 
-  const transaction = await sequelize.transaction(); // Declare transaction variable
+  const transaction = await db.sequelize.transaction(); // Declare transaction variable
 
   try {
     const existingUser = await userExists(email, phone_number, transaction);
+    console.log('existingUser', existingUser)
     if (existingUser) {
       if (existingUser.verified) {
         // Rollback transaction

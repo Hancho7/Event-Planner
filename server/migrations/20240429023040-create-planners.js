@@ -2,52 +2,47 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Clients", {
+    await queryInterface.createTable("Planners", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      client_id: {
+      planner_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         unique: true,
         primaryKey: true,
-        type: Sequelize.UUID,
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
       phone_number: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
-      },
-      phone_number_verified: {
         allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
-      email_verified: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        unique: true,
       },
       password: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      ticket_id: {
-        allowNull: false,
-        primaryKey: true,
+      profile_picture: {
         type: Sequelize.STRING,
+        unique: true,
+        allowNull: true,
+      },
+      event_id: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true,
+        unique: true,
       },
       createdAt: {
         allowNull: false,
@@ -60,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Clients");
+    await queryInterface.dropTable("Planners");
   },
 };

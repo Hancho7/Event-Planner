@@ -1,51 +1,47 @@
 "use strict";
 
-const { sequelize } = require("../models");
+const { UUIDV4 } = require("sequelize");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Planners", {
+    await queryInterface.createTable("Clients", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      planner_id: {
+      client_id: {
         type: Sequelize.UUID,
-        unique: true,
+        defaultValue: UUIDV4,
         allowNull: false,
+        primaryKey: true,
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: null,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
-        unique: true,
       },
       phone_number: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
-        unique: true,
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      profile_picture: {
+      verified: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      ticket_id: {
         type: Sequelize.STRING,
         allowNull: true,
-        unique: true,
-      },
-      event_id: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
-        allowNull: true,
-        unique: true,
       },
       createdAt: {
         allowNull: false,
@@ -58,6 +54,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Planners");
+    await queryInterface.dropTable("Clients");
   },
 };

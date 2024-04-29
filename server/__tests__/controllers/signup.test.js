@@ -1,11 +1,10 @@
 const { signUp } = require("../../controllers/clients/signUp");
-const db = require("../../models");
+const {Clients} = require("../../models/clients");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
 const { hashText } = require("../../utils/bcrypt");
 const generateRandomSixDigitNumber = require("../../utils/randomNumbers");
 const crypto = require("crypto");
-const { Clients, Tokens } = db;
 
 const req = {
   body: {
@@ -77,12 +76,13 @@ describe("Signing up users", () => {
     });
   });
   it("should check for an existing user", async () => {
-    Clients.findOne.mockImplementation(() => ({
+    Clients.findOne.mockImplementation(() => Promise.resolve({
       name: "@John Doe",
       email: "john.doe@example.com",
       password: "Password@123",
       phone_number: "1234567890",
     }));
+    
 
     await signUp(req, res);
 

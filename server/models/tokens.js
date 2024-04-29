@@ -1,4 +1,4 @@
-"use strict";
+("use strict");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Tokens extends Model {
@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   Tokens.init(
     {
       clientID: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.UUID,
+        allowNull: true,
         unique: true,
         references: {
           model: "Clients",
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       plannerID: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
         unique: true,
         references: {
           model: "Planners",
