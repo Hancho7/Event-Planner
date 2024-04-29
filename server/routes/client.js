@@ -1,8 +1,12 @@
 const express = require("express");
-const { signUp } = require("../controllers/clients/signUp");
+const { signup } = require("../controllers/clients/signup");
+const {
+  signupVerification,
+} = require("../controllers/clients/signupVerification");
 
 const router = express.Router();
 
-router.post("/sign-up", signUp);
+router.post("/sign-up", signup);
+router.post("/:clientID/:tokenLink", signupVerification);
 
 module.exports = router;

@@ -9,7 +9,7 @@ require("dotenv").config();
 module.exports = {
   sendSMS: async (phone, message) => {
     const respone = await axios.get(
-      `https://sms.arkesel.com/sms/api?action=send-sms&api_key=${process.env.SMS_API_KEY}&to=+${phone}&from=Hancho&sms=${message}`
+      `https://sms.arkesel.com/sms/api?action=send-sms&api_key=${process.env.SMS_API_KEY}&to=+${phone}&from=HanchoTech&sms=${message}`
     );
 
     return respone;

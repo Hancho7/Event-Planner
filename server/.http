@@ -1,1 +1,9 @@
-GET http://localhost:5001/clients/signup
+POST http://localhost:5001/clients/sign-up
+Content-Type: application/json
+
+{
+    "name": "Jefferson",
+    "email": "litorojose1@gmail.com",
+    "password": "Password@123",
+    "phone_number": "0544625477"
+}

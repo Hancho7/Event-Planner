@@ -1,4 +1,4 @@
-const { signUp } = require("../../controllers/clients/signUp");
+const { signup } = require("../../controllers/clients/signup");
 const {Clients} = require("../../models/clients");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
