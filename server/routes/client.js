@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/sign-up", signup);
 router.post("/:clientID/:tokenLink", signupVerification);
-router.post("/signin", signin);
+router.post("/sign-in", signin);
 
 module.exports = router;

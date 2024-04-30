@@ -1,9 +1,13 @@
 const db = require("../../models");
+const { where } = require("sequelize");
 const { responseMiddleware } = require("../../utils/response");
 const { compareHashes } = require("../../utils/bcrypt");
 const { Clients } = db;
 const signin = async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return responseMiddleware(res, 400, "Empty Fields", null, "Error");
+  }
 
   try {
     const client = await Clients.findOne({ where: { email } });
@@ -27,6 +31,13 @@ const signin = async (req, res) => {
         "Error"
       );
     }
+
+    req.session.user = {
+        id: client.client_id,
+        email: client.email,
+      };
+
+      console.log('session', req.session)
 
     return responseMiddleware(res, 200, "Login successfull", null, "Success");
   } catch (error) {

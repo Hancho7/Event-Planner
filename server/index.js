@@ -1,15 +1,14 @@
 const express = require("express");
+const session = require("express-session");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-
+const sessionConfig = require("./sessionConfig");
 const routes = require("./routes");
 
 const app = express();
-
-
 
 app.use(express.json());
 app.use(helmet());
@@ -18,6 +17,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(session(sessionConfig));
 
 app.use(routes);
 

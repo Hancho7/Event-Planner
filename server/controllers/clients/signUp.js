@@ -3,7 +3,7 @@ const db = require("../../models");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
 const { hashText } = require("../../utils/bcrypt");
-const generateRandomSixDigitNumber = require("../../utils/randomNumbers");
+const {generateRandomSixDigitNumber} = require("../../utils/random");
 const crypto = require("crypto");
 const { Clients, Tokens } = db;
 
