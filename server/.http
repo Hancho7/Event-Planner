@@ -7,3 +7,20 @@ Content-Type: application/json
     "password": "Password@123",
     "phone_number": "0544625477"
 }
+###
+
+POST http://localhost:5001/clients/d19af051-0b30-445d-9aa1-0e24bd4f5350/207c5d24b804b5f21a207c85263c01423af2b8144c91846d51da432081f566d8
+Content-Type: application/json
+
+{
+    "smsCode":"839008"
+}
+
+###
+POST http://localhost:5001/clients/sign-in
+Content-Type: application/json
+
+{
+    "email": "litorojose1@gmail.com",
+    "password": "Password@123"
+}
