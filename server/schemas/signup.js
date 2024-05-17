@@ -2,10 +2,11 @@ const Joi = require("joi");
 
 // Define the phone and password patterns
 const phonePattern = /^\d{10}$/; // Assuming phone numbers are 10 digits
-const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
+const passwordPattern =
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
 
 // Update the Joi schema to include the patterns
-const plannerSignupSchema = Joi.object().keys({
+const signupSchema = Joi.object().keys({
   name: Joi.string().required().messages({
     "any.required": "Name is required",
     "string.base": "Name must be a string",
@@ -25,4 +26,4 @@ const plannerSignupSchema = Joi.object().keys({
   }),
 });
 
-module.exports = { plannerSignupSchema };
+module.exports = { signupSchema };

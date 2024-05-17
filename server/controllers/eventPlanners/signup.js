@@ -2,7 +2,7 @@ const db = require("../../models");
 const { Op } = require("sequelize");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
-const { plannerSignupSchema } = require("../../schemas/planner");
+const { signupSchema } = require("../../schemas/signup");
 const { hashText } = require("../../utils/bcrypt");
 const { generateRandomSixDigitNumber } = require("../../utils/random");
 const crypto = require("crypto");
@@ -11,7 +11,7 @@ const { Planners, Tokens } = db;
 
 // Function to validate the entries
 function validateSignUpData(reqBody) {
-  const result = plannerSignupSchema.validate(reqBody);
+  const result = signupSchema.validate(reqBody);
   console.log("result", result);
   if (result.error) {
     return result.error.details[0].message;
