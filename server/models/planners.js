@@ -43,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         unique: true,
       },
+      verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       event_id: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,

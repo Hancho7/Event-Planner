@@ -2,6 +2,7 @@ const db = require("../../models");
 const { Op } = require("sequelize");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
+const { plannerSignupSchema } = require("../../schemas/planner");
 const { hashText } = require("../../utils/bcrypt");
 const { generateRandomSixDigitNumber } = require("../../utils/random");
 const crypto = require("crypto");
@@ -10,30 +11,10 @@ const { Planners, Tokens } = db;
 
 // Function to validate the entries
 function validateSignUpData(reqBody) {
-  const { name, email, phone_number, password } = reqBody;
-
-  if (!name || !email || !phone_number || !password) {
-    return "Missing Fields";
-  }
-
-  // Regular expression patterns for email and phone number validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phonePattern = /^\d{10}$/; // Assuming phone numbers are 10 digits
-  const passwordPattern =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
-
-  // Check email format
-  if (!emailPattern.test(email)) {
-    return "Invalid email format";
-  }
-  if (!phonePattern.test(phone_number)) {
-    return "Invalid phone number format";
-  }
-  if (/[^\w\s]/.test(name)) {
-    return "Name should not contain symbols or punctuation marks";
-  }
-  if (!passwordPattern.test(password)) {
-    return "Password should be 8 or more characters containing symbols, numbers, lowercase and uppercase letters";
+  const result = plannerSignupSchema.validate(reqBody);
+  console.log("result", result);
+  if (result.error) {
+    return result.error.details[0].message;
   }
   return null;
 }
@@ -60,10 +41,12 @@ async function createUser(
   profile_picture,
   transaction
 ) {
-  if (!profile_picture) {
-    return;
+  let saved_picture_key = null;
+  if (profile_picture) {
+    const saved_picture = await saveToBucket(profile_picture);
+    saved_picture_key = saved_picture.key;
   }
-  const saved_picture = await saveToBucket(profile_picture);
+
   const hashedPassword = await hashText(password, 10);
   return await Planners.create(
     {
@@ -71,7 +54,7 @@ async function createUser(
       email,
       phone_number,
       password: hashedPassword,
-      profile_picture: saved_picture.key,
+      profile_picture: saved_picture_key,
     },
     { transaction }
   );
@@ -103,7 +86,7 @@ async function sendVerificationMessages(
   } else {
     formattedPhoneNumber = `233${phoneNumber.toString().slice(1)}`;
   }
-  const url = `http://localhost:5001/planners/${plannerID}/${token.tokenLink}`;
+  const url = `http://localhost:5001/event-planners/${plannerID}/${token.tokenLink}`;
 
   try {
     // Send email
@@ -134,6 +117,8 @@ async function signup(req, res) {
 
   const { name, email, phone_number, password } = req.body;
   const profile_picture = req.file;
+
+  console.log("request file", req.file);
 
   const validationError = validateSignUpData({
     name,
@@ -169,6 +154,7 @@ async function signup(req, res) {
         const token = await Tokens.findOne({
           where: { plannerID: existingPlanner.planner_id },
         });
+        console.log("existingPlanner.planner_id", existingPlanner.planner_id);
         if (token) {
           await sendVerificationMessages(
             existingPlanner.name,
