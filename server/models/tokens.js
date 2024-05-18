@@ -13,24 +13,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tokens.init(
     {
-      clientID: {
+      userID: {
         type: DataTypes.UUID,
-        allowNull: true,
+        allowNull: false,
         unique: true,
         references: {
-          model: "Clients",
-          key: "client_id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      plannerID: {
-        type: DataTypes.UUID,
-        allowNull: true,
-        unique: true,
-        references: {
-          model: "Planners",
-          key: "planner_id",
+          model: "Users",
+          key: "userID",
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",

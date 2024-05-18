@@ -1,11 +1,9 @@
 const express = require("express");
-const clientRouter = require("./client");
-const plannerRouter = require("./planners");
+const logsRouter = require("./logs");
 
 const router = express.Router();
 
 // Add routes here
-router.use("/clients", clientRouter);
-router.use("/event-planners", plannerRouter);
+router.use("/users", logsRouter);
 
 module.exports = router;

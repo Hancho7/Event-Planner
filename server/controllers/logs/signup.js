@@ -1,61 +1,52 @@
-const { Op, where } = require("sequelize");
 const db = require("../../models");
+const { Op } = require("sequelize");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { responseMiddleware } = require("../../utils/response");
+const { signupSchema } = require("../../schemas/signup");
 const { hashText } = require("../../utils/bcrypt");
-const {generateRandomSixDigitNumber} = require("../../utils/random");
+const { generateRandomSixDigitNumber } = require("../../utils/random");
 const crypto = require("crypto");
-const { Clients, Tokens } = db;
+const { Users, Tokens } = db;
 
-//Function to validate the entries
+// Function to validate the entries
 function validateSignUpData(reqBody) {
-  const { name, email, phone_number, password } = reqBody;
-  if (!name || !email || !phone_number || !password) {
-    return "Missing fields";
-  }
-  // Regular expression patterns for email and phone number validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phonePattern = /^\d{10}$/; // Assuming phone numbers are 10 digits
-  const passwordPattern =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
-
-  // Check email format
-  if (!emailPattern.test(email)) {
-    return "Invalid email format";
-  }
-  if (!phonePattern.test(phone_number)) {
-    return "Invalid phone number format";
-  }
-  if (/[^\w\s]/.test(name)) {
-    return "Name should not contain symbols or punctuation marks";
-  }
-  if (!passwordPattern.test(password)) {
-    return "Password should be 8 or more characters containing symbols, numbers, lowercase and uppercase letters";
+  const result = signupSchema.validate(reqBody);
+  console.log("result", result);
+  if (result.error) {
+    return result.error.details[0].message;
   }
   return null;
 }
 
-// Function to check if a user with the given email or phone number already exists
-async function userExists(email, phoneNumber, transaction) {
-  return await Clients.findOne({
+// Function to check if a planner with the given email or phone number already exists
+async function userExists(email, phone_number, transaction) {
+  return await Users.findOne({
     where: {
       [Op.or]: {
         email: email,
-        phone_number: phoneNumber,
+        phone_number: phone_number,
       },
     },
     transaction,
   });
 }
 
-// Function to create a new user
-async function createUser(name, email, phoneNumber, password, transaction) {
+// Function to create a new planner
+async function createUser(
+  name,
+  email,
+  phone_number,
+  password,
+  transaction
+) {
+  
+
   const hashedPassword = await hashText(password, 10);
-  return await Clients.create(
+  return await Users.create(
     {
       name,
       email,
-      phone_number: phoneNumber,
+      phone_number,
       password: hashedPassword,
     },
     { transaction }
@@ -63,10 +54,10 @@ async function createUser(name, email, phoneNumber, password, transaction) {
 }
 
 // Function to generate verification token
-async function generateVerificationToken(clientID, transaction) {
+async function generateVerificationToken(userID, transaction) {
   return await Tokens.create(
     {
-      clientID,
+      userID,
       tokenLink: crypto.randomBytes(32).toString("hex"),
       smsCode: generateRandomSixDigitNumber(),
     },
@@ -80,7 +71,7 @@ async function sendVerificationMessages(
   email,
   phoneNumber,
   token,
-  clientID
+  userID
 ) {
   let formattedPhoneNumber;
   if (typeof phoneNumber === "string") {
@@ -88,13 +79,13 @@ async function sendVerificationMessages(
   } else {
     formattedPhoneNumber = `233${phoneNumber.toString().slice(1)}`;
   }
-  const url = `http://localhost:5001/clients/${clientID}/${token.tokenLink}`;
+  const url = `http://localhost:5001/event-Users/${userID}/${token.tokenLink}`;
 
   try {
     // Send email
     const messageSent = await Promise.all([
-      sendEmail(email, "VERIFICATION EMAIL", "clientVerification.ejs", {
-        clientName: name,
+      sendEmail(email, "VERIFICATION EMAIL", "eventPlannerVerification.ejs", {
+        userName: name,
         verificationLink: url,
       }),
       sendSMS(
@@ -113,10 +104,13 @@ async function sendVerificationMessages(
   }
 }
 
-// Function to handle user sign-up
+// Function to handle planner sign-up
 async function signup(req, res) {
   console.log("req.body", req.body);
+
   const { name, email, phone_number, password } = req.body;
+
+  console.log("request file", req.file);
 
   const validationError = validateSignUpData({
     name,
@@ -132,7 +126,11 @@ async function signup(req, res) {
   const transaction = await db.sequelize.transaction(); // Declare transaction variable
 
   try {
-    const existingUser = await userExists(email, phone_number, transaction);
+    const existingUser = await userExists(
+      email,
+      phone_number,
+      transaction
+    );
     console.log("existingUser", existingUser);
     if (existingUser) {
       if (existingUser.verified) {
@@ -144,28 +142,29 @@ async function signup(req, res) {
           "This account has already been verified"
         );
       } else {
-        //Check if his token has not yet been deleted and send it back
+        // Check if their token has not yet been deleted and send it back
         const token = await Tokens.findOne({
-          where: { clientID: existingUser.client_id },
+          where: { userID: existingUser.userID },
         });
+        console.log("existingUser.planner_id", existingUser.planner_id);
         if (token) {
           await sendVerificationMessages(
             existingUser.name,
             existingUser.email,
             existingUser.phone_number,
             token,
-            existingUser.client_id
+            existingUser.userID
           );
           return responseMiddleware(
             res,
             200,
-            "Verification messages has been sent to phone and email",
+            "Verification messages have been sent to phone and email",
             null,
             "success"
           );
         }
         const newToken = await generateVerificationToken(
-          existingUser.client_id,
+          existingUser.userID,
           transaction
         );
         await sendVerificationMessages(
@@ -173,7 +172,7 @@ async function signup(req, res) {
           existingUser.email,
           existingUser.phone_number,
           newToken,
-          existingUser.client_id
+          existingUser.userID
         );
         // Commit transaction
         await transaction.commit();
@@ -189,7 +188,7 @@ async function signup(req, res) {
       transaction
     );
     const token = await generateVerificationToken(
-      newUser.client_id,
+      newUser.userID,
       transaction
     );
     // Inside the signUp function
@@ -198,7 +197,7 @@ async function signup(req, res) {
       newUser.email,
       newUser.phone_number,
       token,
-      newUser.client_id
+      newUser.userID
     );
 
     if (!sendResult.success) {
@@ -215,7 +214,7 @@ async function signup(req, res) {
     return responseMiddleware(
       res,
       200,
-      "User created successfully. Verification link has been sent"
+      "Planner created successfully. Verification link has been sent"
     );
   } catch (error) {
     if (transaction) {
