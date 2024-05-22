@@ -2,20 +2,19 @@ const db = require("../../models");
 const { where } = require("sequelize");
 const { responseMiddleware } = require("../../utils/response");
 const { compareHashes } = require("../../utils/bcrypt");
-const { Planners } = db;
-
-
-
+const { Users } = db;
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
+  console.log("email", email);
+  console.log("password", password);
   if (!email || !password) {
     return responseMiddleware(res, 400, "Empty Fields", null, "Error");
   }
 
   try {
-    const planner = await Planners.findOne({ where: { email } });
-    if (!planner) {
+    const user = await Users.findOne({ where: { email } });
+    if (!user) {
       return responseMiddleware(
         res,
         400,
@@ -25,7 +24,7 @@ const signin = async (req, res) => {
       );
     }
 
-    const isPasswordCorrect = await compareHashes(password, planner.password);
+    const isPasswordCorrect = await compareHashes(password, user.password);
     if (!isPasswordCorrect) {
       return responseMiddleware(
         res,
@@ -37,11 +36,12 @@ const signin = async (req, res) => {
     }
 
     req.session.user = {
-        id: planner.planner_id,
-        email: planner.email,
-      };
+      id: user.userID,
+      email: user.email,
+      role: user.role,
+    };
 
-      console.log('session', req.session)
+    console.log("session", req.session);
 
     return responseMiddleware(res, 200, "Login successfull", null, "Success");
   } catch (error) {

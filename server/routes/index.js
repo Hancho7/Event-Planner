@@ -4,6 +4,6 @@ const logsRouter = require("./logs");
 const router = express.Router();
 
 // Add routes here
-router.use("/users", logsRouter);
+router.use("/logs", logsRouter);
 
 module.exports = router;

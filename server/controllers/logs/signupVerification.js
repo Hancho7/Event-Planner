@@ -1,20 +1,20 @@
 const { Op } = require("sequelize");
 const db = require("../../models");
 const { responseMiddleware } = require("../../utils/response");
-const { Planners, Tokens } = db;
+const { Users, Tokens } = db;
 
 const signupVerification = async (req, res) => {
-  const { plannerID, tokenLink } = req.params;
+  const { userID, tokenLink } = req.params;
   const { smsCode } = req.body;
 
   try {
     const transaction = await db.sequelize.transaction();
 
-    const planner = await Planners.findOne({
-      where: { planner_id: plannerID },
+    const user = await Users.findOne({
+      where: { userID },
       transaction,
     });
-    if (!planner) {
+    if (!user) {
       await transaction.rollback();
       return responseMiddleware(
         res,
@@ -28,7 +28,7 @@ const signupVerification = async (req, res) => {
     const token = await Tokens.findOne({
       where: {
         [Op.and]: {
-          plannerID,
+          userID,
           tokenLink,
           smsCode,
         },
@@ -41,9 +41,9 @@ const signupVerification = async (req, res) => {
       return responseMiddleware(res, 400, "Invalid Token", null, "Error");
     }
 
-    const [updatedCount] = await Planners.update(
+    const [updatedCount] = await Users.update(
       { verified: true },
-      { where: { planner_id: plannerID }, transaction }
+      { where: { userID }, transaction }
     );
 
     if (updatedCount !== 1) {
@@ -53,7 +53,7 @@ const signupVerification = async (req, res) => {
 
     const deletedToken = await Tokens.destroy({
       where: {
-        plannerID,
+        userID,
         tokenLink,
         smsCode,
       },
