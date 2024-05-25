@@ -1,26 +1,35 @@
-POST http://localhost:5001/clients/sign-up
+POST http://localhost:5001/logs/sign-up
 Content-Type: application/json
 
 {
-    "name": "Jefferson",
+    "name": "Jose",
     "email": "litorojose1@gmail.com",
     "password": "Password@123",
     "phone_number": "0544625477"
 }
 ###
 
-POST http://localhost:5001/clients/d19af051-0b30-445d-9aa1-0e24bd4f5350/207c5d24b804b5f21a207c85263c01423af2b8144c91846d51da432081f566d8
+POST http://localhost:5001/logs/a06f105a-a8e0-4fd1-8f85-318a689fa8d5/8f12a0be9a23e0416dc4f34468fa8087e59355eb8f9ae771b1e7b42bdfdc7eec
 Content-Type: application/json
 
 {
-    "smsCode":"839008"
+    "smsCode":"159029"
 }
 
 ###
-POST http://localhost:5001/clients/sign-in
+POST http://localhost:5001/logs/sign-in
 Content-Type: application/json
 
 {
     "email": "litorojose1@gmail.com",
     "password": "Password@123"
+}
+
+POST http://localhost:5001/multer-test
+Content-Type: application/json
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "name": "Jeff",
+    "avatar": ""
 }
