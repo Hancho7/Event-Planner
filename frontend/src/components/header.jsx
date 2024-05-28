@@ -1,6 +1,6 @@
 import header from "../assets/header.jpg";
 import { Link } from "react-router-dom";
-import {FaUserPlus, FaSignInAlt} from 'react-icons/fa';
+import {FaUserPlus, FaSignInAlt, FaSearch} from 'react-icons/fa';
 
 function Header() {
   return (
@@ -18,14 +18,15 @@ function Header() {
           <Link to="/about-us">About Us</Link>
           <div className="flex items-center gap-2">
             <Link to="/register">
-              <button className="bg-green-500 rounded-md h-8 px-2 hover:bg-green-600">
-              <FaUserPlus className="mr-2" />
-                Register
+              <button className="bg-green-500 flex items-center rounded-md h-8 px-2 hover:bg-green-600">
+                <FaUserPlus className="mr-2" />
+                <span>Register</span>
               </button>
             </Link>
             <Link to="/login">
-              <button className="bg-[rgba(241,94,117,1)] rounded-md h-8 px-2 hover:bg-red-600">
-                Log In
+              <button className="bg-[rgba(241,94,117,1)] flex items-center rounded-md h-8 px-2 hover:bg-red-600">
+                <FaSignInAlt className="me-2" />
+                <span> Log In</span>
               </button>
             </Link>
           </div>
@@ -49,9 +50,10 @@ function Header() {
           <input
             type="text"
             placeholder="Search events..."
-            className="rounded-md h-8 p-1"
+            className="rounded-md h-8 p-1 text-black"
           />
-          <button className="bg-[#ffdd50] rounded-md h-8 px-2 hover:bg-[#d8bc4c]">
+          <button className="bg-[#ffdd50] flex items-center rounded-md h-8 px-2 hover:bg-[#d8bc4c]">
+          <FaSearch className="mr-2" />
             <span>Search</span>
           </button>
         </div>
