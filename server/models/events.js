@@ -44,15 +44,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       startOfDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATE, //ISO 8601 String
         allowNull: false,
       },
       endOfDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATE, //ISO 8601 String
         allowNull: false,
       },
       bookingDeadline: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATE, //ISO 8601 String
         allowNull: false,
       },
       attendees: {
@@ -60,6 +60,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       numberOfAttendees: {
         type: DataTypes.INTEGER,
+      },
+      price: {
+        type: DataTypes.JSON,
       },
     },
     {
