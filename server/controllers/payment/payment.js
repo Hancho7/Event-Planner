@@ -10,10 +10,13 @@ module.exports = {
 
     try {
       const user = await Users.findOne({ where: { userID } });
+      console.log("user ID", user.userID);
       if (!user) {
         return responseMiddleware(res, 404, "User not found", null, "Error");
       }
-      const request = await initializeTransaction(user.email, amount);
+      const actualAmount = amount * 100;
+      const request = await initializeTransaction(user.email, actualAmount);
+      console.log("request", request);
 
       const saveRequest = await Payments.create({
         userID: user.userID,
@@ -27,6 +30,8 @@ module.exports = {
           reference: request.data.reference,
         },
       });
+
+      console.log("saveRequest", saveRequest);
 
       if (!saveRequest) {
         return responseMiddleware(
