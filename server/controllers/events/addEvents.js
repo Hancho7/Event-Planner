@@ -13,6 +13,7 @@ const createEvents = async (req, res) => {
     endOfDate,
     bookingDeadline,
     numberOfAttendees,
+    price,
   } = req.body;
 
   const images = req.files;
@@ -49,6 +50,7 @@ const createEvents = async (req, res) => {
         startOfDate,
         endOfDate,
         bookingDeadline,
+        price,
         numberOfAttendees: newNumberOfAttendees,
         images: savedImageLinks,
       },
