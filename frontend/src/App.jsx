@@ -5,11 +5,13 @@ import Events from "./pages/events";
 import AboutUs from "./pages/aboutUs";
 import Register from "./pages/register";
 import Login from "./pages/login";
+import Hero from "./components/Hero";
 
 function App() {
   return (
     <Router>
       <Header />
+      <Hero />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
