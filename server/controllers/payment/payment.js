@@ -13,7 +13,7 @@ module.exports = {
       if (!user) {
         return responseMiddleware(res, 404, "User not found", null, "Error");
       }
-      const request = await initializeTransaction(user.email, amount*100);
+      const request = await initializeTransaction(user.email, amount);
 
       const saveRequest = await Payments.create({
         userID: user.userID,
