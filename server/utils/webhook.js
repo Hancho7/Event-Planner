@@ -1,5 +1,5 @@
 const db = require("../models");
-const { Payments, Users } = db;
+
 module.exports = {
   updateUserRole: async (requests, userId) => {
     try {

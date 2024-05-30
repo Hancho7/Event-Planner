@@ -48,7 +48,7 @@ module.exports = {
       return responseMiddleware(
         res,
         200,
-        "request successfully made",
+        "Payment initiated successfully",
         { authorization_url: request.data.authorization_url },
         "Success"
       );

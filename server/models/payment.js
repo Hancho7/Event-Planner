@@ -42,6 +42,15 @@ module.exports = (sequelize, DataTypes) => {
         values: ["PLANNER_REQUEST", "EVENT_TICKET"],
         allowNull: false,
       },
+      eventID: {
+        type: DataTypes.UUID,
+        references: {
+          model: "Events",
+          key: "eventID",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       paystack: {
         type: DataTypes.JSON,
         allowNull: false,
