@@ -4,6 +4,7 @@ import event3 from "../assets/event 3.jpeg";
 import event4 from "../assets/event 4.jpeg";
 import event5 from "../assets/event 5.jpeg";
 import event6 from "../assets/event 6.jpeg";
+import Hero from "../components/Hero";
 function Home() {
   const featuredEvents = [
     {
@@ -22,7 +23,7 @@ function Home() {
       id: 3,
       title: "Student conference",
       description:
-        "We are delighted to share the success of our recent Student Conference held on 20th May, 2020. This dynamic event brought together students from various disciplines to engage, learn, and network in an inspiring environment.",
+        "",
       imageUrl: event3,
     },
     {
@@ -46,30 +47,33 @@ function Home() {
     },
   ];
   return (
-    <div className="py-8 bg-gray-100">
-      <h2 className="text-3xl font-bold font-sans text-center mb-6">
-        Latest Awesome Events
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
-        {featuredEvents.map((event) => (
-          <div
-            key={event.id}
-            className="relative bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-lg transition-shadow duration-300"
-          >
+    <div>
+      <Hero />
+      <div className="py-8 bg-gray-100">
+        <h2 className="text-3xl font-bold font-sans text-center mb-6">
+          Latest Awesome Events
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+          {featuredEvents.map((event) => (
             <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-              style={{ backgroundImage: `url(${event.imageUrl})` }}
-            ></div>
-            <div className="relative p-4  bg-opacity-50 text-white h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
-              <h3 className="text-xl font-mono font-semibold mb-2">
-                {event.title}
-              </h3>
-              <p className="opacity-0 group-hover:opacity-100 text-[#ffdd50] transition-opacity duration-300">
-                {event.description}
-              </p>
+              key={event.id}
+              className="relative bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-lg transition-shadow duration-300"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                style={{ backgroundImage: `url(${event.imageUrl})` }}
+              ></div>
+              <div className="relative p-4  bg-opacity-50 text-white h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
+                <h3 className="text-xl font-mono font-semibold mb-2">
+                  {event.title}
+                </h3>
+                <p className="opacity-0 group-hover:opacity-100 text-[#ffdd50] transition-opacity duration-300">
+                  {event.description}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

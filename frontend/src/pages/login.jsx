@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUser, FaLock } from 'react-icons/fa';
-import { loginUser } from '../Redux/authSlice'; // Assuming you have an auth slice for handling authentication
+import { loginUser } from '../features/authSlice'; // Assuming you have an auth slice for handling authentication
 import { Link } from 'react-router-dom';
 
 function LoginPage() {
