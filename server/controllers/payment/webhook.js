@@ -44,6 +44,7 @@ const processTransaction = async (eventData) => {
 };
 
 const webhook = async (req, res) => {
+  console.log("request body", req.body);
   const secret = process.env.PAYSTACK_SECRET_KEY;
 
   if (!verifyWebhookSignature(req, secret)) {
