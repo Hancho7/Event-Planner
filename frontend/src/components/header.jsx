@@ -13,7 +13,7 @@ function Header() {
             <span className="text-[#DBB610]">Center</span>
           </h6>
         </div>
-        <div className="flex flex-row gap-4 text-black font-semibold">
+        <div className="flex flex-row font-sans gap-4 text-black font-semibold">
           <Link to="/">Home</Link>
           <Link to="/events">Events</Link>
           <Link to="/about-us">About Us</Link>
@@ -41,13 +41,13 @@ function Header() {
           backgroundPosition: "center",
         }}
       >
-        <h1 className="text-5xl font-bold text-center mb-4">
+        <h1 className="text-5xl font-bold font-mono text-center mb-4">
           Welcome to Event Center
         </h1>
         <p className="text-lg text-center mb-6">
           Find and register for the best events around you.
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center text-black font-sans gap-2">
           <input
             type="text"
             placeholder="Search events..."

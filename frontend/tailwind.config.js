@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        serif: ['Georgia', 'Times New Roman', 'serif'],
+        mono: ['Courier New', 'Courier', 'monospace'],
+        custom: ['"Your Custom Font"', 'Sans-serif'],
+      },
+    },
   },
+  variants: {},
   plugins: [],
 }
