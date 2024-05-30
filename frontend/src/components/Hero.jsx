@@ -1,9 +1,9 @@
 import event1 from "../assets/event 1.jpeg";
 import event2 from "../assets/event 2.jpeg";
 import event3 from "../assets/event 3.jpeg";
-import event4 from "../assets/event 4.jpeg"
-import event5 from "../assets/event 5.jpeg"
-import event6 from "../assets/event 6.jpeg"
+import event4 from "../assets/event 4.jpeg";
+import event5 from "../assets/event 5.jpeg";
+import event6 from "../assets/event 6.jpeg";
 function Hero() {
   const featuredEvents = [
     {
@@ -21,7 +21,8 @@ function Hero() {
     {
       id: 3,
       title: "Student conference",
-      description: "Description for event 3",
+      description:
+        "We are delighted to share the success of our recent Student Conference held on 20th May, 2020. This dynamic event brought together students from various disciplines to engage, learn, and network in an inspiring environment.",
       imageUrl: event3,
     },
     {
@@ -33,7 +34,8 @@ function Hero() {
     {
       id: 5,
       title: " Board meeting ",
-      description: "Description for event 5",
+      description:
+        "We recently held our quarterly Board Meeting on 10th, June 2023, bringing together our board of directors to deliberate on pivotal topics impacting our organization. This session was instrumental in guiding our strategic direction and enhancing our corporate governance.",
       imageUrl: event5,
     },
     {
