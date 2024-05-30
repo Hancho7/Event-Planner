@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 
 function App() {
   return (
+    
     <Router>
       <Header />
       <Hero />
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>  
     </Router>
+
   );
 }
 
