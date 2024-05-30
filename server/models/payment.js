@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { updateUserRole } = require("../utils/webhook");
 
 module.exports = (sequelize, DataTypes) => {
   class requests extends Model {
@@ -50,6 +51,17 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Payments",
       tableName: "Payments",
+      hooks: {
+        afterUpdate: async (payment, options) => {
+          if (
+            payment.changed("paid") &&
+            payment.paid === true &&
+            payment.type === "PLANNER_REQUEST"
+          ) {
+            await updateUserRole(requests, payment.userID);
+          }
+        },
+      },
     }
   );
   return requests;
