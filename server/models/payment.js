@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       userID: {
         type: DataTypes.UUID,
         allowNull: false,
-        unique: true,
         references: {
           model: "Users",
           key: "userID",
@@ -38,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       type: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM,
+        values: ["PLANNER_REQUEST", "EVENT_TICKET"],
         allowNull: false,
       },
       paystack: {

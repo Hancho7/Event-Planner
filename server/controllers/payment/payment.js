@@ -7,6 +7,7 @@ const { Payments, Users } = db;
 module.exports = {
   initializePaymentRequest: async (req, res) => {
     const { userID, amount, type } = req.body;
+    console.log("request body", req.body);
 
     try {
       const user = await Users.findOne({ where: { userID } });
@@ -15,6 +16,7 @@ module.exports = {
         return responseMiddleware(res, 404, "User not found", null, "Error");
       }
       const actualAmount = amount * 100;
+      console.log("actualAmount", actualAmount);
       const request = await initializeTransaction(user.email, actualAmount);
       console.log("request", request);
 

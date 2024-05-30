@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const db = require("../../models");
 const { Payments } = db;
 const { responseMiddleware } = require("../../utils/response");
+const { Op, where } = require("sequelize");
 
 const processedTransactions = new Set();
 
@@ -22,7 +23,7 @@ const processTransaction = async (eventData) => {
       where: {
         email: eventData.customer.email,
         paystack: {
-          reference: eventData.reference,
+          [Op.contains]: { reference: eventData.reference },
         },
       },
     });
