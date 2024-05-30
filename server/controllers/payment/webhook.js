@@ -22,7 +22,7 @@ const processTransaction = async (eventData) => {
       where: {
         email: eventData.customer.email,
         paystack: {
-          reference: eventData.reference,
+          [Op.contains]: { reference: eventData.reference },
         },
       },
     });
