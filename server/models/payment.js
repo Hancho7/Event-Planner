@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       userID: {
         type: DataTypes.UUID,
         allowNull: false,
-        unique: true,
         references: {
           model: "Users",
           key: "userID",
