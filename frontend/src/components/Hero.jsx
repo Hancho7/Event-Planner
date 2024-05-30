@@ -61,9 +61,9 @@ function Hero() {
               className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
               style={{ backgroundImage: `url(${event.imageUrl})` }}
             ></div>
-            <div className="relative p-4 bg-black bg-opacity-50 text-white h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
-              <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
-              <p className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="relative p-4  bg-opacity-50 text-white h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
+              <h3 className="text-xl font-mono font-semibold mb-2">{event.title}</h3>
+              <p className="opacity-0 group-hover:opacity-100 text-[#ffdd50] transition-opacity duration-300">
                 {event.description}
               </p>
             </div>
