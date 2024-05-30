@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       type: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM,
+        values: ["PLANNER_REQUEST", "EVENT_TICKET"],
         allowNull: false,
       },
       paystack: {
