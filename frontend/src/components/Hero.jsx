@@ -1,26 +1,46 @@
 import event1 from "../assets/event 1.jpeg";
 import event2 from "../assets/event 2.jpeg";
 import event3 from "../assets/event 3.jpeg";
-
+import event4 from "../assets/event 4.jpeg"
+import event5 from "../assets/event 5.jpeg"
+import event6 from "../assets/event 6.jpeg"
 function Hero() {
   const featuredEvents = [
     {
       id: 1,
-      title: "Party",
+      title: "SRC party",
       description: "Description for event 1",
       imageUrl: event1,
     },
     {
       id: 2,
-      title: "Work Shop",
+      title: "National Service Workshop",
       description: "Description for event 2",
       imageUrl: event2,
     },
     {
       id: 3,
-      title: "Conference",
+      title: "Student conference",
       description: "Description for event 3",
       imageUrl: event3,
+    },
+    {
+      id: 4,
+      title: "Seminars",
+      description: "Description for event 4",
+      imageUrl: event4,
+    },
+    {
+      id: 5,
+      title: " Board meeting ",
+      description: "Description for event 5",
+      imageUrl: event5,
+    },
+    {
+      id: 3,
+      title: "CU Graduation ",
+      description: "Description for event 6",
+      imageUrl: event6,
     },
   ];
 
