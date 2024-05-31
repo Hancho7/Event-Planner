@@ -1,14 +1,15 @@
 
 import TeamMember from "../components/TeamMember";
 import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
-
 import team1 from "../assets/team 1.jpeg"
 import team2 from "../assets/team 2.jpeg"
+import team3 from "../assets/team 3.jpeg"
 
 function AboutUsPage() {
   const team = [
     { name: "Imar Brown", role: "CEO", image: team1 },
     { name: "Future", role: "Manger", image: team2},
+    { name: "Hancho",  role:"Director", image: team3},
   ];
 
   return (

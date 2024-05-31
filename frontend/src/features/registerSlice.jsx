@@ -25,6 +25,9 @@ const registerSlice = createSlice({
     setError: (state, action) => {
       state.errors[action.payload.field] = action.payload.error;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 });
 

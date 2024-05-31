@@ -9,7 +9,7 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
-import { setField, toggleShowPassword, setError} from "../features/registerSlice.jsx"
+import { setField, toggleShowPassword, setError, } from "../features/registerSlice.jsx"
 
 function Register() {
   const dispatch = useDispatch();

@@ -10,39 +10,37 @@ function Home() {
     {
       id: 1,
       title: "SRC party",
-      description: "Description for event 1",
+      Location: "Location for event 1",
       imageUrl: event1,
     },
     {
       id: 2,
       title: "National Service Workshop",
-      description: "Description for event 2",
+      Location: "Location for event 2",
       imageUrl: event2,
     },
     {
       id: 3,
       title: "Student conference",
-      description:
-        "",
+      Location: "Location for event 3",
       imageUrl: event3,
     },
     {
       id: 4,
       title: "Seminars",
-      description: "Description for event 4",
+      Location: "Description for event 4",
       imageUrl: event4,
     },
     {
       id: 5,
       title: " Board meeting ",
-      description:
-        "We recently held our quarterly Board Meeting on 10th, June 2023, bringing together our board of directors to deliberate on pivotal topics impacting our organization. This session was instrumental in guiding our strategic direction and enhancing our corporate governance.",
+      Location:"",
       imageUrl: event5,
     },
     {
       id: 3,
       title: "CU Graduation ",
-      description: "Description for event 6",
+      Location: "Description for event 6",
       imageUrl: event6,
     },
   ];
@@ -68,7 +66,7 @@ function Home() {
                   {event.title}
                 </h3>
                 <p className="opacity-0 group-hover:opacity-100 text-[#ffdd50] transition-opacity duration-300">
-                  {event.description}
+                  {event.Location}
                 </p>
               </div>
             </div>
