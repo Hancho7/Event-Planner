@@ -1,5 +1,8 @@
+//import React from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-function Modal({ isOpen, onClose, children }) {
+function Modal({ isOpen, onClose, slides }) {
   if (!isOpen) return null;
 
   return (
@@ -11,10 +14,45 @@ function Modal({ isOpen, onClose, children }) {
         >
           &times;
         </button>
-        {children}
+        <Carousel
+          showThumbs={false}
+          showStatus={false}
+          infiniteLoop
+          useKeyboardArrows
+          autoPlay
+          showIndicators={false}
+        >
+          {slides.map((slide, index) => (
+            <div key={index}>
+              <img
+                src={slide.imageUrl}
+                alt={slide.title}
+                className="w-full h-auto mb-4"
+              />
+              <h2 className="text-2xl font-semibold mb-4">{slide.title}</h2>
+              {slide.location && (
+                <p className="mb-2 font-bold">{slide.location}</p>
+              )}
+              {slide.description && (
+                <p className="mb-2 font-mono font-bold text-black-900">
+                  {slide.description}
+                </p>
+              )}
+              {slide.date && (
+                <p className="mb-2 font-bold text-mono">{slide.date}</p>
+              )}
+              {slide.time && <p className="mb-2">{slide.time}</p>}
+              {index === 0 && (
+                <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+                  Book Now
+                </button>
+              )}
+            </div>
+          ))}
+        </Carousel>
       </div>
     </div>
   );
 }
 
-export default Modal;
+export default Modal; 

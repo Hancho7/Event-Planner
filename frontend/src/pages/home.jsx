@@ -3,10 +3,16 @@ import Hero from "../components/Hero";
 import Modal from "../components/Modal";
 import event1 from "../assets/event 1.jpeg";
 import event2 from "../assets/event 2.jpeg";
+import event2b from "../assets/event2b.jpg";
 import event3 from "../assets/event 3.jpeg";
+import event3b from "../assets/event3b.jpg";
 import event4 from "../assets/event 4.jpeg";
+import event4b from "../assets/event4b.jpg";
 import event5 from "../assets/event 5.jpeg";
 import event6 from "../assets/event 6.jpeg";
+import event1b from "../assets/event1b.jpg";
+import event6b from "../assets/event6b.jpg";
+import meeting from "../assets/meeting.jpg";
 
 function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -16,39 +22,117 @@ function Home() {
     {
       id: 1,
       title: "SRC party",
-      description: "hjk",
-      location: "Location for event 1",
       imageUrl: event1,
+      slides: [
+        {
+          imageUrl: event1,
+          title: "SRC party",
+          location: "Trinity Hall",
+          description:
+            "Join us for the SRC’s annual Spring Fest, a vibrant celebration that marks the end of the academic year with a day full of fun, entertainment, and community spirit. This event is open to all students, faculty, and staff, promising a memorable experience for everyone!",
+          date: "20/05/2020",
+          time: "10:00 AM",
+        },
+        {
+          imageUrl: event1b,
+          title: "SRC party",
+        },
+      ],
     },
     {
       id: 2,
       title: "National Service Workshop",
-      location: "Location for event 2",
       imageUrl: event2,
+      slides: [
+        {
+          imageUrl: event2,
+          title: "National Service Workshop",
+          location: "Location for event 2",
+          description: "Slide 1 description",
+          date: "20/05/2020",
+          time: "10:00 AM",
+        },
+        {
+          imageUrl: event2b,
+          title: "National Service Workshop",
+        },
+      ],
     },
     {
       id: 3,
       title: "Student conference",
-      location: "Location for event 3",
       imageUrl: event3,
+      slides: [
+        {
+          imageUrl: event3,
+          title: "Student conference",
+          location: "Location for event 3",
+          description: "Slide 1 description",
+          date: "20/05/2020",
+          time: "10:00 AM",
+        },
+        {
+          imageUrl: event3b,
+          title: "Student conference",
+        },
+      ],
     },
     {
       id: 4,
       title: "Seminars",
-      location: "Description for event 4",
       imageUrl: event4,
+      slides: [
+        {
+          imageUrl: event4,
+          title: "Seminars",
+          location: "Location for event 4",
+          description: "Slide 1 description",
+          date: "20/05/2020",
+          time: "10:00 AM",
+        },
+        {
+          imageUrl: event4b,
+          title: "Seminars",
+        },
+      ],
     },
     {
       id: 5,
       title: "Board meeting",
-      location: "",
       imageUrl: event5,
+      slides: [
+        {
+          imageUrl: event5,
+          title: "Board meeting",
+          location: "Location for event 5",
+          description: "Slide 1 description",
+          date: "20/05/2020",
+          time: "10:00 AM",
+        },
+        {
+          imageUrl: meeting,
+          title: "Board meeting",
+        },
+      ],
     },
     {
       id: 6,
       title: "CU Graduation",
-      location: "Description for event 6",
       imageUrl: event6,
+      slides: [
+        {
+          imageUrl: event6,
+          title: "CU Graduation",
+          location: "Location  for event 6",
+          description: "Slide 1 description",
+          date: "20/05/2020",
+          time: "10:00 AM",
+        },
+        {
+          imageUrl: event6b,
+          title: "CU Graduation",
+        },
+      ],
     },
   ];
 
@@ -80,38 +164,21 @@ function Home() {
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
                 style={{ backgroundImage: `url(${event.imageUrl})` }}
               ></div>
-              <div className="relative p-4 bg-opacity-50 text-white h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
-                <h3 className="text-xl font-mono font-semibold mb-2">
+              <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
+                <h3 className="text-xl font-sans font-semibold mb-2">
                   {event.title}
                 </h3>
-                <p className="opacity-0 group-hover:opacity-100 text-[#ffdd50] transition-opacity duration-300">
-                  {event.location}
-                </p>
-                <p className="opacity-0 group-hover:opacity-100 text-black transition-opacity duration-300">
-                  {event.description}
-                </p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {selectedEvent && (
-          <div>
-            <img
-              src={selectedEvent.imageUrl}
-              alt={selectedEvent.title}
-              className="w-full h-auto mb-4"
-            />
-            <h2 className="text-2xl font-bold mb-4">{selectedEvent.title}</h2>
-            <p className="mb-4">{selectedEvent.location}</p>
-            <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
-              Book Now
-            </button>
-          </div>
-        )}
-      </Modal>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        slides={selectedEvent ? selectedEvent.slides : []}
+      />
     </div>
   );
 }
