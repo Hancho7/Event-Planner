@@ -1,9 +1,9 @@
 
 import TeamMember from "../components/TeamMember";
 import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
-import team1 from "../assets/team 1.jpeg"
-import team2 from "../assets/team 2.jpeg"
-import team3 from "../assets/team 3.jpeg"
+import team1 from "../assets/team1.jpeg"
+import team2 from "../assets/team2.jpeg"
+import team3 from "../assets/team3.jpeg"
 
 function AboutUsPage() {
   const team = [
