@@ -1,17 +1,17 @@
-import  { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
-import { FaUser, FaLock } from 'react-icons/fa';
-import userSchema from '../schema/register'; 
-import { Link } from 'react-router-dom';
+// import { useState } from "react";
+// import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { FaUser, FaLock } from "react-icons/fa";
+import userSchema from "../schema/register";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const formik = useFormik({
     initialValues: {
-      username: "",
       email: "",
+      password: "",
     },
-      validationSchema: userSchema,
+    validationSchema: userSchema,
     onSubmit: (values) => {
       console.log(values);
     },
@@ -33,22 +33,20 @@ function LoginPage() {
                 <div className="flex items-center  py-2">
                   <FaUser className="text-gray-500 mr-3" />
                   <input
-                    id="username"
-                    name="username"
+                    id="email"
+                    name="email"
                     type="text"
-                    autoComplete="username"
-                    required
                     className="appearance-none bg-transparent border-b w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                    placeholder="Username"
-                    value={formik.values.username}
+                    placeholder="email"
+                    value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                 </div>
                 <span className=" text-red-500 text-sm">
-                  {formik.errors.username &&
-                    formik.touched.username &&
-                    formik.errors.username}
+                  {formik.errors.email &&
+                    formik.touched.email &&
+                    formik.errors.email}
                 </span>
               </div>
             </div>
@@ -61,8 +59,6 @@ function LoginPage() {
                     id="password"
                     name="password"
                     type="password"
-                    autoComplete="current-password"
-                    required
                     className="appearance-none bg-transparent border-b w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                     placeholder="Password"
                     value={formik.values.password}

@@ -2,10 +2,30 @@
 // import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-import { FaUser, FaEnvelope, FaLock, FaPhone } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock, FaPhoneAlt } from "react-icons/fa";
 import userSchema from "../schema/register.jsx";
+import { useEffect, useState } from "react";
 
 function Register() {
+
+const [sticky, setSticky] = useState(false);
+
+ useEffect(() => {
+   const handleScroll = () => {
+     if (window.scrollY > 150) {
+       // Change 200 to the height you want
+       setSticky(true);
+     } else {
+       setSticky(false);
+     }
+   };
+
+   window.addEventListener("scroll", handleScroll);
+   return () => {
+     window.removeEventListener("scroll", handleScroll);
+   };
+ }, []);
+ 
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -22,6 +42,7 @@ function Register() {
   // const dispatch = useDispatch();
 
   return (
+     <div style={sticky?{position: "sticky", top:"0"  }: {}}>
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
@@ -111,7 +132,7 @@ function Register() {
           </div>
           <div className="flex flex-col">
             <div className="flex items-center border-b border-gray-300 py-2">
-              <FaPhone className="text-gray-500 mr-3" />
+              <FaPhoneAlt className="text-gray-500 mr-3" />
               <input
                 type="tel"
                 name="phoneNumber"
@@ -147,6 +168,7 @@ function Register() {
             </Link>
           </p>
         </div>
+      </div>
       </div>
     </div>
   );

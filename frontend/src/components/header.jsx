@@ -24,7 +24,7 @@ function Header() {
   }, []);
 
   return (
-    <div style={sticky?{position: "sticky", top:"0"  }: {}}>
+    <div style={sticky?{position: "sticky", top:"0", zIndex:89  }: {}}>
       <div className="flex flex-row justify-between h-20 items-center bg-white px-6">
         <div>
           <h6 className="font-extrabold text-lg">
