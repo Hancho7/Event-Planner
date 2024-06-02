@@ -9,7 +9,9 @@ const initialState = {
   confirmPassword: '',
   phoneNumber: '',
   showPassword: false,
-  errors: {},
+  errors: {
+    passwordMatch: "",
+  },
 };
 
 const registerSlice = createSlice({
@@ -27,6 +29,9 @@ const registerSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setPasswordMatchError: (state, action) => {
+      state.errors.passwordMatch = action.payload;
     },
   },
 });

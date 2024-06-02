@@ -25,17 +25,13 @@ function Home() {
       imageUrl: event1,
       slides: [
         {
-          imageUrl: event1,
+          imageUrls: [event1, event1b],
           title: "SRC party",
           location: "Trinity Hall",
           description:
             "Join us for the SRC’s annual Spring Fest, a vibrant celebration that marks the end of the academic year with a day full of fun, entertainment, and community spirit. This event is open to all students, faculty, and staff, promising a memorable experience for everyone!",
           date: "20/05/2020",
           time: "10:00 AM",
-        },
-        {
-          imageUrl: event1b,
-          title: "SRC party",
         },
       ],
     },
@@ -45,16 +41,12 @@ function Home() {
       imageUrl: event2,
       slides: [
         {
-          imageUrl: event2,
+          imageUrls: [event2, event2b],
           title: "National Service Workshop",
           location: "Location for event 2",
           description: "Slide 1 description",
           date: "20/05/2020",
           time: "10:00 AM",
-        },
-        {
-          imageUrl: event2b,
-          title: "National Service Workshop",
         },
       ],
     },
@@ -64,16 +56,12 @@ function Home() {
       imageUrl: event3,
       slides: [
         {
-          imageUrl: event3,
+          imageUrls: [event3, event3b],
           title: "Student conference",
           location: "Location for event 3",
           description: "Slide 1 description",
           date: "20/05/2020",
           time: "10:00 AM",
-        },
-        {
-          imageUrl: event3b,
-          title: "Student conference",
         },
       ],
     },
@@ -83,16 +71,12 @@ function Home() {
       imageUrl: event4,
       slides: [
         {
-          imageUrl: event4,
+          imageUrls: [event4, event4b],
           title: "Seminars",
           location: "Location for event 4",
           description: "Slide 1 description",
           date: "20/05/2020",
           time: "10:00 AM",
-        },
-        {
-          imageUrl: event4b,
-          title: "Seminars",
         },
       ],
     },
@@ -102,16 +86,12 @@ function Home() {
       imageUrl: event5,
       slides: [
         {
-          imageUrl: event5,
+          imageUrls: [event5, meeting],
           title: "Board meeting",
           location: "Location for event 5",
           description: "Slide 1 description",
           date: "20/05/2020",
           time: "10:00 AM",
-        },
-        {
-          imageUrl: meeting,
-          title: "Board meeting",
         },
       ],
     },
@@ -121,16 +101,12 @@ function Home() {
       imageUrl: event6,
       slides: [
         {
-          imageUrl: event6,
+          imageUrls: [event6, event6b],
           title: "CU Graduation",
           location: "Location  for event 6",
           description: "Slide 1 description",
           date: "20/05/2020",
           time: "10:00 AM",
-        },
-        {
-          imageUrl: event6b,
-          title: "CU Graduation",
         },
       ],
     },

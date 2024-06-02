@@ -1,11 +1,30 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaUserPlus, FaSignInAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 function Header() {
   const location = useLocation();
 
+  const [sticky, setSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 150) {
+        // Change 200 to the height you want
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div>
+    <div style={sticky?{position: "sticky", top:"0"  }: {}}>
       <div className="flex flex-row justify-between h-20 items-center bg-white px-6">
         <div>
           <h6 className="font-extrabold text-lg">
@@ -19,7 +38,7 @@ function Header() {
           <Link to="/about-us">About Us</Link>
           {location.pathname === "/events" ? (
             <button className="bg-blue-500 flex items-center rounded-md h-8 px-2 hover:bg-blue-600">
-              Request to be a Planner
+              Become a Planner
             </button>
           ) : (
             <div className="flex items-center gap-2">
