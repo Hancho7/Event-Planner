@@ -40,7 +40,7 @@ function AboutUsPage() {
         <h2 className="mt-8 text-2xl text-center font-bold text-black-700">
           Here are our team members
         </h2>
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-6">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2  gap-6">
           {team.map((member, index) => (
             <TeamMember key={index} {...member} />
           ))}
