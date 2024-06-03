@@ -54,7 +54,6 @@ function Home() {
           slides={selectedEvent ? selectedEvent.slides : []}
         />
       </div>
-
     </div>
   );
 }
