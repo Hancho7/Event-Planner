@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import event1 from "../assets/event1.jpeg";
+import logo from "../assets/logo.png";
 import { useState, useEffect } from "react";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
@@ -94,18 +94,33 @@ export default function Admin() {
         style={{
           gridArea: "header",
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           alignItems: "center",
           minHeight: "4rem",
-          gap: "1rem",
           padding: "1rem",
-          backgroundColor: "#E1E1E1",
+          backgroundColor: "#cffafe",
         }}
       >
-        <div className="flex justify-end gap-3">
+
+        {/* Middle section: Search Field */}
+        <div className="flex-grow flex justify-center">
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none">
+              Search
+            </button>
+          </div>
+        </div>
+
+        {/* Right section: User and Dropdown */}
+        <div className="flex items-center gap-3">
           <h1
             onClick={(e) => [e.preventDefault(), navigate("/admin/Profile")]}
-            className=" self-center md:self-auto hover:cursor-pointer font-semibold duration-500"
+            className="self-center md:self-auto hover:cursor-pointer font-semibold duration-500"
           >
             Elton
           </h1>
@@ -117,7 +132,7 @@ export default function Admin() {
       <div
         className={`${
           open ? " w-60" : " w-20"
-        } h-screen overflow-y-auto overflow-x-hidden bg-[#E1E1E1] duration-500 p-4 md:flex flex-col justify-between hidden`}
+        } h-screen overflow-y-auto overflow-x-hidden bg-[#cffafe] duration-500 p-4 md:flex flex-col justify-between hidden`}
         style={{ gridArea: "sidebar", position: "relative" }}
       >
         <IoIosArrowBack
@@ -127,12 +142,11 @@ export default function Admin() {
           onClick={() => setOpen(!open)}
         />
         <div className="flex items-center justify-center text-white gap-2">
-          <img src={event1} className="w-11 h-11 rounded-full" />
-
+          <img src={logo} className="w-11 h-11 rounded-full" />
           <span
             className={`${
               !open && " hidden"
-            } duration-700 font-semibold text-[#636363]`}
+            } duration-700 font-semibold text-[#333]`}
           >
             Event<span className=" text-[#fffb00]">Center</span>
           </span>
@@ -156,10 +170,10 @@ export default function Admin() {
               <Link
                 key={title}
                 to={path}
-                className={`flex gap-x-4 py-2 px-6 items-center font-semibold rounded-md ${
+                className={`flex gap-x-4 py-2 text-black-900 px-6 items-center font-semibold rounded-md ${
                   pathname === path
-                    ? "bg-slate-400"
-                    : "hover:bg-slate-400 active:bg-slate-400 duration-500"
+                    ? "bg-[#0ea5e9] text-black"
+                    : "hover:bg-white active:bg-white duration-500"
                 } ${!open && "justify-center"}`}
               >
                 <span>{icons}</span>
@@ -172,7 +186,7 @@ export default function Admin() {
         <div
           className={`${
             !open && "justify-center"
-          } flex gap-x-4 py-2 px-6 items-center font-semibold rounded-md hover:bg-slate-400 hover:cursor-pointer`}
+          } flex gap-x-4 py-2 px-6 items-center font-semibold rounded-md hover:bg-white hover:cursor-pointer`}
           onClick={() => {
             navigate("/");
           }}
