@@ -1,13 +1,13 @@
-import event1 from "../assets/event 1.jpeg";
+import event1 from "../assets/event1.jpeg";
 import event1b from "../assets/event1b.jpg";
-import event2 from "../assets/event 2.jpeg";
+import event2 from "../assets/event2.jpeg";
 import event2b from "../assets/event2b.jpg";
-import event3 from "../assets/event 3.jpeg";
+import event3 from "../assets/event3.jpeg";
 import event3b from "../assets/event3b.jpg";
-import event4 from "../assets/event 4.jpeg";
+import event4 from "../assets/event4.jpeg";
 import event4b from "../assets/event4b.jpg";
-import event5 from "../assets/event 5.jpeg";
-import event6 from "../assets/event 6.jpeg";
+import event5 from "../assets/event5.jpeg";
+import event6 from "../assets/event6.jpeg";
 import event6b from "../assets/event6b.jpg";
 import meeting from "../assets/meeting.jpg";
 import event7 from "../assets/event7.jpg";
@@ -29,7 +29,7 @@ import event14b from "../assets/even14b.jpg";
 import event15 from "../assets/event15.jpg";
 import event15b from "../assets/event15b.jpg";
 import event16 from "../assets/event16.jpg";
-import event16b from "../assets/event16b.jpg";
+// import event16b from "../assets/event16b.jpg";
 
 
 const featuredEvents = [
@@ -274,7 +274,7 @@ const featuredEvents = [
     imageUrl: event16,
     slides: [
       {
-        imageUrls: [event16, event16b],
+        imageUrls: [event16],
         title: "Book Fair",
         location: "Convention Center",
         description:
