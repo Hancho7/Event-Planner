@@ -14,8 +14,23 @@ import event7 from "../assets/event7.jpg";
 import event7b from "../assets/event7b.jpg";
 import event8 from "../assets/event8.jpg";
 import event8b from "../assets/event8b.jpg";
+import event9 from "../assets/event9.jpg";
+import event9b from "../assets/event9b.jpg";
+import event10  from "../assets/event10.jpg";
+import event10b from "../assets/event10b.jpg";
+import event11 from "../assets/event11.jpg";
+import event11b from "../assets/event11b.jpg";
+import event12 from "../assets/event12.jpg";
+import event12b from "../assets/event12b.jpg";
+import event13 from "../assets/event13.jpg";
+import event13b from "../assets/event13b.jpg";
+import event14 from "../assets/event14.jpg";
+import event14b from "../assets/even14b.jpg";
+import event15 from "../assets/event15.jpg";
+import event15b from "../assets/event15b.jpg";
 import event16 from "../assets/event16.jpg";
 import event16b from "../assets/event16b.jpg";
+
 
 const featuredEvents = [
   {
@@ -144,10 +159,10 @@ const featuredEvents = [
   {
     id: 9,
     title: "Art Exhibition",
-    imageUrl: event3,
+    imageUrl: event9,
     slides: [
       {
-        imageUrls: [event3, event3b],
+        imageUrls: [event9, event9b],
         title: "Art Exhibition",
         location: "Art Gallery",
         description:
@@ -159,12 +174,12 @@ const featuredEvents = [
   },
   {
     id: 10,
-    title: "Food Festival",
-    imageUrl: event4,
+    title: "Health Talk",
+    imageUrl: event10,
     slides: [
       {
-        imageUrls: [event4, event4b],
-        title: "Food Festival",
+        imageUrls: [event10, event10b],
+        title: "Health Talk",
         location: "Main Square",
         description:
           "Taste a variety of delicious dishes and drinks at the Food Festival.",
@@ -176,10 +191,10 @@ const featuredEvents = [
   {
     id: 11,
     title: "Sports Meet",
-    imageUrl: event5,
+    imageUrl: event11,
     slides: [
       {
-        imageUrls: [event5, meeting],
+        imageUrls: [event11, event11b],
         title: "Sports Meet",
         location: "Sports Complex",
         description:
@@ -192,10 +207,10 @@ const featuredEvents = [
   {
     id: 12,
     title: "Science Fair",
-    imageUrl: event6,
+    imageUrl: event12,
     slides: [
       {
-        imageUrls: [event6, event6b],
+        imageUrls: [event12, event12b],
         title: "Science Fair",
         location: "Expo Center",
         description:
@@ -207,13 +222,13 @@ const featuredEvents = [
   },
   {
     id: 13,
-    title: "Dance Workshop",
-    imageUrl: event1,
+    title: "Matriculation ",
+    imageUrl: event13b,
     slides: [
       {
-        imageUrls: [event1, event1b],
-        title: "Dance Workshop",
-        location: "Dance Studio",
+        imageUrls: [event13b, event13],
+        title: "Matriculation",
+        location: "University Hall",
         description:
           "Learn new dance moves and techniques at the Dance Workshop.",
         date: "30/09/2020",
@@ -224,10 +239,10 @@ const featuredEvents = [
   {
     id: 14,
     title: "Film Screening",
-    imageUrl: event2,
+    imageUrl: event14,
     slides: [
       {
-        imageUrls: [event2, event2b],
+        imageUrls: [event14, event14b],
         title: "Film Screening",
         location: "Cinema Hall",
         description:
@@ -240,10 +255,10 @@ const featuredEvents = [
   {
     id: 15,
     title: "Fashion Show",
-    imageUrl: event3,
+    imageUrl: event15,
     slides: [
       {
-        imageUrls: [event3, event3b],
+        imageUrls: [event15, event15b],
         title: "Fashion Show",
         location: "Grand Ballroom",
         description:
