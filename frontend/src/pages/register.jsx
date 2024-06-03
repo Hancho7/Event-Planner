@@ -42,7 +42,7 @@ const [sticky, setSticky] = useState(false);
   // const dispatch = useDispatch();
 
   return (
-     <div style={sticky?{position: "sticky", top:"0"  }: {}}>
+     <div style={sticky?{position: "sticky", top:"0", zIndex:89  }: {}}>
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
