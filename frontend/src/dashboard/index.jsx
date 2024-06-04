@@ -40,7 +40,7 @@ export default function Admin() {
     {
       title: "Overview",
       icons: <GrOverview />,
-      path: "/admin/Overview",
+      path: "/admin/",
     },
     {
       title: "add event",
@@ -167,7 +167,7 @@ export default function Admin() {
               <Link
                 key={title}
                 to={path}
-                className={`flex gap-x-4 py-2 text-black-900 px-6 items-center font-semibold rounded-md ${
+                className={`flex gap-x-4 py-2 text-black-900 px-6 items-center font-semibold rounded-md my-1 ${
                   pathname === path
                     ? "bg-[#0ea5e9] text-black"
                     : "hover:bg-white active:bg-white duration-500"
