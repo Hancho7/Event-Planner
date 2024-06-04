@@ -99,7 +99,7 @@ function LoginPage() {
           Not a member?{" "}
           <Link
             to="/register"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
           >
             Register here
           </Link>

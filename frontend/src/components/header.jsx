@@ -77,18 +77,26 @@ export default function Header() {
                     </div>
                   </div>
                   <div className="hidden sm:flex items-center space-x-4">
-                    <Link to="/login">
-                      <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
-                        <FaSignInAlt className="mr-2" />
-                        <span>Log In</span>
+                    {location.pathname === "/events" ? (
+                      <button className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white">
+                        Become a Planner
                       </button>
-                    </Link>
-                    <Link to="/register">
-                      <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white">
-                        <FaUserPlus className="mr-2" />
-                        <span>Register</span>
-                      </button>
-                    </Link>
+                    ) : (
+                      <>
+                        <Link to="/login">
+                          <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+                            <FaSignInAlt className="mr-2" />
+                            <span>Log In</span>
+                          </button>
+                        </Link>
+                        <Link to="/register">
+                          <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white">
+                            <FaUserPlus className="mr-2" />
+                            <span>Register</span>
+                          </button>
+                        </Link>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

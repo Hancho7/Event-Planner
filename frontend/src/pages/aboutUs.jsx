@@ -4,12 +4,21 @@ import team1 from "../assets/team1.jpeg";
 import team2 from "../assets/team2.jpeg";
 import team3 from "../assets/team3.jpeg";
 import aboutus from "../assets/aboutUs.jpg";
+import Aos from "aos"
+import "aos/dist/aos.css";
+import { useEffect } from "react";
+
+ 
 function AboutUsPage() {
   const team = [
     { name: "Imar Brown", role: "CEO", image: team1 },
     { name: "Future", role: "Manger", image: team2 },
     { name: "Hancho", role: "Director", image: team3 },
   ];
+
+  useEffect(()=>{
+    Aos.init({duration:3000});
+  },[])
 
   return (
     <div>
@@ -21,12 +30,13 @@ function AboutUsPage() {
           backgroundPosition: "center",
         }}
       >
-        <h1 className="lg:text-7xl text-center font-extrabold opacity-[0.7]">
+        <h1 className="lg:text-7xl text-center font-extrabold opacity-[0.7]" data-aos="fade-down">
           About Us
         </h1>
       </div>
 
-      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+        <h4 className=" text-2xl font-semibold">Know More About Us</h4>
         <div className="max-w-4xl mx-auto">
           <p className="mt-4 text-lg text-black-600">
             Welcome to our organization! Lorem ipsum dolor sit amet, consectetur
@@ -51,7 +61,7 @@ function AboutUsPage() {
           <h2 className="mt-8 text-2xl text-center font-bold text-black-700">
             Here are our team members
           </h2>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2  gap-6">
+          <div className="mt-8 grid md:grid-cols-3 grid-cols-1  gap-6">
             {team.map((member, index) => (
               <TeamMember key={index} {...member} />
             ))}
