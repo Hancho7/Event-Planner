@@ -8,7 +8,7 @@ function Arrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "red" }}
+      style={{ ...style, display: "block", background: "#686D76" }}
       onClick={onClick}
     />
   );
