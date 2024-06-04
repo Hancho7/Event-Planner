@@ -117,7 +117,7 @@ export default function Admin() {
         <div className="flex items-center gap-3">
           <h1
             onClick={(e) => [e.preventDefault(), navigate("/admin/Profile")]}
-            className="self-center text-black md:self-auto hover:cursor-pointer font-semibold duration-500"
+            className="self-center text-white md:self-auto hover:cursor-pointer font-semibold duration-500"
           >
             Elton
           </h1>
@@ -143,7 +143,7 @@ export default function Admin() {
           <span
             className={`${
               !open && " hidden"
-            } duration-700 font-semibold text-[#333]`}
+            } duration-700 font-semibold text-white`}
           >
             Event<span className=" text-[#fffb00]">Center</span>
           </span>
