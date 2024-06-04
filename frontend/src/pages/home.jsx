@@ -1,9 +1,11 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import Modal from "../components/Modal";
-import Testimonials from "../components/testimonials";
 import featuredEvents from "../data/featuredEvents";
+import { testimonials } from "../components/testimonials";
+import ResponsiveSlider from "../components/slider";
+import Aos from "aos"
+import "aos/dist/aos.css";
 
 function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -18,20 +20,23 @@ function Home() {
     setSelectedEvent(null);
     setIsModalOpen(false);
   };
+  useEffect(()=>{
+    Aos.init({duration:1000});
+  },[])
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <Hero />
-        <div className="py-8 bg-gray-100">
+        <div className="py-8 bg-gray-100 min-h-screen flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold font-sans text-center mb-6">
             Latest Awesome Events
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6" data-aos="fade-right">
             {featuredEvents.slice(0, 6).map((event) => (
               <div
                 key={event.id}
-                className="relative bg-white rounded-lg shadow-md h-40 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="relative bg-white rounded-lg shadow-md h-64 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(event)}
               >
                 <div
@@ -47,7 +52,10 @@ function Home() {
             ))}
           </div>
         </div>
-        <Testimonials />
+        <div className="h-screen px-2" data-aos="fade-up">
+          <ResponsiveSlider testimonials={testimonials} />
+        </div>
+
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
