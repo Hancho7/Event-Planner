@@ -18,17 +18,26 @@ function EventsPage() {
     setIsModalOpen(false);
   };
 
-  useEffect(()=>{
-    Aos.init({duration:1500})
-  })
+  useEffect(() => {
+    Aos.init({ duration: 1500 });
+  });
 
   return (
     <div className="min-h-screen bg-gray-100 py-16">
-      <div className="py-8 ">
-        <h2 className="text-3xl font-bold font-sans text-center mb-6" data-aos="fade-down">
-          All Events
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6" data-aos="fade-up">
+      <div className=" flex flex-col gap-12">
+        <div>
+          <h2
+            className="text-3xl lg:text-5xl font-bold text-center"
+            data-aos="fade-down"
+          >
+            All Events
+          </h2>
+        </div>
+
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-6 px-6"
+          data-aos="fade-up"
+        >
           {featuredEvents.map((event) => (
             <div
               key={event.id}
