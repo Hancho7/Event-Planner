@@ -102,7 +102,7 @@ export default function Admin() {
         }}
       >
 
-        {/* Middle section: Search Field */}
+        
         <div className="flex-grow flex justify-center">
           <div className="flex items-center gap-2">
             <input
@@ -116,11 +116,11 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Right section: User and Dropdown */}
+        
         <div className="flex items-center gap-3">
           <h1
             onClick={(e) => [e.preventDefault(), navigate("/admin/Profile")]}
-            className="self-center md:self-auto hover:cursor-pointer font-semibold duration-500"
+            className="self-center text-black md:self-auto hover:cursor-pointer font-semibold duration-500"
           >
             Elton
           </h1>

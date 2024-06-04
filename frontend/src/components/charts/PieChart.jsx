@@ -1,5 +1,4 @@
-// src/components/charts/PieChart.jsx
-import React from "react";
+// import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -10,7 +9,7 @@ const PieChart = () => {
     labels: ["Conference", "Workshop", "Seminar", "Others"],
     datasets: [
       {
-        label: "# of Events",
+        label: "Number of Events",
         data: [12, 19, 3, 5],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",

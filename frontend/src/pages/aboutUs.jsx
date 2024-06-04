@@ -1,3 +1,4 @@
+
 import TeamMember from "../components/TeamMember";
 import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import team1 from "../assets/team1.jpeg";
@@ -12,8 +13,8 @@ import { useEffect } from "react";
 function AboutUsPage() {
   const team = [
     { name: "Imar Brown", role: "CEO", image: team1 },
-    { name: "Future", role: "Manger", image: team2 },
-    { name: "Hancho", role: "Director", image: team3 },
+    { name: "Future", role: "Manger", image: team2},
+    { name: "Hancho",  role:"Director", image: team3},
   ];
 
   useEffect(()=>{

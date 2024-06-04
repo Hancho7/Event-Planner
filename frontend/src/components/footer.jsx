@@ -5,10 +5,12 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-between items-center">
+        <div className="flex flex-wrap justify-between ">
           {/* Quick Links */}
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg text-[#ffdd50] font-semibold mb-4">
+              Quick Links
+            </h4>
             <ul className="space-y-2">
               <li>
                 <a href="/login" className="hover:underline">
@@ -16,7 +18,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/about-us" className="hover:underline">
+                <a href="/about-Us" className="hover:underline">
                   About Us
                 </a>
               </li>
@@ -27,13 +29,16 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
           {/* Contact Information */}
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h4 className="text-lg font-semibold mb-4">Contact Information</h4>
+            <h4 className="text-lg text-[#ffdd50] font-semibold mb-4">
+              Contact Information
+            </h4>
             <ul className="space-y-2">
               <li>
                 <a href="mailto:info@example.com" className="hover:underline">
-                  info@example.com
+                  info@eventcenter2.com
                 </a>
               </li>
               <li>
@@ -41,18 +46,20 @@ const Footer = () => {
                   +1 234 567 890
                 </a>
               </li>
-              <li>123 Event Street, City, Country</li>
             </ul>
           </div>
           {/* Social Media Links */}
           <div className="w-full md:w-1/3">
-            <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+            <h4 className="text-lg text-[#ffdd50] font-semibold mb-4">
+              Follow Us
+            </h4>
             <ul className="flex space-x-4">
               <li>
                 <a
                   href="https://www.facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="text-white-600 hover:text-blue-500"
                 >
                   <FaFacebook className="w-6 h-6" />
                 </a>
@@ -62,6 +69,7 @@ const Footer = () => {
                   href="https://www.twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="text-white-600 hover:text-blue-500"
                 >
                   <FaTwitter className="w-6 h-6" />
                 </a>
@@ -71,6 +79,7 @@ const Footer = () => {
                   href="https://www.instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="text-white-600 hover:text-blue-500"
                 >
                   <FaInstagram className="w-6 h-6" />
                 </a>
@@ -80,6 +89,7 @@ const Footer = () => {
                   href="https://www.linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="text-white-600 hover:text-blue-500"
                 >
                   <FaLinkedin className="w-6 h-6" />
                 </a>
@@ -99,8 +109,10 @@ const Footer = () => {
               </a>
             </div>
             <div>
-              &copy; {new Date().getFullYear()} Event Management System. All
-              rights reserved.
+              &copy; {new Date().getFullYear()}{" "}
+              <span className="text-white">Event</span>
+              <span className="text-[#DBB610]">Center</span>  
+               Management System. All rights reserved.
             </div>
           </div>
         </div>
