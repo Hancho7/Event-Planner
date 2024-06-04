@@ -5,7 +5,6 @@ import AboutUs from "./pages/aboutUs";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Admin from "./dashboard";
-import DashboardHome from "./dashboard/pages/home";
 import Overview from "./dashboard/pages/Overview";
 import AddNewEvent from "./dashboard/pages/AddNewEvent";
 import Attendees from "./dashboard/pages/Attendees";
@@ -30,8 +29,7 @@ function App() {
             </Route>
 
             <Route path="/admin" element={<Admin />}>
-              <Route path="/admin/" element={<DashboardHome />} />
-              <Route path="/admin/Overview" element={<Overview />} />
+              <Route path="/admin/" element={<Overview />} />
               <Route path="/admin/add-new-event" element={<AddNewEvent />} />
               <Route path="/admin/Attendees" element={<Attendees />} />
               <Route path="/admin/Payments" element={<Payments />} />
