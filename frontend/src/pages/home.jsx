@@ -38,6 +38,7 @@ function Home() {
                 key={event.id}
                 className="relative bg-white rounded-lg shadow-md h-64 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(event)}
+                data-aos="fade-up"
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"

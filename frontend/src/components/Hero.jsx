@@ -16,17 +16,17 @@ function Hero() {
         backgroundPosition: "center",
       }}
     >
-      <h1 className="text-5xl font-bold  text-center mb-4" data-aos="fade-left">
+      <h1 className="text-3xl lg:text-5xl font-bold  text-center mb-4" data-aos="fade-left">
         Welcome to Event Center
       </h1>
       <p className="text-lg text-center mb-6" data-aos="fade-right">
         Find and register for the best events around you.
       </p>
-      <div className="flex items-center text-black font-sans gap-2" data-aos="flip-up">
+      <div className="flex flex-col md:flex-row items-center text-black gap-2" data-aos="flip-up">
         <input
           type="text"
           placeholder="Search events..."
-          className="rounded-sm h-10 w-[22rem] px-3 font-semibold"
+          className="rounded-sm h-10 md:w-[22rem] px-3 font-semibold"
         />
         <button className="bg-[#ffdd50] text-black flex items-center font-semibold rounded-sm h-10 px-3 hover:bg-[#d8bc4c]">
           <FaSearch className="mr-2" />
