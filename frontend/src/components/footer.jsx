@@ -18,11 +18,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-<<<<<<< HEAD
                 <a href="/about-Us" className="hover:underline">
-=======
-                <a href="/about-us" className="hover:underline">
->>>>>>> b3ceef05f1a302dc06d92d6df568669e5d4a563b
                   About Us
                 </a>
               </li>
@@ -115,7 +111,7 @@ const Footer = () => {
             <div>
               &copy; {new Date().getFullYear()}{" "}
               <span className="text-white">Event</span>
-              <span className="text-[#DBB610] p-2">Center</span>  
+              <span className="text-[#DBB610]">Center</span>  
                Management System. All rights reserved.
             </div>
           </div>
