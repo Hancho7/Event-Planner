@@ -1,4 +1,7 @@
-// import React from "react";
+//import React from "react";
+import LineChart from "../../components/charts/GeographicLineChart";
+import BarChart from "../../components/charts/BarChart"; 
+import GenderPieChart from "../../components/charts/GenderPieChart";
 
 const AttendeeOverview = ({ total, newRegistrations, attendanceRate }) => {
   return (
@@ -41,7 +44,10 @@ const GeographicDistribution = () => {
       <h2 className="text-xl text-black font-semibold mb-2">
         Geographic Distribution
       </h2>
-      <div className="h-32 bg-gray-200"></div> {/* Placeholder for a map */}
+      <div className="h-64 bg-white flex items-center justify-center rounded-lg shadow-inner">
+        <LineChart />
+        {/* Replacing with a LineChart as a placeholder for a map */}
+      </div>
     </div>
   );
 };
@@ -52,8 +58,10 @@ const GenderDistribution = () => {
       <h2 className="text-xl text-black font-semibold mb-2">
         Gender Distribution
       </h2>
-      <div className="h-32 bg-gray-200"></div>{" "}
-      {/* Placeholder for a pie chart */}
+      <div className="h-64 bg-white flex items-center justify-center rounded-lg shadow-inner">
+        <GenderPieChart /> 
+        {/* Replacing with a PieChart */}
+      </div>
     </div>
   );
 };
@@ -64,8 +72,9 @@ const PopularSessions = () => {
       <h2 className="text-xl text-black font-semibold mb-2">
         Popular Sessions
       </h2>
-      <div className="h-32 bg-gray-200"></div>{" "}
-      {/* Placeholder for a bar chart */}
+      <div className="h-64 bg-white flex items-center justify-center rounded-lg shadow-inner">
+        <BarChart /> {/* Replacing with a BarChart */}
+      </div>
     </div>
   );
 };
@@ -76,7 +85,9 @@ const RealTimeCheckIns = () => {
       <h2 className="text-xl text-black font-semibold mb-2">
         Real-Time Check-Ins
       </h2>
-      <div className="h-32 bg-gray-200"></div> {/* Placeholder for live feed */}
+      <div className="h-32 bg-gray-200 flex items-center justify-center">
+        <p className="text-gray-500">Live Feed Placeholder</p>
+      </div>
     </div>
   );
 };
@@ -87,7 +98,9 @@ const EngagementMetrics = () => {
       <h2 className="text-xl text-black font-semibold mb-2">
         Engagement Metrics
       </h2>
-      <div className="h-32 bg-gray-200"></div> {/* Placeholder for graphs */}
+      <div className="h-32 bg-gray-200 flex items-center justify-center">
+        <p className="text-gray-500">Graph Placeholder</p>
+      </div>
     </div>
   );
 };
@@ -98,7 +111,9 @@ const SurveyResponses = () => {
       <h2 className="text-xl text-black font-semibold mb-2">
         Survey Responses
       </h2>
-      <div className="h-32 bg-gray-200"></div> {/* Placeholder for graphs */}
+      <div className="h-32 bg-gray-200 flex items-center justify-center">
+        <p className="text-gray-500">Graph Placeholder</p>
+      </div>
     </div>
   );
 };
@@ -159,6 +174,8 @@ const Dashboard = () => {
         <SurveyResponses />
         <Notifications />
         <DownloadReports />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       </div>
     </div>
   );

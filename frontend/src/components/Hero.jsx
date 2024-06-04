@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import header from "../assets/header.jpg";
 import { FaSearch } from "react-icons/fa";
-import Aos from "aos"
+import Aos from "aos";
 import "aos/dist/aos.css";
 function Hero() {
   useEffect(()=>{

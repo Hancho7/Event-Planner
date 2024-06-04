@@ -98,11 +98,9 @@ export default function Admin() {
           alignItems: "center",
           minHeight: "4rem",
           padding: "1rem",
-          backgroundColor: "#cffafe",
+          backgroundColor: "#1f2937",
         }}
       >
-
-        
         <div className="flex-grow flex justify-center">
           <div className="flex items-center gap-2">
             <input
@@ -116,7 +114,6 @@ export default function Admin() {
           </div>
         </div>
 
-        
         <div className="flex items-center gap-3">
           <h1
             onClick={(e) => [e.preventDefault(), navigate("/admin/Profile")]}
@@ -132,7 +129,7 @@ export default function Admin() {
       <div
         className={`${
           open ? " w-60" : " w-20"
-        } h-screen overflow-y-auto overflow-x-hidden bg-[#cffafe] duration-500 p-4 md:flex flex-col justify-between hidden`}
+        } h-screen overflow-y-auto overflow-x-hidden bg-[#1f2937] duration-500 p-4 md:flex flex-col justify-between hidden`}
         style={{ gridArea: "sidebar", position: "relative" }}
       >
         <IoIosArrowBack
