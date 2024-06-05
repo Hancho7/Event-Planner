@@ -1,6 +1,8 @@
-import React from "react";
+// import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+
 import pay1 from "../../../src/assets/pay1.jpg";
 import pay2 from "../../../src/assets/pay2.jpg";
 import pay3 from "../../../src/assets/pay3.jpg";
@@ -84,15 +86,40 @@ const Payment = () => {
         </div>
         <div className="w-1/4">
           <div className="bg-white shadow rounded-lg p-4">
-            <h2 className="text-xl font-semibold text-black mb-4">Payment Overview</h2>
+            <h2 className="text-xl font-semibold text-black mb-4">
+              Payment Overview
+            </h2>
             <div className="w-32 mx-auto">
               <Pie data={data} />
             </div>
           </div>
         </div>
       </div>
+      {/* Payment Options */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold text-black mb-2">
+          Payment Options
+        </h2>
+        <p className="text-gray-600">
+          Choose a payment option to manage funds:
+        </p>
+        <div className="flex justify-center mt-4">
+          {/* Add the Paystack link here */}
+          <Link
+            to="https://paystack.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+          >
+            View Funds on Paystack
+          </Link>
+        </div>
+      </div>
+      {/* Student payments list */}
       <div>
-        <h2 className="text-xl font-semibold text-black mb-4">Student Payments</h2>
+        <h2 className="text-xl font-semibold text-black mb-4 mt-8">
+          Student Payments
+        </h2>
         <ul className="bg-white text-black shadow rounded-lg p-4">
           {students.map((student, index) => (
             <li
