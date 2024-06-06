@@ -14,6 +14,7 @@ import Review from "./dashboard/pages/Review";
 import Profile from "./dashboard/pages/Profile";
 import Navbar from "./components/layouts";
 import { AdminProvider } from "./Context/AdminContext.jsx";
+import PaymentForm from "./components/PaymentForm.jsx";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
                 <Route path="/admin/Review" element={<Review />} />
                 <Route path="/admin/Profile" element={<Profile />} />
               </Route>
+
+              
+              <Route path="/payment" element={<PaymentForm />} />
             </Routes>
           </div>
         </div>

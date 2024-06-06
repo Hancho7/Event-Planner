@@ -1,8 +1,15 @@
-// Modal.jsx
 import { Carousel } from "react-responsive-carousel";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function Modal({ isOpen, onClose, slides }) {
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleBookNow = () => {
+    // Navigate to the payment form page
+    navigate("/payment");
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -52,7 +59,10 @@ function Modal({ isOpen, onClose, slides }) {
             )}
             {slide.time && <p className="mb-2">{slide.time}</p>}
             {index === 0 && (
-              <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+              <button
+                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+                onClick={handleBookNow} // Call handleBookNow function when clicked
+              >
                 Book Now
               </button>
             )}
