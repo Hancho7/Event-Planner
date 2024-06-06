@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import logo from "../assets/logo.png";
-import { useState, useEffect } from "react";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import { TbBrandBooking } from "react-icons/tb";
@@ -12,14 +11,13 @@ import { GrOverview } from "react-icons/gr";
 import { PiStudentBold } from "react-icons/pi";
 import { BiLogOut } from "react-icons/bi";
 import DropdownMenu from "./menu";
+import { AdminContext } from "../Context/AdminContext.jsx";
 
 export default function Admin() {
   const { pathname } = useLocation();
-  let data;
+  const { admin } = useContext(AdminContext); 
   const navigate = useNavigate();
-  console.log(data);
   const [open, setOpen] = useState(true);
-
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
@@ -119,7 +117,7 @@ export default function Admin() {
             onClick={(e) => [e.preventDefault(), navigate("/admin/Profile")]}
             className="self-center text-white md:self-auto hover:cursor-pointer font-semibold duration-500"
           >
-            Elton
+            {admin.username}
           </h1>
           {isSmallScreen && <DropdownMenu pages={pages} navigate={navigate} />}
         </div>
@@ -139,13 +137,13 @@ export default function Admin() {
           onClick={() => setOpen(!open)}
         />
         <div className="flex items-center justify-center text-white gap-2">
-          <img src={logo} className="w-11 h-11 rounded-full" />
+          <img src={admin.profilePic} className="w-11 h-11 rounded-full" />
           <span
             className={`${
               !open && " hidden"
             } duration-700 font-semibold text-white`}
           >
-            Event<span className=" text-[#fffb00]">Center</span>
+            Event<span className="text-[#ffdd50]">Center</span>
           </span>
         </div>
 

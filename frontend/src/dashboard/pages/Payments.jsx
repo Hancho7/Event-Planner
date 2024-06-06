@@ -1,7 +1,7 @@
 // import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom"; 
 
 import pay1 from "../../../src/assets/pay1.jpg";
 import pay2 from "../../../src/assets/pay2.jpg";
@@ -95,7 +95,7 @@ const Payment = () => {
           </div>
         </div>
       </div>
-      {/* Payment Options */}
+      
       <div className="mt-8">
         <h2 className="text-xl font-semibold text-black mb-2">
           Payment Options
@@ -104,7 +104,7 @@ const Payment = () => {
           Choose a payment option to manage funds:
         </p>
         <div className="flex justify-center mt-4">
-          {/* Add the Paystack link here */}
+          
           <Link
             to="https://paystack.com/"
             target="_blank"
@@ -115,7 +115,7 @@ const Payment = () => {
           </Link>
         </div>
       </div>
-      {/* Student payments list */}
+      
       <div>
         <h2 className="text-xl font-semibold text-black mb-4 mt-8">
           Student Payments

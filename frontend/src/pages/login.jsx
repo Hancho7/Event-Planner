@@ -1,7 +1,7 @@
 // import { useState } from "react";
 // import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import userSchema from "../schema/register";
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ function LoginPage() {
             <div>
               <div className="flex flex-col">
                 <div className="flex items-center  py-2">
-                  <FaUser className="text-gray-500 mr-3" />
+                  <FaEnvelope className="text-gray-500 mr-3" />
                   <input
                     id="email"
                     name="email"
@@ -43,7 +43,7 @@ function LoginPage() {
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                <span  className=" font-semibold text-sm text-red-600 hover:text-red-500">
+                <span className=" font-semibold text-sm text-red-600 hover:text-red-500">
                   {formik.errors.email &&
                     formik.touched.email &&
                     formik.errors.email}
