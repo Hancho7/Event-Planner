@@ -1,5 +1,4 @@
 import TeamMember from "../components/TeamMember";
-import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import team1 from "../assets/team1.jpeg";
 import team2 from "../assets/team2.jpeg";
 import team3 from "../assets/team3.jpeg";
@@ -65,32 +64,6 @@ function AboutUsPage() {
             {team.map((member, index) => (
               <TeamMember key={index} {...member} />
             ))}
-          </div>
-          <div className="mt-8 flex items-center justify-center">
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-500 mr-4"
-            >
-              <FaTwitter className="h-6 w-6" />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-500 mr-4"
-            >
-              <FaFacebook className="h-6 w-6" />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-500"
-            >
-              <FaInstagram className="h-6 w-6" />
-            </a>
           </div>
         </div>
       </div>

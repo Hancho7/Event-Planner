@@ -1,5 +1,6 @@
 // import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -38,12 +39,14 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a href="mailto:info@example.com" className="hover:underline">
+                  <FaEnvelope className="text-[#ffdd50] mr-3" />
                   info@eventcenter2.com
                 </a>
               </li>
               <li>
                 <a href="tel:+1234567890" className="hover:underline">
-                  +1 234 567 890
+                <FaPhoneAlt className="text-[#ffdd50] mr-3" />
+                  +233 549 671 479
                 </a>
               </li>
             </ul>
@@ -111,8 +114,8 @@ const Footer = () => {
             <div>
               &copy; {new Date().getFullYear()}{" "}
               <span className="text-white">Event</span>
-              <span className="text-[#DBB610]">Center</span>  
-               Management System. All rights reserved.
+              <span className="text-[#DBB610] p-1">Center</span>
+              Management System. All rights reserved.
             </div>
           </div>
         </div>
