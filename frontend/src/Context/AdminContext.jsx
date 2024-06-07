@@ -1,4 +1,3 @@
-// src/context/AdminContext.js
 import React, { createContext, useState } from "react";
 import logo from "../assets/logo.png";
 

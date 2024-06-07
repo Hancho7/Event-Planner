@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function Modal({ isOpen, onClose, slides }) {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const handleBookNow = () => {
-    // Navigate to the payment form page
+    
     navigate("/payment");
   };
 
@@ -61,7 +61,7 @@ function Modal({ isOpen, onClose, slides }) {
             {index === 0 && (
               <button
                 className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-                onClick={handleBookNow} // Call handleBookNow function when clicked
+                onClick={handleBookNow} 
               >
                 Book Now
               </button>
