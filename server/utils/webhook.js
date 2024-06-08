@@ -1,9 +1,11 @@
 const { createSubAccount } = require("./paystack");
-const { Users, sequelize } = require("../models");
+const db = require("../models");
+const { Users } = db;
 
 module.exports = {
   updateUserRoleAndSecretKey: async (userId) => {
-    const transaction = await sequelize.transaction();
+    console.log("user id in hook", userId);
+    const transaction = await db.sequelize.transaction();
 
     try {
       const user = await Users.findOne({
@@ -45,7 +47,9 @@ module.exports = {
       // Commit the transaction
       await transaction.commit();
 
-      console.log(`User role updated to Planner for userID: ${user.userID}`);
+      console.log(
+        `User role updated to Planner for userID: ${user.userID} and subaccount created`
+      );
     } catch (error) {
       // Rollback the transaction in case of an error
       await transaction.rollback();
