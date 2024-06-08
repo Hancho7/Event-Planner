@@ -11,11 +11,12 @@ const BASE_OPTIONS = {
 };
 
 module.exports = {
-  initializeTransaction: (email, amount) => {
+  initializeTransaction: (email, amount, subaccount) => {
     return new Promise((resolve, reject) => {
       const params = JSON.stringify({
         email: email,
         amount: amount,
+        subaccount,
       });
 
       const options = {
@@ -77,6 +78,51 @@ module.exports = {
           reject(error);
         });
 
+      req.end();
+    });
+  },
+
+  createSubAccount: (
+    business_name, //username
+    settlement_bank, //name of telecom network
+    account_number, //mobile money number
+    percentage_charge
+  ) => {
+    return new Promise((resolve, reject) => {
+      const params = JSON.stringify({
+        business_name,
+        settlement_bank,
+        account_number,
+        percentage_charge,
+      });
+
+      const options = {
+        ...BASE_OPTIONS,
+        path: "/subaccount",
+        method: "POST",
+      };
+
+      const req = https
+        .request(options, (res) => {
+          let data = "";
+
+          res.on("data", (chunk) => {
+            data += chunk;
+          });
+
+          res.on("end", () => {
+            try {
+              resolve(JSON.parse(data));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        })
+        .on("error", (error) => {
+          reject(error);
+        });
+
+      req.write(params);
       req.end();
     });
   },

@@ -58,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "Client",
       },
+      secretKey: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
     },
     {
       sequelize,

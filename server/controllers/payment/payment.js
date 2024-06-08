@@ -6,7 +6,7 @@ const { Payments, Users } = db;
 
 module.exports = {
   initializePaymentRequest: async (req, res) => {
-    const { userID, amount, type } = req.body;
+    const { userID, amount, type, subaccount } = req.body;
     console.log("request body", req.body);
 
     try {
@@ -17,7 +17,11 @@ module.exports = {
       }
       const actualAmount = amount * 100;
       console.log("actualAmount", actualAmount);
-      const request = await initializeTransaction(user.email, actualAmount);
+      const request = await initializeTransaction(
+        user.email,
+        actualAmount,
+        subaccount
+      );
       console.log("request", request);
 
       const saveRequest = await Payments.create({
