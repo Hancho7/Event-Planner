@@ -1,6 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const { updateUserRoleAndSecretKey } = require("../utils/webhook");
+const { updateUserRoleAndSecretKey } = require("../utils/hook");
 
 module.exports = (sequelize, DataTypes) => {
   class requests extends Model {
