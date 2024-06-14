@@ -12,6 +12,7 @@ module.exports = {
         where: { userID: userId },
         transaction,
       });
+      console.log("User in the hook", user);
 
       if (!user) {
         console.log(`User not found for userID: ${userId}`);
@@ -23,6 +24,7 @@ module.exports = {
       user.role = "Planner";
 
       const updatedUser = await user.save({ transaction });
+      console.log("updated User in the hook", updatedUser);
       if (!updatedUser) {
         throw new Error("Failed to update user role");
       }
@@ -34,6 +36,7 @@ module.exports = {
         user.phone_number,
         5
       );
+      console.log("sub account in the hook", newSubAccount);
 
       if (!newSubAccount || newSubAccount.status !== true) {
         throw new Error("Failed to create subaccount");
@@ -41,7 +44,7 @@ module.exports = {
 
       // Update the user's secret key with the subaccount code
       user.secretKey = newSubAccount.data.subaccount_code;
-
+      console.log("sub account secret key in the hook", user.secretKey);
       await user.save({ transaction });
 
       // Commit the transaction
