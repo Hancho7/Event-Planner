@@ -1,28 +1,27 @@
 const { createSubAccount } = require("./paystack");
-const { Users } = require("../models"); // Make sure sequelize is imported
 
 module.exports = {
-  updateUserRoleAndSecretKey: async (userId) => {
+  updateUserRoleAndSecretKey: async (requests, userId) => {
     console.log("user id in hook", userId);
-    // const transaction = await sequelize.transaction();
+    const transaction = await requests.sequelize.transaction();
 
     try {
-      const user = await Users.findOne({
+      const user = await requests.sequelize.models.Users.findOne({
         where: { userID: userId },
-        // transaction,
+        transaction,
       });
       console.log("User in the hook", user);
 
       if (!user) {
         console.log(`User not found for userID: ${userId}`);
-        // await transaction.rollback();
+        await transaction.rollback();
         return;
       }
 
       // Update the user's role to "Planner"
       user.role = "Planner";
 
-      const updatedUser = await user.save();
+      const updatedUser = await user.save({ transaction });
       console.log("updated User in the hook", updatedUser);
       if (!updatedUser) {
         throw new Error("Failed to update user role");
@@ -44,17 +43,17 @@ module.exports = {
       // Update the user's secret key with the subaccount code
       user.secretKey = newSubAccount.data.subaccount_code;
       console.log("sub account secret key in the hook", user.secretKey);
-      await user.save();
+      await user.save({ transaction });
 
       // Commit the transaction
-      // await transaction.commit();
+      await transaction.commit();
 
       console.log(
         `User role updated to Planner for userID: ${user.userID} and subaccount created`
       );
     } catch (error) {
       // Rollback the transaction in case of an error
-      // await transaction.rollback();
+      await transaction.rollback();
       console.error("Error updating user role and creating subaccount:", error);
     }
   },

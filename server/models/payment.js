@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
             payment.paid === true &&
             payment.type === "PLANNER_REQUEST"
           ) {
-            await updateUserRoleAndSecretKey(payment.userID);
+            await updateUserRoleAndSecretKey(requests, payment.userID);
           }
         },
       },
