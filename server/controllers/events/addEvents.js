@@ -50,7 +50,7 @@ const createEvents = async (req, res) => {
         startOfDate,
         endOfDate,
         bookingDeadline,
-        price,
+        price: price || null,
         numberOfAttendees: newNumberOfAttendees,
         images: savedImageLinks,
       },

@@ -4,162 +4,186 @@ const { responseMiddleware } = require("../../utils/response");
 const { sendEmail, sendSMS } = require("../../utils/communication");
 const { Events, Users, Payments } = db;
 
-module.exports = {
-  addUserToEvent: async (req, res) => {
-    const { eventID, userID, amount } = req.body;
-    try {
-      // Find the user
-      const user = await Users.findOne({ where: { userID } });
-      if (!user) {
-        return responseMiddleware(res, 404, "User not found", null, "Error");
-      }
+async function findUser(userID, transaction) {
+  return await Users.findOne({ where: { userID }, transaction });
+}
 
-      // Find the event
-      const event = await Events.findOne({ where: { eventID } });
-      if (!event) {
-        return responseMiddleware(res, 404, "Event not found", null, "Error");
-      }
+async function findEvent(eventID, transaction) {
+  return await Events.findOne({ where: { eventID }, transaction });
+}
 
-      // If the event has a specified number of attendees
-      if (event.numberOfAttendees !== null) {
-        // If the event is already full
-        if (event.numberOfAttendees === 0) {
-          return responseMiddleware(
-            res,
-            400,
-            "Event is already full. Cannot accept more attendees",
-            null,
-            "Error"
-          );
-        }
+async function handleFreeEvent(user, event, transaction, res) {
+  const updatedEvent = await event.update(
+    {
+      attendees: [...event.attendees, user.id],
+      numberOfAttendees: event.numberOfAttendees - 1,
+    },
+    { transaction }
+  );
 
-        // If the event is free or if the user has already paid, add the user directly to the attendees array
-        if (!event.price) {
-          await event.update({
-            attendees: [...event.attendees, user.id],
-            numberOfAttendees: event.numberOfAttendees - 1,
-          });
-          return responseMiddleware(
-            res,
-            200,
-            "User added to event attendees",
-            null,
-            "Success"
-          );
-        } else {
-          const actualAmount = amount * 100;
-          const request = await initializeTransaction(user.email, actualAmount);
-          if (request.status !== true) {
-            return responseMiddleware(
-              res,
-              400,
-              "Payment failed",
-              null,
-              "Error"
-            );
-          }
-          const saveRequest = await Payments.create({
-            userID: user.userID,
-            name: user.name,
-            email: user.email,
-            amount,
-            type: "EVENT_TICKET",
-            eventID,
-            paystack: {
-              authorization_url: request.data.authorization_url,
-              access_code: request.data.access_code,
-              reference: request.data.reference,
-            },
-          });
-          console.log("saveRequest", saveRequest);
+  const updatedUser = await user.update(
+    {
+      event_id: [...user.event_id, event.eventID],
+    },
+    { transaction }
+  );
 
-          if (!saveRequest) {
-            return responseMiddleware(
-              res,
-              500,
-              "Error creating request",
-              null,
-              "Error"
-            );
-          }
-          console.log("request", request);
-          return responseMiddleware(
-            res,
-            200,
-            "Payment initiated successfully",
-            { authorization_url: request.data.authorization_url },
-            "Success"
-          );
-        }
-      } else {
-        // If the event does not have a specified number of attendees
-        // Proceed as before
-        if (!event.price) {
-          await event.update({
-            attendees: [...event.attendees, user.id],
-          });
-          return responseMiddleware(
-            res,
-            200,
-            "User added to event attendees",
-            null,
-            "Success"
-          );
-        } else {
-          const actualAmount = amount * 100;
-          const request = await initializeTransaction(user.email, actualAmount);
-          if (request.status !== true) {
-            return responseMiddleware(
-              res,
-              400,
-              "Payment failed",
-              null,
-              "Error"
-            );
-          }
-          const saveRequest = await Payments.create({
-            userID: user.userID,
-            name: user.name,
-            email: user.email,
-            amount,
-            type: "EVENT_TICKET",
-            eventID,
-            paystack: {
-              authorization_url: request.data.authorization_url,
-              access_code: request.data.access_code,
-              reference: request.data.reference,
-            },
-          });
-          console.log("saveRequest", saveRequest);
+  if (!updatedEvent || !updatedUser) {
+    await transaction.rollback();
+    return responseMiddleware(res, 500, "Failed to register for event");
+  }
+  const smsSent = await sendSMS(
+    user.phone_number,
+    `You have been added to the attendee list of this event: ${event.name}`
+  );
+  if (smsSent.code !== "ok") {
+    await transaction.rollback();
+    return responseMiddleware(res, 500, "Failed to send SMS");
+  }
+  await transaction.commit();
+  return responseMiddleware(
+    res,
+    200,
+    "User added to event attendees",
+    null,
+    "Success"
+  );
+}
 
-          if (!saveRequest) {
-            return responseMiddleware(
-              res,
-              500,
-              "Error creating request",
-              null,
-              "Error"
-            );
-          }
-          console.log("request", request);
-          return responseMiddleware(
-            res,
-            200,
-            "Payment initiated successfully",
-            { authorization_url: request.data.authorization_url },
-            "Success"
-          );
-        }
-      }
-    } catch (error) {
-      console.error("Error adding user to event attendees:", error);
-      return responseMiddleware(
-        res,
-        500,
-        "Internal server error",
-        null,
-        "Error"
-      );
+async function handlePaidEvent(user, event, planner, amount, transaction, res) {
+  const actualAmount = amount * 100;
+  const request = await initializeTransaction(
+    user.email,
+    actualAmount,
+    planner.secretKey
+  );
+
+  if (request.status !== true) {
+    await transaction.rollback();
+    return responseMiddleware(res, 400, "Payment failed", null, "Error");
+  }
+
+  const saveRequest = await Payments.create(
+    {
+      userID: user.userID,
+      name: user.name,
+      email: user.email,
+      amount,
+      type: "EVENT_TICKET",
+      eventID: event.eventID,
+      paystack: {
+        authorization_url: request.data.authorization_url,
+        access_code: request.data.access_code,
+        reference: request.data.reference,
+      },
+    },
+    { transaction }
+  );
+
+  if (!saveRequest) {
+    await transaction.rollback();
+    return responseMiddleware(
+      res,
+      500,
+      "Error creating request",
+      null,
+      "Error"
+    );
+  }
+
+  await transaction.commit();
+  return responseMiddleware(
+    res,
+    200,
+    "Payment initiated successfully",
+    { authorization_url: request.data.authorization_url },
+    "Success"
+  );
+}
+
+async function addUserToEvent(req, res) {
+  const { eventID, userID, amount } = req.body;
+  const transaction = await db.sequelize.transaction();
+
+  try {
+    const user = await findUser(userID, transaction);
+    if (!user) {
+      await transaction.rollback();
+      return responseMiddleware(res, 404, "User not found", null, "Error");
     }
-  },
+
+    const event = await findEvent(eventID, transaction);
+    if (!event) {
+      await transaction.rollback();
+      return responseMiddleware(res, 404, "Event not found", null, "Error");
+    }
+
+    const plannerId = event.plannerID;
+    const planner = await Users.findOne({
+      where: { userID: plannerId },
+      transaction,
+    });
+
+    if (event.numberOfAttendees !== null) {
+      if (event.numberOfAttendees === 0) {
+        await transaction.rollback();
+        return responseMiddleware(
+          res,
+          400,
+          "Event is already full. Cannot accept more attendees",
+          null,
+          "Error"
+        );
+      }
+
+      if (!event.price) {
+        return await handleFreeEvent(user, event, transaction, res);
+      } else {
+        return await handlePaidEvent(
+          user,
+          event,
+          planner,
+          amount,
+          transaction,
+          res
+        );
+      }
+    } else {
+      if (!event.price) {
+        await event.update(
+          { attendees: [...event.attendees, user.id] },
+          { transaction }
+        );
+        await user.update(
+          { event_id: [...user.event_id, event.eventID] },
+          { transaction }
+        );
+        await transaction.commit();
+        return responseMiddleware(
+          res,
+          200,
+          "User added to event attendees",
+          null,
+          "Success"
+        );
+      } else {
+        return await handlePaidEvent(
+          user,
+          event,
+          planner,
+          amount,
+          transaction,
+          res
+        );
+      }
+    }
+  } catch (error) {
+    await transaction.rollback();
+    console.error("Error adding user to event attendees:", error);
+    return responseMiddleware(res, 500, "Internal server error", null, "Error");
+  }
+}
+
+module.exports = {
+  addUserToEvent,
 };

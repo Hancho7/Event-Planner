@@ -1,6 +1,9 @@
 "use strict";
 const { Model } = require("sequelize");
-const { updateUserRoleAndSecretKey } = require("../utils/hook");
+const {
+  updateUserRoleAndSecretKey,
+  updateEventAttendeesAndUserEvent,
+} = require("../utils/hook");
 
 module.exports = (sequelize, DataTypes) => {
   class requests extends Model {
@@ -62,12 +65,16 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Payments",
       hooks: {
         afterUpdate: async (payment, options) => {
-          if (
-            payment.changed("paid") &&
-            payment.paid === true &&
-            payment.type === "PLANNER_REQUEST"
-          ) {
-            await updateUserRoleAndSecretKey(requests, payment.userID);
+          if (payment.changed("paid") && payment.paid === true) {
+            if (payment.type === "PLANNER_REQUEST") {
+              await updateUserRoleAndSecretKey(requests, payment.userID);
+            } else if (payment.type === "EVENT_TICKET") {
+              await updateEventAttendeesAndUserEvent(
+                requests,
+                payment.userID,
+                payment.eventID
+              );
+            }
           }
         },
       },
