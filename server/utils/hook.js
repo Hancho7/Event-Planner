@@ -1,61 +1,61 @@
-const { createSubAccount } = require('./paystack');
-const { sequelize, Users } = require('../models'); // Make sure sequelize is imported
+const { createSubAccount } = require("./paystack");
+const { Users } = require("../models"); // Make sure sequelize is imported
 
 module.exports = {
   updateUserRoleAndSecretKey: async (userId) => {
-    console.log('user id in hook', userId);
-    const transaction = await sequelize.transaction();
+    console.log("user id in hook", userId);
+    // const transaction = await sequelize.transaction();
 
     try {
       const user = await Users.findOne({
         where: { userID: userId },
-        transaction,
+        // transaction,
       });
-      console.log('User in the hook', user);
+      console.log("User in the hook", user);
 
       if (!user) {
         console.log(`User not found for userID: ${userId}`);
-        await transaction.rollback();
+        // await transaction.rollback();
         return;
       }
 
       // Update the user's role to "Planner"
-      user.role = 'Planner';
+      user.role = "Planner";
 
-      const updatedUser = await user.save({ transaction });
-      console.log('updated User in the hook', updatedUser);
+      const updatedUser = await user.save();
+      console.log("updated User in the hook", updatedUser);
       if (!updatedUser) {
-        throw new Error('Failed to update user role');
+        throw new Error("Failed to update user role");
       }
 
       // Create a subaccount for the user
       const newSubAccount = await createSubAccount(
         user.name,
-        'MTN',
+        "MTN",
         user.phone_number,
         5
       );
-      console.log('sub account in the hook', newSubAccount);
+      console.log("sub account in the hook", newSubAccount);
 
       if (!newSubAccount || newSubAccount.status !== true) {
-        throw new Error('Failed to create subaccount');
+        throw new Error("Failed to create subaccount");
       }
 
       // Update the user's secret key with the subaccount code
       user.secretKey = newSubAccount.data.subaccount_code;
-      console.log('sub account secret key in the hook', user.secretKey);
-      await user.save({ transaction });
+      console.log("sub account secret key in the hook", user.secretKey);
+      await user.save();
 
       // Commit the transaction
-      await transaction.commit();
+      // await transaction.commit();
 
       console.log(
         `User role updated to Planner for userID: ${user.userID} and subaccount created`
       );
     } catch (error) {
       // Rollback the transaction in case of an error
-      await transaction.rollback();
-      console.error('Error updating user role and creating subaccount:', error);
+      // await transaction.rollback();
+      console.error("Error updating user role and creating subaccount:", error);
     }
   },
 };
