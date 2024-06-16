@@ -1,7 +1,10 @@
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { verifyEmailAction } from "../features/auth/verifyEmail";
 
 function EmailVerification() {
+  const dispatch = useDispatch();
   const inputRefs = useRef([]);
   const { userID, token } = useParams();
 
@@ -15,9 +18,7 @@ function EmailVerification() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const smsCode = inputRefs.current.map((input) => input.value).join("");
-    console.log("SMS code:", smsCode);
-    console.log("userID", userID);
-    console.log("token", token);
+    dispatch(verifyEmailAction({ userID, token, smsCode }));
   };
 
   return (
