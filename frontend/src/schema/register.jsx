@@ -1,15 +1,15 @@
 import { object, string, ref } from "yup";
 
 const userSchema = object({
-  username: string()
-    .required("Username is required")
-    .min(6, "Username must be at least 6 characters")
+  name: string()
+    .required("name is required")
+    .min(6, "name must be at least 6 characters")
     .matches(
       /^[a-zA-Z_]+$/,
-      "Username can only contain letters, and underscores"
+      "name can only contain letters, and underscores"
     ),
 
-  phoneNumber: string()
+  phone_number: string()
     .required("Phone number is required")
     .matches(/^[0-9]{10}$/, "Phone number must be  10"),
 

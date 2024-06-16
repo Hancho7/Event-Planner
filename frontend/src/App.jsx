@@ -15,6 +15,7 @@ import Profile from "./dashboard/pages/Profile";
 import Navbar from "./components/layouts";
 import { AdminProvider } from "./Context/AdminContext.jsx";
 import PaymentForm from "./components/PaymentForm.jsx";
+import EmailVerification from "./pages/EmailVerification.jsx";
 
 function App() {
   return (
@@ -41,8 +42,13 @@ function App() {
                 <Route path="/admin/Profile" element={<Profile />} />
               </Route>
 
-              
               <Route path="/payment" element={<PaymentForm />} />
+
+              
+              <Route
+                path="/email-verification/:userID/:token"
+                element={<EmailVerification />}
+              />
             </Routes>
           </div>
         </div>
