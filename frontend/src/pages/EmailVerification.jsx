@@ -14,8 +14,8 @@ function EmailVerification() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const code = inputRefs.current.map((input) => input.value).join("");
-    console.log("SMS code:", code);
+    const smsCode = inputRefs.current.map((input) => input.value).join("");
+    console.log("SMS code:", smsCode);
     console.log("userID", userID);
     console.log("token", token);
   };

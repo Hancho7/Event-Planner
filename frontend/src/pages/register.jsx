@@ -1,34 +1,14 @@
-//import React from "react";
-// import { useDispatch } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaPhoneAlt } from "react-icons/fa";
 import userSchema from "../schema/register.jsx";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerAction } from "../features/registerSlice.jsx";
+import { registerAction } from "../features/auth/registerSlice.jsx";
 
 function Register() {
-  const [sticky, setSticky] = useState(false);
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.register);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 150) {
-        // Change 200 to the height you want
-        setSticky(true);
-      } else {
-        setSticky(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -44,10 +24,9 @@ function Register() {
       dispatch(registerAction(values));
     },
   });
-  // const dispatch = useDispatch();
 
   return (
-    <div style={sticky ? { position: "sticky", top: "0", zIndex: 89 } : {}}>
+    <div>
       <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
@@ -161,7 +140,7 @@ function Register() {
                 type="submit"
                 className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                Register
+                Register {loading && <BeatLoader />}
               </button>
             </div>
           </form>
@@ -169,7 +148,7 @@ function Register() {
             <p className="text-sm text-gray-600">
               I have an account,{" "}
               <Link to="/login" className="text-indigo-600 hover:underline">
-                login here {loading && <BeatLoader />}
+                login here
               </Link>
             </p>
           </div>
