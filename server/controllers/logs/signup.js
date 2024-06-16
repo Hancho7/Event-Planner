@@ -79,7 +79,7 @@ async function sendVerificationMessages(
   } else {
     formattedPhoneNumber = `233${phoneNumber.toString().slice(1)}`;
   }
-  const url = `http://localhost:5001/logs/${userID}/${token.tokenLink}`;
+  const url = `${process.env.FRONT_END_URL}/email-verification/${userID}/${token.tokenLink}`;
 
   try {
     // Send email
