@@ -1,40 +1,44 @@
-
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
-  username: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  phoneNumber: '',
-  showPassword: false,
-  errors: {
-    passwordMatch: "",
-  },
+  error: false,
+  status: null,
+  code: null,
+  message: null,
+  data: null,
+  success: false,
 };
 
+export const registerAction = createAction("register/action");
+
 const registerSlice = createSlice({
-  name: 'register',
+  name: "register",
   initialState,
   reducers: {
-    setField: (state, action) => {
-      state[action.payload.field] = action.payload.value;
+    registerPending: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.status = null;
+      state.code = null;
+      state.message = null;
+      state.data = null;
+      state.success = false;
     },
-    toggleShowPassword: (state) => {
-      state.showPassword = !state.showPassword;
+    registerSuccess: (state, action) => {
+      state.loading = false;
+      state.error = null;
+      const { status, code, message, data } = action.payload;
+      state.success = true;
     },
-    setError: (state, action) => {
-      state.errors[action.payload.field] = action.payload.error;
-    },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-    setPasswordMatchError: (state, action) => {
-      state.errors.passwordMatch = action.payload;
+    registerError: (state, action) => {
+      state.loading = false;
+      state.error = true;
+      const { status, code, message } = action.payload;
     },
   },
 });
 
-export const { setField, toggleShowPassword, setError } = registerSlice.actions;
+export const { registerError, registerPending, registerSuccess } =
+  registerSlice.actions;
 export default registerSlice.reducer;
