@@ -16,6 +16,8 @@ import Navbar from "./components/layouts";
 import { AdminProvider } from "./Context/AdminContext.jsx";
 import PaymentForm from "./components/PaymentForm.jsx";
 import EmailVerification from "./pages/EmailVerification.jsx";
+import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
+import TermsOfService from "./components/TermsOfService.jsx";
 
 function App() {
   return (
@@ -49,6 +51,11 @@ function App() {
                 path="/email-verification/:userID/:token"
                 element={<EmailVerification />}
               />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} 
+              />
+              <Route path="/terms-of-service" element={<TermsOfService />} 
+              />
+
             </Routes>
           </div>
         </div>

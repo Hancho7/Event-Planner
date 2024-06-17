@@ -2,22 +2,27 @@ import { Carousel } from "react-responsive-carousel";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-function Modal({ isOpen, onClose, slides, isLoggedIn, onLogin, onCreateAccount }) {
-  const navigate = useNavigate(); 
+function Modal({
+  isOpen,
+  onClose,
+  slides,
+  isLoggedIn,
+  onLogin,
+  onCreateAccount,
+}) {
+  const navigate = useNavigate();
 
   const handleBookNow = () => {
     if (!isLoggedIn) {
-      // Display prompt to log in or create an account
-      const response = window.confirm("You need to log in or create an account to book. Do you want to log in or create an account?");
+      const response = window.confirm(
+        "You need to log in or create an account to book. Do you want to log in or create an account?"
+      );
       if (response) {
-        // User wants to create an account
         navigate("/register");
       } else {
-        // User wants to log in
         onLogin();
       }
     } else {
-      // User is already logged in, navigate to payment page
       navigate("/payment");
     }
   };
@@ -73,7 +78,7 @@ function Modal({ isOpen, onClose, slides, isLoggedIn, onLogin, onCreateAccount }
             {index === 0 && (
               <button
                 className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-                onClick={handleBookNow} 
+                onClick={handleBookNow}
               >
                 Book Now
               </button>

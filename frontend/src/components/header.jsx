@@ -1,8 +1,11 @@
+// src/components/Header.js
+
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaUserPlus, FaSignInAlt } from "react-icons/fa";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import PlannerForm from "./PlannerForm";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
@@ -17,6 +20,7 @@ function classNames(...classes) {
 export default function Header() {
   const location = useLocation();
   const [sticky, setSticky] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +32,14 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+  };
 
   return (
     <div className={sticky ? "sticky top-0 z-50" : ""}>
@@ -78,7 +90,10 @@ export default function Header() {
                   </div>
                   <div className="hidden sm:flex items-center space-x-4">
                     {location.pathname === "/events" ? (
-                      <button className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white">
+                      <button
+                        className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white"
+                        onClick={toggleForm}
+                      >
                         Become a Planner
                       </button>
                     ) : (
@@ -125,7 +140,10 @@ export default function Header() {
               </div>
               <div className="px-2 pb-3 pt-2">
                 {location.pathname === "/events" ? (
-                  <button className="bg-blue-500 flex items-center rounded-md h-8 px-2 hover:bg-blue-600 w-full">
+                  <button
+                    className="bg-blue-500 flex items-center rounded-md h-8 px-2 hover:bg-blue-600 w-full"
+                    onClick={toggleForm}
+                  >
                     Become a Planner
                   </button>
                 ) : (
@@ -149,6 +167,7 @@ export default function Header() {
           </>
         )}
       </Disclosure>
+      {showForm && <PlannerForm onClose={closeForm} />}
     </div>
   );
 }
