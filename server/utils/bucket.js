@@ -78,7 +78,6 @@ module.exports = {
       const command = new GetObjectCommand(getObjectParams);
       const link = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
-      console.log("Generated signed URL for key:", key);
       return { key, url: link, status: "success" };
     } catch (error) {
       console.error("Error getting file:", error);
