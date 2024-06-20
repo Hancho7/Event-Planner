@@ -1,11 +1,10 @@
 // src/components/Header.js
 
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaUserPlus, FaSignInAlt } from "react-icons/fa";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import PlannerForm from "./PlannerForm";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
@@ -18,9 +17,9 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const Navigate = useNavigate();
   const location = useLocation();
   const [sticky, setSticky] = useState(false);
-  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,12 +32,8 @@ export default function Header() {
     };
   }, []);
 
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
-
-  const closeForm = () => {
-    setShowForm(false);
+  const becomeAPlanner = () => {
+    Navigate("/planner-request");
   };
 
   return (
@@ -92,7 +87,7 @@ export default function Header() {
                     {location.pathname === "/events" ? (
                       <button
                         className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white"
-                        onClick={toggleForm}
+                        onClick={becomeAPlanner}
                       >
                         Become a Planner
                       </button>
@@ -142,7 +137,7 @@ export default function Header() {
                 {location.pathname === "/events" ? (
                   <button
                     className="bg-blue-500 flex items-center rounded-md h-8 px-2 hover:bg-blue-600 w-full"
-                    onClick={toggleForm}
+                    onClick={becomeAPlanner}
                   >
                     Become a Planner
                   </button>
@@ -167,7 +162,7 @@ export default function Header() {
           </>
         )}
       </Disclosure>
-      {showForm && <PlannerForm onClose={closeForm} />}
+      {/* {showForm && <PlannerForm onClose={closeForm} />} */}
     </div>
   );
 }

@@ -14,10 +14,11 @@ import Review from "./dashboard/pages/Review";
 import Profile from "./dashboard/pages/Profile";
 import Navbar from "./components/layouts";
 import { AdminProvider } from "./Context/AdminContext.jsx";
-import PaymentForm from "./components/PaymentForm.jsx";
 import EmailVerification from "./pages/EmailVerification.jsx";
-import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
-import TermsOfService from "./components/TermsOfService.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import TermsOfService from "./pages/TermsOfService.jsx";
+import UserProfile from "./pages/updateProfile.jsx";
+import BecomeAPlanner from "./pages/becomeAPlanner.jsx";
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/update-profile" element={<UserProfile />} />
+                <Route path="/planner-request" element={<BecomeAPlanner />} />
               </Route>
 
               <Route path="/admin" element={<Admin />}>
@@ -44,18 +47,14 @@ function App() {
                 <Route path="/admin/Profile" element={<Profile />} />
               </Route>
 
-              <Route path="/payment" element={<PaymentForm />} />
+              {/* <Route path="/payment" element={<PaymentForm />} /> */}
 
-              
               <Route
                 path="/email-verification/:userID/:token"
                 element={<EmailVerification />}
               />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} 
-              />
-              <Route path="/terms-of-service" element={<TermsOfService />} 
-              />
-
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
             </Routes>
           </div>
         </div>
