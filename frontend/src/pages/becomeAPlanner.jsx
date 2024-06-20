@@ -46,11 +46,16 @@ function BecomeAPlanner() {
             <div className=" my-3">
               <p>
                 To request to become a planner on our platform, you must meet
-                the following requirements: - You must be at least 18 years old.
-                - You must provide a valid phone number registered with either
-                MTN or Vodafone (Telecel). - The phone number provided must be
-                registered for Mobile Money (MoMo) services to receive payments
-                for paid events.
+                the following requirements:{" "}
+                <p className="my-3">- You must be at least 18 years old.</p>
+                <p className="my-3">
+                  - You must provide a valid phone number registered with either
+                  MTN or Vodafone (Telecel).
+                </p>{" "}
+                <p className="my-3">
+                  - The phone number provided must be registered for Mobile
+                  Money (MoMo) services to receive payments for paid events.
+                </p>
               </p>
             </div>
           </div>
@@ -84,12 +89,18 @@ function BecomeAPlanner() {
               3. Event Posting and Payments
             </h4>
             <div className="my-3">
-              <p>
+              <p className="my-3">
                 3.1. As a planner, you will have the ability to post events on
-                our platform. 3.2. If you choose to organize paid events,
-                attendees will be required to make payments through the MoMo
-                service. 3.3. It is your responsibility to ensure that your MoMo
-                account is active and capable of receiving payments.
+                our platform.
+              </p>
+              <p className="my-3">
+                3.2. If you choose to organize paid events, attendees will be
+                required to make payments through the MoMo service.
+              </p>
+              <p className="my-3">
+                {" "}
+                3.3. It is your responsibility to ensure that your MoMo account
+                is active and capable of receiving payments.
               </p>
             </div>
           </div>
