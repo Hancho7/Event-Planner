@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 import featuredEvents from "../data/featuredEvents";
 import Aos from "aos";
+import { getAllEventsAction } from "../features/events/getAllEvents";
 import "aos/dist/aos.css";
+import { useDispatch, useSelector } from "react-redux";
 
 function EventsPage() {
+  const dispatch = useDispatch();
+  const { status, code, message, data, loading } = useSelector(
+    (state) => state.getAllEvents
+  );
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -17,6 +23,13 @@ function EventsPage() {
     setSelectedEvent(null);
     setIsModalOpen(false);
   };
+  useEffect(() => {
+    dispatch(getAllEventsAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("message", message);
+  }, [message]);
 
   useEffect(() => {
     Aos.init({ duration: 1500 });

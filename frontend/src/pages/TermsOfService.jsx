@@ -1,6 +1,6 @@
 // import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { FaEnvelope } from "react-icons/fa6";
+import { FaPhone } from "react-icons/fa";
 
 const TermsOfService = () => {
   return (
@@ -73,7 +73,7 @@ const TermsOfService = () => {
       <p className="text-lg leading-relaxed">
         Event Center Management System
         <br />
-        <FontAwesomeIcon icon={faEnvelope} className="text-blue-600 mr-2" />
+        <FaEnvelope className="text-blue-600 mr-2" />
         Email:{" "}
         <a
           href="mailto:info@example.com"
@@ -82,7 +82,7 @@ const TermsOfService = () => {
           info@eventcenter2.com
         </a>
         <br />
-        <FontAwesomeIcon icon={faPhone} className="text-blue-600 mr-2" />
+        <FaPhone className="text-blue-600 mr-2" />
         Phone:{" "}
         <a href="tel:+1234567890" className="text-blue-600 hover:underline">
           +233 549 671 479

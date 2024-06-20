@@ -39,7 +39,7 @@ function AboutUsPage() {
       <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <h4 className=" text-2xl font-semibold">Know More About Us</h4>
         <div className="max-w-4xl mx-auto">
-          <p className="mt-4 text-lg text-black-600">
+          <p className="mt-4 text-lg ">
             At <span className="text-black">Event</span><span className="text-[#ffdd50]">Center</span>, we specialize in transforming events into
             unforgettable experiences. Our mission is to provide seamless,
             innovative, and personalized event management solutions that exceed
@@ -47,7 +47,7 @@ function AboutUsPage() {
             excellence, and customer focus, we ensure that every event we manage
             is executed to perfection.
           </p>
-          <p className="mt-4 text-lg text-black-600">
+          <p className="mt-4 text-lg ">
             Our mission is to provide high-quality services and products to our
             customers. We strive for excellence in everything we do and aim to
             make a positive impact in our community.Leading our team is Elton,
@@ -58,7 +58,7 @@ function AboutUsPage() {
             works closely with clients to tailor each event to their specific
             needs, bringing creativity and precision to every project.
           </p>
-          <p className="mt-4 text-lg text-black-600">
+          <p className="mt-4 text-lg ">
             We are passionate about pushing the boundaries of creativity and
             innovation in event management. Whether you are a client, a partner,
             or a team member, we invite you to join us on this exciting journey
