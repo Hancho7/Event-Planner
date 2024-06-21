@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-// import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
-=======
 import { FaEnvelope } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa";
->>>>>>> 6dfb07ce6e748bcd547d2f026c9f53c96f5a11c5
 
 const PrivacyPolicy = () => {
   return (
