@@ -16,7 +16,14 @@ const createEvents = async (req, res) => {
     price,
   } = req.body;
 
+  console.log("request body\n", req.body);
+
   const images = req.files;
+
+  // Validate dates
+  if (new Date(endOfDate) <= new Date(startOfDate)) {
+    return responseMiddleware(res, 400, "End date must be after start date");
+  }
 
   // Start a transaction
   const transaction = await db.sequelize.transaction();
@@ -28,6 +35,7 @@ const createEvents = async (req, res) => {
       where: { [Op.and]: [{ userID: plannerID }, { role: "Planner" }] },
       transaction,
     });
+    console.log("user\n", user);
 
     if (!user) {
       await transaction.rollback();
@@ -67,6 +75,7 @@ const createEvents = async (req, res) => {
       "Success"
     );
   } catch (error) {
+    console.error("Error creating event:", error);
     // Rollback the transaction in case of error
     await transaction.rollback();
     return responseMiddleware(res, 500, error.message, null, "Server Error");

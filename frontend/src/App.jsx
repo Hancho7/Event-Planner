@@ -50,7 +50,7 @@ function App() {
               {/* <Route path="/payment" element={<PaymentForm />} /> */}
 
               <Route
-                path="/email-verification/:userID/:token"
+                path="/email-verification/:userID/:tokenLink"
                 element={<EmailVerification />}
               />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />

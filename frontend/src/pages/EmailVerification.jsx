@@ -1,12 +1,17 @@
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import { verifyEmailAction } from "../features/auth/verifyEmail";
 
 function EmailVerification() {
   const dispatch = useDispatch();
   const inputRefs = useRef([]);
-  const { userID, token } = useParams();
+  const { userID, tokenLink } = useParams();
+  const navigate = useNavigate();
+
+  const { status, code, message, data, loading } = useSelector(
+    (state) => state.verifyEmail || {} // Provide default value
+  );
 
   const handleInputChange = (e, index) => {
     const { value } = e.target;
@@ -18,19 +23,26 @@ function EmailVerification() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const smsCode = inputRefs.current.map((input) => input.value).join("");
-    dispatch(verifyEmailAction({ userID, token, smsCode }));
+    console.log("handle submit", userID, tokenLink, smsCode);
+    dispatch(verifyEmailAction({ userID, tokenLink, smsCode }));
   };
+
+  useEffect(() => {
+    if (status === "Success") {
+      navigate("/login");
+    }
+  }, [status, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className=" text-base md:text-2xl font-bold mb-6 text-center">
+        <h2 className="text-base md:text-2xl font-bold mb-6 text-center">
           Email And Phone Verification
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label className="block text-gray-700 font-medium mb-2 text-center">
-              verification code
+              Verification code
             </label>
             <div className="flex space-x-2 justify-center">
               {[...Array(6)].map((_, index) => (

@@ -7,6 +7,10 @@ const signupVerification = async (req, res) => {
   const { userID, tokenLink } = req.params;
   const { smsCode } = req.body;
 
+  console.log("userID", userID);
+  console.log("tokenLink", tokenLink);
+  console.log("smsCode", smsCode);
+
   try {
     const transaction = await db.sequelize.transaction();
 

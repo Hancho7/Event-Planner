@@ -1,15 +1,9 @@
 import { Carousel } from "react-responsive-carousel";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useNavigate } from "react-router-dom";
+import { formatDate } from "../utils/formatDate";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-function Modal({
-  isOpen,
-  onClose,
-  slides,
-  isLoggedIn,
-  onLogin,
-  onCreateAccount,
-}) {
+function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
   const navigate = useNavigate();
 
   const handleBookNow = () => {
@@ -47,44 +41,60 @@ function Modal({
           autoPlay
           showIndicators={false}
         >
-          {slides.map((slide, index) =>
-            slide.imageUrls.map((image, idx) => (
-              <div key={`${index}-${idx}`}>
-                <img
-                  src={image}
-                  alt={slide.title}
-                  className="w-full h-auto mb-4"
-                />
-              </div>
-            ))
-          )}
+          {event.images.map((image, idx) => (
+            <div key={idx}>
+              <img
+                src={image}
+                alt={event.name}
+                className="w-full h-auto mb-4"
+              />
+            </div>
+          ))}
         </Carousel>
 
-        {slides.map((slide, index) => (
-          <div key={index} className="mt-4">
-            <h2 className="text-2xl font-semibold mb-4">{slide.title}</h2>
-            {slide.location && (
-              <p className="mb-2 font-bold">{slide.location}</p>
+        <div className="mt-4">
+          <h2 className="text-xl font-semibold mb-4 text-center">
+            {event.name}
+          </h2>
+          {event.location && (
+            <p className="mb-2 font-medium">{event.location}</p>
+          )}
+          <div className="flex flex-col">
+            {event.startOfDate && (
+              <div className="mb-2  text-black-900">
+                <h6 className=" font-semibold">Starts</h6>
+                <p>{formatDate(event.startOfDate)}</p>
+              </div>
             )}
-            {slide.description && (
-              <p className="mb-2 font-mono font-bold text-black-900">
-                {slide.description}
-              </p>
-            )}
-            {slide.date && (
-              <p className="mb-2 font-bold text-mono">{slide.date}</p>
-            )}
-            {slide.time && <p className="mb-2">{slide.time}</p>}
-            {index === 0 && (
-              <button
-                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-                onClick={handleBookNow}
-              >
-                Book Now
-              </button>
+            {event.endOfDate && (
+              <div className="mb-2  text-black-900">
+                <h6 className=" font-semibold">Ends</h6>
+                <p>{formatDate(event.endOfDate)}</p>
+              </div>
             )}
           </div>
-        ))}
+
+
+          {event.bookingDeadline && (
+            <div className="mb-2  text-black-900">
+              <h6 className=" font-semibold">Booking Deadline</h6>
+              <p>{formatDate(event.bookingDeadline)}</p>
+            </div>
+          )}
+
+          {event.price && (
+            <div className="mb-2  text-black-900">
+              <h6 className=" font-semibold">Attendance fee</h6>
+              <p>GHC {event.price}</p>
+            </div>
+          )}
+          <button
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+            onClick={handleBookNow}
+          >
+            Book Now
+          </button>
+        </div>
       </div>
     </div>
   );

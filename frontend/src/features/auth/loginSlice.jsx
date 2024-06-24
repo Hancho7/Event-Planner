@@ -28,13 +28,18 @@ const loginSlice = createSlice({
     loginSuccess: (state, action) => {
       state.loading = false;
       state.error = null;
-      const { status, code, message, data } = action.payload;
+      state.code = action.payload.code;
+      state.status = action.payload.status;
+      state.data = action.payload.data;
+      state.message = action.payload.message;
       state.success = true;
     },
     loginError: (state, action) => {
       state.loading = false;
       state.error = true;
-      const { status, code, message } = action.payload;
+      state.code = action.payload.code;
+      state.status = action.payload.status;
+      state.message = action.payload.message;
     },
   },
 });

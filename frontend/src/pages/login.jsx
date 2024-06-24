@@ -1,18 +1,18 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import userSchema from "../schema/register";
 import { Link } from "react-router-dom";
 import { loginAction } from "../features/auth/loginSlice";
 
 function LoginPage() {
+  const { loading, message, data, status, code, success } = useSelector((state) => state.login);
+  console.log({ loading, message, data, status, code, success });
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validationSchema: userSchema,
     onSubmit: (values) => {
       dispatch(loginAction(values));
       console.log(values);

@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       plannerID: {
         type: DataTypes.UUID,
         allowNull: false,
-        unique: true,
         references: {
           model: "Users",
           key: "userID",

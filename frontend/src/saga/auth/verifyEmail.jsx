@@ -14,8 +14,8 @@ function* handleVerifyEmail(action) {
 
     const response = yield call(
       axios.post,
-      `/logs/${action.payload.userID}/${action.payload.token}`,
-      action.payload.smsCode
+      `/logs/${action.payload.userID}/${action.payload.tokenLink}`,
+      action.payload
     );
     console.log("verifyEmail response saga", response);
 

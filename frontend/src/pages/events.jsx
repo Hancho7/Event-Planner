@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "../components/Modal";
-import featuredEvents from "../data/featuredEvents";
+// import featuredEvents from "../data/featuredEvents";
 import Aos from "aos";
 import { getAllEventsAction } from "../features/events/getAllEvents";
 import "aos/dist/aos.css";
@@ -28,8 +28,8 @@ function EventsPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("message", message);
-  }, [message]);
+    console.log("data", data);
+  }, [data]);
 
   useEffect(() => {
     Aos.init({ duration: 1500 });
@@ -51,19 +51,19 @@ function EventsPage() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-6 px-6"
           data-aos="fade-up"
         >
-          {featuredEvents.map((event) => (
+          {data?.map((event) => (
             <div
-              key={event.id}
+              key={event.eventID}
               className="relative bg-white  text-white rounded-lg shadow-md h-40 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
               onClick={() => openModal(event)}
             >
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-                style={{ backgroundImage: `url(${event.imageUrl})` }}
+                style={{ backgroundImage: `url(${event.images[1]})` }}
               ></div>
               <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
                 <h3 className="text-xl font-sans font-semibold mb-2">
-                  {event.title}
+                  {event.name}
                 </h3>
               </div>
             </div>
@@ -74,7 +74,7 @@ function EventsPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
-        slides={selectedEvent ? selectedEvent.slides : []}
+        event={selectedEvent }
       />
     </div>
   );

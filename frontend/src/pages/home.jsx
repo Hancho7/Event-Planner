@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import Modal from "../components/Modal";
-import featuredEvents from "../data/featuredEvents";
 import { testimonials } from "../components/testimonials";
 import ResponsiveSlider from "../components/slider";
 import Aos from "aos"
 import "aos/dist/aos.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEventsAction } from "../features/events/getAllEvents";
 
 function Home() {
+  const dispatch = useDispatch();
+  const { status, code, message, data, loading } = useSelector(
+    (state) => state.getAllEvents
+  );
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,6 +29,10 @@ function Home() {
     Aos.init({duration:1000});
   },[])
 
+  useEffect(() => {
+    dispatch(getAllEventsAction());
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
@@ -33,20 +42,20 @@ function Home() {
             Latest Awesome Events
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6" data-aos="fade-right">
-            {featuredEvents.slice(0, 6).map((event) => (
+            {data?.slice(0, 6)?.map((event) => (
               <div
-                key={event.id}
+                key={event.eventID}
                 className="relative bg-white rounded-lg shadow-md h-64 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(event)}
                 data-aos="fade-up"
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${event.imageUrl})` }}
+                  style={{ backgroundImage: `url(${event.images[0]})` }}
                 ></div>
                 <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
                   <h3 className="text-xl text-white font-sans font-semibold mb-2">
-                    {event.title}
+                    {event.name}
                   </h3>
                 </div>
               </div>
@@ -60,7 +69,7 @@ function Home() {
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
-          slides={selectedEvent ? selectedEvent.slides : []}
+          event={selectedEvent}
         />
       </div>
     </div>
