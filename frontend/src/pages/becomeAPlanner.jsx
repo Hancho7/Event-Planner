@@ -47,13 +47,13 @@ function BecomeAPlanner() {
               <p>
                 To request to become a planner on our platform, you must meet
                 the following requirements:{" "}
-                <p className="my-3">- You must be at least 18 years old.</p>
+                <p className="my-3">1.1. You must be at least 18 years old.</p>
                 <p className="my-3">
-                  - You must provide a valid phone number registered with either
-                  MTN or Vodafone (Telecel).
+                  1.2. You must provide a valid phone number registered with
+                  either MTN or Vodafone (Telecel).
                 </p>{" "}
                 <p className="my-3">
-                  - The phone number provided must be registered for Mobile
+                  1.3. The phone number provided must be registered for Mobile
                   Money (MoMo) services to receive payments for paid events.
                 </p>
               </p>
@@ -138,10 +138,10 @@ function BecomeAPlanner() {
               </p>{" "}
               <p className="my-3">
                 {" "}
-                5.2. By clicking the <em>Proceed</em>
-                button, you acknowledge that you have read, understood, and
-                agreed to these terms and conditions. If you satisfy all the
-                above requirements, please click the button below to proceed.{" "}
+                5.2. By clicking the Proceed button, you acknowledge that you
+                have read, understood, and agreed to these terms and conditions.
+                If you satisfy all the above requirements, please click the
+                button below to proceed.{" "}
               </p>
             </div>
           </div>

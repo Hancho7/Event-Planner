@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import  { useState, useContext } from "react";
 import { AdminContext } from "../../Context/AdminContext.jsx";
 
 const AdminProfile = () => {

@@ -9,9 +9,9 @@ import { useEffect } from "react";
 
 function AboutUsPage() {
   const team = [
-    { name: "Imar Brown", role: "CEO", image: team1 },
-    { name: "Future", role: "Manger", image: team2 },
-    { name: "Hancho", role: "Director", image: team3 },
+    { name: "Osei-Bonsu Elton", role: "CEO", image: team1 },
+    { name: "Abdul-Aziz Nasiru", role: "Manger", image: team2 },
+    { name: "Frank Naro", role: "Director", image: team3 },
   ];
 
   useEffect(() => {
@@ -50,11 +50,11 @@ function AboutUsPage() {
           <p className="mt-4 text-lg ">
             Our mission is to provide high-quality services and products to our
             customers. We strive for excellence in everything we do and aim to
-            make a positive impact in our community.Leading our team is Imar,
+            make a positive impact in our community.Leading our team is Elton,
             our Chief Executive Officer, whose vision and 6 years of industry
-            experience drive our company forward. Hancho, our Director of
+            experience drive our company forward. Frank, our Director of
             Operations, meticulously oversees all operational aspects, ensuring
-            every detail is flawlessly executed. Our Event Manager, Future,
+            every detail is flawlessly executed. Our Event Manager, Nasiru,
             works closely with clients to tailor each event to their specific
             needs, bringing creativity and precision to every project.
           </p>
