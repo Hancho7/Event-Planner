@@ -19,6 +19,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import TermsOfService from "./pages/TermsOfService.jsx";
 import UserProfile from "./pages/updateProfile.jsx";
 import BecomeAPlanner from "./pages/becomeAPlanner.jsx";
+import ForgetPassword from "./pages/ForgetPassword.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/update-profile" element={<UserProfile />} />
                 <Route path="/planner-request" element={<BecomeAPlanner />} />
+                <Route path="/forget-password" element={<ForgetPassword />} />
               </Route>
 
               <Route path="/admin" element={<Admin />}>
