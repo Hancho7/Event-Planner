@@ -2,6 +2,7 @@ import { watchLogin } from "./auth/login";
 import { watchRegister } from "./auth/register";
 import { watchVerifyEmail } from "./auth/verifyEmail";
 import { watchGetAllEvents } from "./events/getAllEvents";
+import { watchPlannerRequest } from "./payments/initializePlanner";
 
 export const sagas = [
   //authentication
@@ -11,4 +12,7 @@ export const sagas = [
 
   //events
   watchGetAllEvents(),
+
+  //payments
+  watchPlannerRequest(),
 ];

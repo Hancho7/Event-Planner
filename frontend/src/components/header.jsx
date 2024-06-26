@@ -1,15 +1,14 @@
-// src/components/Header.js
-
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaUserPlus, FaSignInAlt } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { FaUserPlus, FaSignInAlt, FaUser } from "react-icons/fa";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Events", href: "/events", current: false },
-  { name: "About Us", href: "/about-us", current: false },
+  { name: "About Us", href: "/about-us", icon: null, current: false },
 ];
 
 function classNames(...classes) {
@@ -17,7 +16,7 @@ function classNames(...classes) {
 }
 
 export default function Header() {
-  const Navigate = useNavigate();
+  const { data } = useSelector((state) => state.login);
   const location = useLocation();
   const [sticky, setSticky] = useState(false);
 
@@ -32,8 +31,60 @@ export default function Header() {
     };
   }, []);
 
-  const becomeAPlanner = () => {
-    Navigate("/planner-request");
+  const renderLoggedInNav = () => {
+    if (data) {
+      if (data.role === "Planner") {
+        return (
+          <>
+            <Link to="/dashboard">
+              <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+                <FaUser className="mr-2" />
+                <span>Dashboard</span>
+              </button>
+            </Link>
+            <Link to="/update-profile">
+              <button className="bg-gray-500 flex items-center rounded-sm h-8 px-2 hover:bg-gray-600 text-white">
+                <FaUser className="mr-2" />
+                <span>Profile</span>
+              </button>
+            </Link>
+          </>
+        );
+      } else if (data.role === "Client") {
+        return (
+          <>
+            <Link to="/planner-request">
+              <button className="bg-[#504ee0] flex items-center rounded-md h-8 px-2 hover:bg-[#6563d4]  text-white">
+                <FaUser className="mr-2" />
+                <span>Become a Planner</span>
+              </button>
+            </Link>
+            <Link to="/update-profile">
+              <button className="bg-gray-500 flex items-center rounded-sm h-8 px-2 hover:bg-gray-600 text-white">
+                <FaUser className="mr-2" />
+                <span>Profile</span>
+              </button>
+            </Link>
+          </>
+        );
+      }
+    }
+    return (
+      <>
+        <Link to="/login">
+          <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+            <FaSignInAlt className="mr-2" />
+            <span>Log In</span>
+          </button>
+        </Link>
+        <Link to="/register">
+          <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white">
+            <FaUserPlus className="mr-2" />
+            <span>Register</span>
+          </button>
+        </Link>
+      </>
+    );
   };
 
   return (
@@ -53,7 +104,7 @@ export default function Header() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="flex flex-1 place-content-start md:place-content-between items-center  sm:items-stretch sm:justify-between">
+                <div className="flex items-center justify-between w-full">
                   <div className="flex-shrink-0 flex items-center">
                     <Link to="/">
                       <h6 className="font-extrabold text-lg">
@@ -63,50 +114,29 @@ export default function Header() {
                     </Link>
                   </div>
                   <div className="hidden sm:block sm:ml-6">
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4 items-center">
                       {navigation.map((item) => (
                         <Link
                           key={item.name}
                           to={item.href}
                           className={classNames(
+                            "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex items-center",
                             location.pathname === item.href
                               ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "rounded-md px-3 py-2 text-sm font-medium"
+                              : ""
                           )}
                           aria-current={
                             location.pathname === item.href ? "page" : undefined
                           }
                         >
+                          {item.icon}
                           {item.name}
                         </Link>
                       ))}
                     </div>
                   </div>
                   <div className="hidden sm:flex items-center space-x-4">
-                    {location.pathname === "/events" ? (
-                      <button
-                        className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white"
-                        onClick={becomeAPlanner}
-                      >
-                        Become a Planner
-                      </button>
-                    ) : (
-                      <>
-                        <Link to="/login">
-                          <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
-                            <FaSignInAlt className="mr-2" />
-                            <span>Log In</span>
-                          </button>
-                        </Link>
-                        <Link to="/register">
-                          <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white">
-                            <FaUserPlus className="mr-2" />
-                            <span>Register</span>
-                          </button>
-                        </Link>
-                      </>
-                    )}
+                    {renderLoggedInNav()}
                   </div>
                 </div>
               </div>
@@ -129,40 +159,20 @@ export default function Header() {
                       location.pathname === item.href ? "page" : undefined
                     }
                   >
+                    {item.icon}
                     {item.name}
                   </Disclosure.Button>
                 ))}
               </div>
               <div className="px-2 pb-3 pt-2">
-                {location.pathname === "/events" ? (
-                  <button
-                    className="bg-blue-500 flex items-center rounded-md h-8 px-2 hover:bg-blue-600 w-full"
-                    onClick={becomeAPlanner}
-                  >
-                    Become a Planner
-                  </button>
-                ) : (
-                  <div className="flex flex-col items-start gap-2">
-                    <Link to="/login" className="w-full">
-                      <button className="flex items-center rounded-sm h-8 px-2 w-full">
-                        <FaSignInAlt className="mr-2" />
-                        <span>Log In</span>
-                      </button>
-                    </Link>
-                    <Link to="/register" className="w-full">
-                      <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 w-full">
-                        <FaUserPlus className="mr-2" />
-                        <span>Register</span>
-                      </button>
-                    </Link>
-                  </div>
-                )}
+                <div className="flex flex-col items-start gap-2">
+                  {renderLoggedInNav()}
+                </div>
               </div>
             </Disclosure.Panel>
           </>
         )}
       </Disclosure>
-      {/* {showForm && <PlannerForm onClose={closeForm} />} */}
     </div>
   );
 }

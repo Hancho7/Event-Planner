@@ -37,14 +37,20 @@ const signin = async (req, res) => {
 
     req.session.user = {
       id: user.userID,
+      name:user.name,
       email: user.email,
       role: user.role,
+      pic: user.profile_picture,
+      phone: user.phone_number
     };
 
     const data = {
       id: user.userID,
+      name:user.name,
       email: user.email,
       role: user.role,
+      pic: user.profile_picture,
+      phone: user.phone_number
     };
 
     console.log("session", req.session);

@@ -2,12 +2,39 @@ import planner from "../assets/planner.jpg";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { plannerRequestAction } from "../features/payments/initializePlanner";
+import { ClipLoader } from "react-spinners";
 
 function BecomeAPlanner() {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.login);
+  const {
+    data: paystack,
+    loading,
+    
+  } = useSelector((state) => state.plannerRequest);
+
   useEffect(() => {
     Aos.init({ duration: 3000 });
   }, []);
+
+  const handleCLick = () => {
+    dispatch(
+      plannerRequestAction({
+        userID: data.id,
+        amount: 0.1,
+        type: "PLANNER_REQUEST",
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (paystack && paystack.authorization_url) {
+      window.location.href = paystack.authorization_url;
+    }
+  }, [paystack]);
 
   return (
     <div>
@@ -146,8 +173,11 @@ function BecomeAPlanner() {
             </div>
           </div>
           <div className="flex w-full justify-end my-8">
-            <button className=" w-32 bg-[#5870c5] py-2 rounded text-white font-semibold hover:bg-[#9fafe8]">
-              Proceed
+            <button
+              onClick={handleCLick}
+              className=" w-32 bg-[#5870c5] flex flex-row items-center justify-center gap-3 py-2 rounded text-white font-semibold hover:bg-[#9fafe8]"
+            >
+              Proceed {loading && <ClipLoader size={15} color="#fff" />}
             </button>
           </div>
           <p>

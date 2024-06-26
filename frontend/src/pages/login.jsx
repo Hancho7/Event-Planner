@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginAction } from "../features/auth/loginSlice";
+import { ClipLoader } from "react-spinners";
+import { useEffect } from "react";
 
 function LoginPage() {
-  const { loading, message, data, status, code, success } = useSelector((state) => state.login);
-  console.log({ loading, message, data, status, code, success });
+  const { loading, success } = useSelector((state) => state.login);
+  console.log({ loading, success });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -18,6 +21,12 @@ function LoginPage() {
       console.log(values);
     },
   });
+
+  useEffect(() => {
+    if (success) {
+      navigate("/");
+    }
+  }, [success, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -91,9 +100,9 @@ function LoginPage() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full gap-2 flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign in
+              Sign in {loading && <ClipLoader size={20} color="#fff" />}
             </button>
           </div>
         </form>
