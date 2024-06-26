@@ -1,7 +1,14 @@
 import { useFormik } from "formik";
 import eventSchema from "../../schema/event";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewEventAction } from "../../features/events/addNewEvents";
+import { ClipLoader } from "react-spinners";
 
 const AddEvent = () => {
+  const dispatch = useDispatch();
+  const { loading, success, message } = useSelector((state) => {
+    state.addNewEvent;
+  });
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -28,6 +35,7 @@ const AddEvent = () => {
       };
 
       console.log(formattedValues);
+      dispatch(addNewEventAction(formattedValues));
       // Submit the formattedValues to your API or handle them as needed
     },
   });
@@ -43,7 +51,9 @@ const AddEvent = () => {
       <h2 className="text-2xl text-[#ffdd50] font-bold mb-6 text-center">
         Add Event
       </h2>
-      <p className=" text-sm text-center">All fields with asterix are required</p>
+      <p className=" text-sm text-center">
+        All fields with asterix are required
+      </p>
 
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         <div className="flex flex-col">
@@ -218,7 +228,12 @@ const AddEvent = () => {
             {formik.errors.price && formik.touched.price && formik.errors.price}
           </span>
         </div>
-        <button type="submit">Add</button>
+        <button
+          className="flex justify-center items-center flex-row"
+          type="submit"
+        >
+          Add {loading && <ClipLoader />}
+        </button>
       </form>
     </div>
   );

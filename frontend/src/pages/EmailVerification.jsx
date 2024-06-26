@@ -1,7 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { verifyEmailAction } from "../features/auth/verifyEmail";
+import { ClipLoader } from "react-spinners";
 
 function EmailVerification() {
   const dispatch = useDispatch();
@@ -9,9 +10,12 @@ function EmailVerification() {
   const { userID, tokenLink } = useParams();
   const navigate = useNavigate();
 
-  const { status, code, message, data, loading } = useSelector(
+  const { success, loading } = useSelector(
     (state) => state.verifyEmail || {} // Provide default value
   );
+
+  const [showMessage, setShowMessage] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
   const handleInputChange = (e, index) => {
     const { value } = e.target;
@@ -28,10 +32,21 @@ function EmailVerification() {
   };
 
   useEffect(() => {
-    if (status === "Success") {
-      navigate("/login");
+    if (success) {
+      setShowMessage(true);
+      const timer = setInterval(() => {
+        setCountdown((prevCount) => prevCount - 1);
+      }, 1000);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
+      return () => {
+        clearInterval(timer);
+      };
     }
-  }, [status, navigate]);
+  }, [success, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -60,11 +75,19 @@ function EmailVerification() {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none"
+            className="w-full flex justify-center items-center gap-3 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none"
+            disabled={loading}
           >
-            Verify
+            Verify {loading && <ClipLoader />}
           </button>
         </form>
+
+        {showMessage && (
+          <div className="mt-4 text-center">
+            <p>You have successfully been verified!</p>
+            <p>Redirecting to login page in {countdown} seconds...</p>
+          </div>
+        )}
       </div>
     </div>
   );

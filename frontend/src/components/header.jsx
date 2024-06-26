@@ -36,7 +36,7 @@ export default function Header() {
       if (data.role === "Planner") {
         return (
           <>
-            <Link to="/dashboard">
+            <Link to="/admin">
               <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
                 <FaUser className="mr-2" />
                 <span>Dashboard</span>
