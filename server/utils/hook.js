@@ -1,6 +1,7 @@
 const { createSubAccount } = require("./paystack");
 const { generateRandomSixDigitNumber } = require("./random");
 const { sendSMS } = require("./communication");
+const { validatePhoneNumber } = require("./phoneLookUp");
 
 module.exports = {
   updateUserRoleAndSecretKey: async (requests, userId) => {
@@ -30,9 +31,17 @@ module.exports = {
       }
 
       // Create a subaccount for the user
+      const carrier = await validatePhoneNumber(user.phone_number);
+      if (!carrier) {
+        await sendSMS(
+          user.phone_number,
+          `Your phone number should be either from MTN Ghana or Vodafone`
+        );
+        throw new Error("Invalid phone number");
+      }
       const newSubAccount = await createSubAccount(
         user.name,
-        "MTN",
+        carrier,
         user.phone_number,
         5
       );
@@ -49,6 +58,10 @@ module.exports = {
 
       // Commit the transaction
       await transaction.commit();
+      await sendSMS(
+        user.phone_number,
+        `You have successfully been made a Planner. You can now post your events and also recieve payments on payable events`
+      );
 
       console.log(
         `User role updated to Planner for userID: ${user.userID} and subaccount created`

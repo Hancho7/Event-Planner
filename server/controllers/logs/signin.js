@@ -41,9 +41,15 @@ const signin = async (req, res) => {
       role: user.role,
     };
 
+    const data = {
+      id: user.userID,
+      email: user.email,
+      role: user.role,
+    };
+
     console.log("session", req.session);
 
-    return responseMiddleware(res, 200, "Login successfull", null, "Success");
+    return responseMiddleware(res, 200, "Login successfull", data, "Success");
   } catch (error) {
     if (error instanceof Error) {
       return responseMiddleware(res, 500, error.message, null, "Server Error");
