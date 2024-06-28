@@ -103,6 +103,7 @@ async function handlePaidEvent(user, event, planner, amount, transaction, res) {
 
 async function addUserToEvent(req, res) {
   const { eventID, userID, amount } = req.body;
+  console.log("request body", req.body)
   const transaction = await db.sequelize.transaction();
 
   try {

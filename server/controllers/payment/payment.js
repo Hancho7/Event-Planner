@@ -60,60 +60,42 @@ module.exports = {
       return responseMiddleware(res, 500, error.message, null, "Error");
     }
   },
-  getUserUnpaidRequests: async (req, res) => {
-    const { userID } = req.body;
-
+  retrieveUserPayments: async (req, res) => {
+    const { userID } = req.params;
+    console.log("userID", userID);
     try {
-      const payments = await Payments.findAll({
-        where: {
-          [Op.and]: [{ userID }, { paid: false }],
-        },
-        attributes: ["name", "amount", "paystack", "type"],
-      });
-
-      if (!payments || payments.length === 0) {
-        return responseMiddleware(
-          res,
-          404,
-          "No unpaid requests found",
-          null,
-          "Error"
-        );
+      const user = await Users.findOne({ where: { userID } });
+      if (!user) {
+        return responseMiddleware(res, 404, "User not found");
       }
-
-      const allPayments = payments.map((payment) => {
-        return {
-          name: payment.name,
-          amount: payment.amount,
-          type: payment.type,
-          url: payment.paystack.authorization_url,
-          reference: payment.paystack.reference,
-        };
-      });
-
+      const payments = await Payments.findAll({ where: { userID } });
       return responseMiddleware(
         res,
         200,
-        "Unpaid requests found",
-        allPayments,
+        "Payments retrieved successfully",
+        payments,
         "Success"
       );
     } catch (error) {
-      return responseMiddleware(res, 500, error.message, null, "Error");
+      console.log("error", error);
+      return responseMiddleware(
+        res,
+        500,
+        "Internal server error",
+        null,
+        error.message
+      );
     }
   },
 
-  deleteSpecificRequest: async (req, res) => {
-    const { userID, reference } = req.body;
+  deleteSpecificPaymentRequest: async (req, res) => {
+    const { userID, id } = req.body;
 
     try {
       // Find the specific request
       const request = await Payments.findOne({
         where: {
-          [Op.and]: [
-            { userID },
-            { paystack: { reference } }, // Note: Sequelize does not support nested JSON queries directly
-          ],
+          [Op.and]: [{ userID }, { id }],
         },
       });
 

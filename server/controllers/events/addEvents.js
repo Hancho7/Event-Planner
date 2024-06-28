@@ -19,6 +19,7 @@ const createEvents = async (req, res) => {
   console.log("request body\n", req.body);
 
   const images = req.files;
+  console.log("request files\n", req.files);
 
   // Validate dates
   if (new Date(endOfDate) <= new Date(startOfDate)) {
