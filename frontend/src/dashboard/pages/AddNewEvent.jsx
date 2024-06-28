@@ -6,11 +6,13 @@ import { ClipLoader } from "react-spinners";
 
 const AddEvent = () => {
   const dispatch = useDispatch();
-  const { loading, success, message } = useSelector((state) => {
-    state.addNewEvent;
-  });
+  const { data } = useSelector((state) => state.login);
+  const { loading, success, message } = useSelector(
+    (state) => state.addNewEvent
+  );
   const formik = useFormik({
     initialValues: {
+      plannerID: data.id,
       name: "",
       location: "",
       images: [],
@@ -21,7 +23,7 @@ const AddEvent = () => {
       numberOfAttendees: "",
       price: "",
     },
-    validationSchema: eventSchema,
+    // validationSchema: eventSchema,
     onSubmit: (values) => {
       const startOfDate = new Date(values.startOfDate + "Z"); // Add 'Z' to indicate UTC time zone
       const endOfDate = new Date(values.endOfDate + "Z");
@@ -70,7 +72,7 @@ const AddEvent = () => {
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.name && formik.touched.name && formik.errors.name}
@@ -90,7 +92,7 @@ const AddEvent = () => {
             value={formik.values.location}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.location &&
@@ -111,7 +113,7 @@ const AddEvent = () => {
             name="images"
             multiple
             onChange={handleFileChange}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.images &&
@@ -133,7 +135,7 @@ const AddEvent = () => {
             value={formik.values.startOfDate}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.startOfDate &&
@@ -155,7 +157,7 @@ const AddEvent = () => {
             value={formik.values.endOfDate}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.endOfDate &&
@@ -177,7 +179,7 @@ const AddEvent = () => {
             value={formik.values.bookingDeadline}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.bookingDeadline &&
@@ -200,7 +202,7 @@ const AddEvent = () => {
             value={formik.values.numberOfAttendees}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.numberOfAttendees &&
@@ -222,19 +224,20 @@ const AddEvent = () => {
             value={formik.values.price}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="mt-1 block w-full px-3 py-2 border border-[#ffdd50] rounded-md shadow-sm"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm"
           />
           <span className=" text-red-500 text-sm">
             {formik.errors.price && formik.touched.price && formik.errors.price}
           </span>
         </div>
         <button
-          className="flex justify-center items-center flex-row"
+          className="flex justify-center items-center gap-3 flex-row w-full bg-blue-700 hover:bg-blue-500 h-9 text-white font-semibold py-3 rounded-sm"
           type="submit"
         >
-          Add {loading && <ClipLoader />}
+          Add {loading && <ClipLoader color="white" size={20} />}
         </button>
       </form>
+      {success && <div className="flex items-center justify-center text-green-700 my-3">Your event has successfully been created!</div>}
     </div>
   );
 };

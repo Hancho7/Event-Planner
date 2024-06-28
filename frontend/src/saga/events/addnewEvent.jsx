@@ -13,16 +13,31 @@ function* handleAddNewEvent(action) {
   try {
     yield put(addNewEventPending()); // Start loading
 
-    const response = yield call(axios.post, addNewEvents, action.payload);
+    const formData = new FormData();
+    formData.append("plannerID", action.payload.plannerID);
+    formData.append("name", action.payload.name);
+    formData.append("location", action.payload.location);
+    formData.append("startOfDate", action.payload.startOfDate);
+    action.payload.images.forEach((image) => {
+      formData.append("images", image);
+    });
+    formData.append("endOfDate", action.payload.endOfDate);
+    formData.append("bookingDeadline", action.payload.bookingDeadline);
+    formData.append("attendees", action.payload.attendees || "");
+    formData.append(
+      "numberOfAttendees",
+      action.payload.numberOfAttendees || ""
+    );
+    formData.append("price", action.payload.price || "");
+    console.log("formData", formData);
+
+    const response = yield call(axios.post, addNewEvents, formData);
     console.log("new event response saga", response);
 
-    // Assuming your response structure is consistent with the middleware
     const { status, code, message, data } = response.data;
 
-    // Dispatch success action
     yield put(addNewEventSuccess({ status, code, message, data }));
   } catch (error) {
-    // Dispatch error action
     yield put(addNewEventError(error));
   }
 }

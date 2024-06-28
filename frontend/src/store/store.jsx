@@ -6,6 +6,9 @@ import loginReducer from "../features/auth/loginSlice";
 import getAllEventsReducer from "../features/events/getAllEvents";
 import plannerRequestReducer from "../features/payments/initializePlanner";
 import addNewEventReducer from "../features/events/addNewEvents";
+import getUserPaymentsReducer from "../features/payments/getUserPayments";
+import deletePaymentRequestReducer from "../features/payments/deletePaymentRequest";
+import attendEventReducer from "../features/events/attendEvent";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,9 +21,12 @@ const store = configureStore({
 
     //payments
     plannerRequest: plannerRequestReducer,
+    getUserPayments: getUserPaymentsReducer,
+    deletePaymentRequest: deletePaymentRequestReducer,
 
     //events
     addNewEvent: addNewEventReducer,
+    attendEvent: attendEventReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),

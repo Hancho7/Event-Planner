@@ -12,10 +12,12 @@ import { PiStudentBold } from "react-icons/pi";
 import { BiLogOut } from "react-icons/bi";
 import DropdownMenu from "./menu";
 import { AdminContext } from "../Context/AdminContext.jsx";
+import { useSelector } from "react-redux";
 
 export default function Admin() {
   const { pathname } = useLocation();
-  const { admin } = useContext(AdminContext); 
+  const { admin } = useContext(AdminContext);
+  const { data } = useSelector((state) => state.login);
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -117,7 +119,7 @@ export default function Admin() {
             onClick={(e) => [e.preventDefault(), navigate("/admin/Profile")]}
             className="self-center text-white md:self-auto hover:cursor-pointer font-semibold duration-500"
           >
-            {admin.username}
+            {data.name}
           </h1>
           {isSmallScreen && <DropdownMenu pages={pages} navigate={navigate} />}
         </div>
