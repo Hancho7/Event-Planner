@@ -1,6 +1,9 @@
 // import React from "react";
 import { FaEnvelope } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaTwitter} from "react-icons/fa";
 
 const TermsOfService = () => {
   return (
@@ -64,31 +67,63 @@ const TermsOfService = () => {
       </h2>
       <p className="mb-6 text-lg leading-relaxed">
         These terms shall be governed and construed in accordance with the laws
-        of [Your Country], without regard to its conflict of law provisions.
+        of Ghana, without regard to its conflict of law provisions.
       </p>
       <h2 className="text-2xl font-semibold mb-4 text-blue-500">Contact Us</h2>
-      <p className="text-lg leading-relaxed mb-2">
-        If you have any questions about these Terms, please contact us:
+      <p className="text-lg leading-relaxed mb-6">
+        If there are any questions regarding this privacy policy, you may
+        contact us using the information below:
       </p>
-      <p className="text-lg leading-relaxed">
-        Event Center Management System
-        <br />
-        <FaEnvelope className="text-blue-600 mr-2" />
-        Email:{" "}
-        <a
-          href="mailto:info@example.com"
-          className="text-blue-600 hover:underline"
-        >
-          info@eventcenter2.com
-        </a>
-        <br />
-        <FaPhone className="text-blue-600 mr-2" />
-        Phone:{" "}
-        <a href="tel:+1234567890" className="text-blue-600 hover:underline">
-          +233 549 671 479
-        </a>
-      </p>
-    </div>
+      <div className="flex justify-center mb-6">
+        <div className="flex items-center mr-4">
+          <FaEnvelope className="text-[#ffdd50] mr-2" />
+          <a
+            href="mailto:info@example.com"
+            className="text-blue-600 hover:underline"
+          >
+            info@eventcenter2.com
+          </a>
+        </div>
+        <div className="flex items-center mr-4">
+          <FaPhone className="text-[#ffdd50] mr-2" />
+          <a href="tel:+1234567890" className="text-blue-600 hover:underline">
+            +233 549 671 479
+          </a>
+        </div>
+        <div className="flex items-center mr-4">
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-200"
+          >
+            <FaFacebook className="w-6 h-6 " />
+          </a>
+        </div>
+
+        <div className="flex items-center mr-4">
+          <a
+            href="https://wa.me/+233549671479"
+            className="text-green-600 hover:text-green-500"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaWhatsapp className="w-6 h-6 " />
+          </a>
+          </div>
+          
+          <div className="flex items-center mr-4">
+            <a
+            href="https://www.twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-500"
+            >
+              <FaTwitter className="w-6 h-6" />
+            </a>
+          </div>
+        </div>
+      </div>
   );
 };
 
