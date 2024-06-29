@@ -1,5 +1,5 @@
 // import React from "react";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 const Footer = () => {
@@ -45,7 +45,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="tel:+1234567890" className="hover:underline">
-                <FaPhoneAlt className="text-[#ffdd50] mr-3" />
+                  <FaPhoneAlt className="text-[#ffdd50] mr-3" />
                   +233 549 671 479
                 </a>
               </li>
@@ -62,7 +62,7 @@ const Footer = () => {
                   href="https://www.facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white-600 hover:text-blue-500"
+                  className="text-blue-600 hover:text-blue-500"
                 >
                   <FaFacebook className="w-6 h-6" />
                 </a>
@@ -72,7 +72,7 @@ const Footer = () => {
                   href="https://www.twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white-600 hover:text-blue-500"
+                  className="text-blue-600 hover:text-blue-500"
                 >
                   <FaTwitter className="w-6 h-6" />
                 </a>
@@ -82,7 +82,7 @@ const Footer = () => {
                   href="https://www.instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white-600 hover:text-blue-500"
+                  className="text-red-600 hover:text-[#dc2743]"
                 >
                   <FaInstagram className="w-6 h-6" />
                 </a>
@@ -92,9 +92,19 @@ const Footer = () => {
                   href="https://www.linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white-600 hover:text-blue-500"
+                  className="text-blue-600 hover:text-blue-500"
                 >
                   <FaLinkedin className="w-6 h-6" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/+233549671479"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-600 hover:text-green-500"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
                 </a>
               </li>
             </ul>
