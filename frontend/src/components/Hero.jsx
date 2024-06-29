@@ -49,7 +49,6 @@ function Hero({ searchQuery, handleSearchChange }) {
           onChange={handleSearchChange}
           className="rounded-sm h-10 md:w-[22rem] px-3 font-semibold"
         />
-        <FaSearch className="text-gray-400" />
       </div>
     </div>
   );
