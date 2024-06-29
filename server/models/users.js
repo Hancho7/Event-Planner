@@ -53,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         unique: true,
       },
+      events: {
+        type: DataTypes.ARRAY(DataTypes.UUID),
+        allowNull: true,
+        unique: true,
+      },
       role: {
         type: DataTypes.ENUM("Planner", "Client"),
         allowNull: false,

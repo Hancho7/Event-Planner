@@ -2,7 +2,7 @@ const { initializeTransaction } = require("../../utils/paystack");
 const db = require("../../models");
 const { responseMiddleware } = require("../../utils/response");
 const { where, Op } = require("sequelize");
-const { Payments, Users } = db;
+const { Payments, Users, Events } = db;
 
 module.exports = {
   initializePaymentRequest: async (req, res) => {
@@ -63,17 +63,42 @@ module.exports = {
   retrieveUserPayments: async (req, res) => {
     const { userID } = req.params;
     console.log("userID", userID);
+
     try {
+      // Find the user by userID
       const user = await Users.findOne({ where: { userID } });
       if (!user) {
         return responseMiddleware(res, 404, "User not found");
       }
+
+      // Find all payments for the user
       const payments = await Payments.findAll({ where: { userID } });
+
+      // Fetch event names for each payment
+      const paymentsWithEventNames = await Promise.all(
+        payments.map(async (payment) => {
+          const event = await Events.findOne({
+            attributes: ["name"], // Select only 'name' attribute
+            where: { eventID: payment.eventID },
+          });
+          return {
+            id: payment.id,
+            type: payment.type,
+            paid: payment.paid,
+            paystack: payment.paystack?.authorization_url,
+            amount: payment.amount,
+            eventName: event ? event.name : null, // Return null if event is not found
+            createdAt: payment.createdAt,
+            updatedAt: payment.updatedAt,
+          };
+        })
+      );
+
       return responseMiddleware(
         res,
         200,
         "Payments retrieved successfully",
-        payments,
+        paymentsWithEventNames,
         "Success"
       );
     } catch (error) {

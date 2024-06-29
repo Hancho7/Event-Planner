@@ -13,41 +13,55 @@ async function findEvent(eventID, transaction) {
 }
 
 async function handleFreeEvent(user, event, transaction, res) {
-  const updatedEvent = await event.update(
-    {
-      attendees: [...event.attendees, user.id],
-      numberOfAttendees: event.numberOfAttendees - 1,
-    },
-    { transaction }
-  );
+  console.log("user in free event\n", user);
+  console.log("event in free event\n", event);
 
-  const updatedUser = await user.update(
-    {
-      event_id: [...user.event_id, event.eventID],
-    },
-    { transaction }
-  );
+  try {
+    const [updatedEvent, updatedUser] = await Promise.all([
+      event.update(
+        {
+          attendeeList: event.attendeeList
+            ? event.attendeeList.length === 0
+              ? [user.userID]
+              : [...event.attendeeList, user.userID]
+            : [user.userID],
+          numberOfAttendees: event.numberOfAttendees - 1,
+        },
+        { transaction }
+      ),
+      user.update(
+        {
+          events: user.events
+            ? user.events.length === 0
+              ? [event.eventID]
+              : [...user.events, event.eventID]
+            : [event.eventID],
+        },
+        { transaction }
+      ),
+    ]);
 
-  if (!updatedEvent || !updatedUser) {
+    console.log("updatedEvent in free event\n", updatedEvent);
+    console.log("updatedUser in free event\n", updatedUser);
+
+    await sendSMS(
+      user.phone_number,
+      `You have been added to the attendee list of this event: ${event.name}`
+    );
+
+    await transaction.commit();
+    return responseMiddleware(
+      res,
+      200,
+      "User added to event attendees",
+      null,
+      "Success"
+    );
+  } catch (error) {
+    console.error("Error in handleFreeEvent:", error);
     await transaction.rollback();
     return responseMiddleware(res, 500, "Failed to register for event");
   }
-  const smsSent = await sendSMS(
-    user.phone_number,
-    `You have been added to the attendee list of this event: ${event.name}`
-  );
-  if (smsSent.code !== "ok") {
-    await transaction.rollback();
-    return responseMiddleware(res, 500, "Failed to send SMS");
-  }
-  await transaction.commit();
-  return responseMiddleware(
-    res,
-    200,
-    "User added to event attendees",
-    null,
-    "Success"
-  );
 }
 
 async function handlePaidEvent(user, event, planner, amount, transaction, res) {
@@ -103,7 +117,7 @@ async function handlePaidEvent(user, event, planner, amount, transaction, res) {
 
 async function addUserToEvent(req, res) {
   const { eventID, userID, amount } = req.body;
-  console.log("request body", req.body)
+  console.log("request body", req.body);
   const transaction = await db.sequelize.transaction();
 
   try {

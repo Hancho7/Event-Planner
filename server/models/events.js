@@ -57,6 +57,9 @@ module.exports = (sequelize, DataTypes) => {
       attendees: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
       },
+      attendeeList: {
+        type: DataTypes.ARRAY(DataTypes.UUID),
+      },
       numberOfAttendees: {
         type: DataTypes.INTEGER,
       },

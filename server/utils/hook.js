@@ -100,15 +100,23 @@ module.exports = {
 
       const updatedEvent = await event.update(
         {
-          attendees: [...event.attendees, user.id],
-          numberOfAttendees: event.numberOfAttendees + 1,
+          attendeeList: event.attendeeList
+            ? event.attendeeList.length === 0
+              ? [user.id]
+              : [...event.attendeeList, user.id]
+            : [user.id],
+          numberOfAttendees: event.numberOfAttendees - 1,
         },
         { transaction }
       );
 
       const updatedUser = await user.update(
         {
-          event_id: [...user.event_id, event.eventID],
+          events: user.events
+            ? user.events.length === 0
+              ? [event.eventID]
+              : [...user.events, event.eventID]
+            : [event.eventID],
         },
         { transaction }
       );
@@ -140,12 +148,6 @@ module.exports = {
         user.phone_number,
         `This is your ticket code ${code}. Please do not share this code with anyone as it will be used to identify you`
       );
-
-      if (smsSent !== "ok") {
-        console.log("Failed to send SMS");
-        await transaction.rollback();
-        return;
-      }
 
       await transaction.commit();
       console.log("Transaction committed successfully");
