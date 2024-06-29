@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import header from "../assets/header.jpg";
 import header2 from "../assets/header 2.jpg";
 import header3 from "../assets/header 3.jpg";
@@ -8,37 +8,40 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 
 function Hero({ searchQuery, handleSearchChange }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const images = [header, header2, header3, header4];
-
   useEffect(() => {
     Aos.init({ duration: 3000 });
   }, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentIndex((currentIndex + 1) % images.length);
-    }, 7000);
-    return () => clearInterval(intervalId);
-  }, [currentIndex, images]);
 
   return (
     <div
       className="w-full h-screen text-white flex flex-col justify-center items-center relative"
       style={{
-        backgroundImage: `url(${images[currentIndex]})`,
+        animation: "slideshow 16s infinite",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        transition: "background-image 1s ease-in-out", // Add this line
       }}
     >
-      <h1 className="text-3xl lg:text-5xl font-bold text-center mb-4" data-aos="fade-left">
+      <style>{`
+        @keyframes slideshow {
+          0%, 100% { background-image: url(${header}); }
+          25% { background-image: url(${header2}); }
+          50% { background-image: url(${header3}); }
+          75% { background-image: url(${header4}); }
+        }
+      `}</style>
+      <h1
+        className="text-3xl lg:text-5xl font-bold text-center mb-4"
+        data-aos="fade-left"
+      >
         Welcome to Event Center
       </h1>
       <p className="text-lg text-center mb-6" data-aos="fade-right">
         Find and register for the best events around you.
       </p>
-      <div className="flex flex-col md:flex-row items-center text-black gap-2" data-aos="flip-up">
+      <div
+        className="flex flex-col md:flex-row items-center text-black gap-2"
+        data-aos="flip-up"
+      >
         <input
           type="text"
           placeholder="Search events..."
