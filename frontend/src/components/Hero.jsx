@@ -22,7 +22,7 @@ function Hero({ searchQuery, handleSearchChange }) {
         showThumbs={false}
         showStatus={false}
         showArrows={false}
-        interval={4000}
+        interval={7000}
         transitionTime={1000}
         className="absolute inset-0 w-full h-full z-[-1]"
       >
