@@ -160,6 +160,9 @@ const UserProfile = () => {
                     Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -174,11 +177,14 @@ const UserProfile = () => {
                       {payment.paid ? "Paid" : "Not Paid"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {payment.eventName }
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {!payment.paid && (
                         <>
                           <button
                             onClick={() =>
-                              handleClick(payment.paystack.authorization_url)
+                              handleClick(payment.paystack)
                             }
                             className="text-green-600 hover:text-green-900"
                           >
