@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import header from "../assets/header.jpg";
 import header2 from "../assets/header 2.jpg";
 import header3 from "../assets/header 3.jpg";
@@ -6,40 +6,32 @@ import header4 from "../assets/header 4.jpg";
 import { FaSearch } from "react-icons/fa";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the carousel CSS
 
 function Hero({ searchQuery, handleSearchChange }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = [header, header2, header3, header4];
+
   useEffect(() => {
     Aos.init({ duration: 3000 });
   }, []);
 
-  return (
-    <div className="w-full h-screen text-white flex flex-col justify-center items-center relative">
-      <Carousel
-        autoPlay
-        infiniteLoop
-        showThumbs={false}
-        showStatus={false}
-        showArrows={false}
-        interval={7000}
-        transitionTime={1000}
-        className="absolute inset-0 w-full h-full z-[-1]"
-      >
-        <div>
-          <img src={header} alt="Header 1" className="w-full h-full object-fill" />
-        </div>
-        <div>
-          <img src={header2} alt="Header 2" className="w-full h-full object-fill" />
-        </div>
-        <div>
-          <img src={header3} alt="Header 3" className="w-full h-full object-fill" />
-        </div>
-        <div>
-          <img src={header4} alt="Header 4" className="w-full h-full object-fill" />
-        </div>
-      </Carousel>
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((currentIndex + 1) % images.length);
+    }, 7000);
+    return () => clearInterval(intervalId);
+  }, [currentIndex, images]);
 
+  return (
+    <div
+      className="w-full h-screen text-white flex flex-col justify-center items-center relative"
+      style={{
+        backgroundImage: `url(${images[currentIndex]})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        transition: "background-image 1s ease-in-out", // Add this line
+      }}
+    >
       <h1 className="text-3xl lg:text-5xl font-bold text-center mb-4" data-aos="fade-left">
         Welcome to Event Center
       </h1>
