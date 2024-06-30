@@ -42,7 +42,10 @@ function EventsPage() {
     <div className="min-h-screen bg-gray-100 py-16">
       <div className="flex flex-col gap-12">
         <div>
-          <h2 className="text-3xl lg:text-5xl font-bold text-center" data-aos="fade-down">
+          <h2
+            className="text-3xl lg:text-5xl font-bold text-center"
+            data-aos="fade-down"
+          >
             All Events
           </h2>
           <div className="flex justify-center mt-4">
@@ -56,11 +59,12 @@ function EventsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-6 px-6" data-aos="fade-up">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-6 px-6">
           {filteredEvents?.map((event) => (
             <div
               key={event.eventID}
               className="relative bg-white rounded-lg shadow-md h-40 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+              data-aos="fade-up"
               onClick={() => openModal(event)}
             >
               <div
@@ -68,7 +72,9 @@ function EventsPage() {
                 style={{ backgroundImage: `url(${event.images[1]})` }}
               ></div>
               <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
-                <h3 className="text-xl font-sans text-white font-semibold mb-2">{event.name}</h3>
+                <h3 className="text-xl font-sans text-white font-semibold mb-2">
+                  {event.name}
+                </h3>
               </div>
             </div>
           ))}
