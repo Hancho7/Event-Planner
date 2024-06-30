@@ -1,4 +1,4 @@
-import { BeatLoader } from "react-spinners";
+import {  ClipLoader } from "react-spinners";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaPhoneAlt } from "react-icons/fa";
@@ -138,16 +138,17 @@ function Register() {
             <div>
               <button
                 type="submit"
-                className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                disabled={loading}
+                className="w-full flex justify-center items-center gap-2 bg-[#1F2937] hover:bg-[#45556b] text-white py-2 px-4 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                Register {loading && <BeatLoader />}
+                Register {loading && <ClipLoader size={20} color="white" />}
               </button>
             </div>
           </form>
           <div className="text-center mt-4">
             <p className="text-sm text-gray-600">
               I have an account,{" "}
-              <Link to="/login" className="text-indigo-600 hover:underline">
+              <Link to="/login" className="text-[#1F2937] hover:text-[#45556b] font-semibold hover:underline">
                 login here
               </Link>
             </p>

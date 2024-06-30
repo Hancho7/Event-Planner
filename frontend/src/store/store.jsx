@@ -9,6 +9,7 @@ import addNewEventReducer from "../features/events/addNewEvents";
 import getUserPaymentsReducer from "../features/payments/getUserPayments";
 import deletePaymentRequestReducer from "../features/payments/deletePaymentRequest";
 import attendEventReducer from "../features/events/attendEvent";
+import verifyEmailReducer from "../features/auth/verifyEmail";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -17,7 +18,7 @@ const store = configureStore({
     //Authentication
     register: registerReducer,
     login: loginReducer,
-    getAllEvents: getAllEventsReducer,
+    verifyEmail: verifyEmailReducer,
 
     //payments
     plannerRequest: plannerRequestReducer,
@@ -26,6 +27,7 @@ const store = configureStore({
 
     //events
     addNewEvent: addNewEventReducer,
+    getAllEvents: getAllEventsReducer,
     attendEvent: attendEventReducer,
   },
   middleware: (getDefaultMiddleware) =>

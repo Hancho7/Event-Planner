@@ -37,9 +37,11 @@ const verifyEmailSlice = createSlice({
     verifyEmailError: (state, action) => {
       state.loading = false;
       state.error = true;
+      state.data = null;
       state.code = action.payload.code;
       state.status = action.payload.status;
       state.message = action.payload.message;
+      state.success = false;
     },
   },
 });

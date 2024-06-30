@@ -90,7 +90,7 @@ function LoginPage() {
             <div className="text-sm">
               <Link
                 to="/forget-password"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                className="font-semibold text-[#1F2937] hover:text-[#45556b]"
               >
                 Forgot your password?
               </Link>
@@ -100,7 +100,7 @@ function LoginPage() {
           <div>
             <button
               type="submit"
-              className="group relative w-full gap-2 flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full gap-2 flex items-center justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-[#1F2937] hover:bg-[#45556b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Sign in {loading && <ClipLoader size={20} color="#fff" />}
             </button>
@@ -110,7 +110,7 @@ function LoginPage() {
           Not a member?{" "}
           <Link
             to="/register"
-            className="font-semibold text-indigo-600 hover:text-indigo-500"
+            className="font-semibold text-[#1F2937] hover:text-[#45556b]"
           >
             Register here
           </Link>

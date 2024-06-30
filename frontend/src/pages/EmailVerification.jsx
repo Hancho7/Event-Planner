@@ -10,9 +10,7 @@ function EmailVerification() {
   const { userID, tokenLink } = useParams();
   const navigate = useNavigate();
 
-  const { success, loading } = useSelector(
-    (state) => state.verifyEmail || {} // Provide default value
-  );
+  const { success, loading } = useSelector((state)=>state.verifyEmail  );
 
   const [showMessage, setShowMessage] = useState(false);
   const [countdown, setCountdown] = useState(3);
@@ -65,7 +63,7 @@ function EmailVerification() {
                   key={index}
                   type="text"
                   maxLength="1"
-                  className="w-[2rem] sm:w-12 h-12 text-center px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-[2rem] sm:w-12 h-12 text-center px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#45556b] focus:border-[#45556b]"
                   onChange={(e) => handleInputChange(e, index)}
                   ref={(el) => (inputRefs.current[index] = el)}
                   required
@@ -75,10 +73,10 @@ function EmailVerification() {
           </div>
           <button
             type="submit"
-            className="w-full flex justify-center items-center gap-3 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none"
+            className="w-full flex justify-center items-center gap-3 py-2 px-4 bg-[#1F2937] hover:bg-[#45556b] text-white font-bold rounded-md focus:outline-none"
             disabled={loading}
           >
-            Verify {loading && <ClipLoader />}
+            Verify {loading && <ClipLoader size={20} color="white" />}
           </button>
         </form>
 
