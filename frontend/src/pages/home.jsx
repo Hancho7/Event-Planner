@@ -50,13 +50,13 @@ function Home() {
             Latest Awesome Events
           </h2>
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6"
+            className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6"
             data-aos="fade-right"
           >
             {filteredEvents?.slice(0, 6)?.map((event) => (
               <div
                 key={event.eventID}
-                className="relative bg-white rounded-lg shadow-md h-64 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="relative bg-white rounded-lg shadow-md h-40 overflow-hidden group hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(event)}
                 data-aos="fade-up"
               >

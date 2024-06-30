@@ -14,41 +14,48 @@ function Hero({ searchQuery, handleSearchChange }) {
 
   return (
     <div
-      className="w-full h-screen text-white flex flex-col justify-center items-center relative"
+      className="w-full relative font-sans h-screen text-white flex flex-col justify-center items-center"
       style={{
         animation: "slideshow 16s infinite",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <style>{`
+      <img
+      loading="lazy"
+      className=" object-cover h-full w-full"
+      src={header}
+      />
+      {/* <style>{`
         @keyframes slideshow {
           0%, 100% { background-image: url(${header}); }
           25% { background-image: url(${header2}); }
           50% { background-image: url(${header3}); }
           75% { background-image: url(${header4}); }
         }
-      `}</style>
-      <h1
-        className="text-3xl lg:text-5xl font-bold text-center mb-4"
-        data-aos="fade-left"
-      >
-        Welcome to Event Center
-      </h1>
-      <p className="text-lg text-center mb-6" data-aos="fade-right">
-        Find and register for the best events around you.
-      </p>
-      <div
-        className="flex flex-col md:flex-row items-center text-black gap-2"
-        data-aos="flip-up"
-      >
-        <input
-          type="text"
-          placeholder="Search events..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="rounded-sm h-10 md:w-[22rem] px-3 font-semibold"
-        />
+      `}</style> */}
+      <div className="flex items-center flex-col absolute">
+        <h1
+          className="text-3xl lg:text-5xl font-bold text-center mb-4"
+          data-aos="fade-left"
+        >
+          Welcome to Event Center
+        </h1>
+        <p className="text-lg text-center mb-6" data-aos="fade-right">
+          Find and register for the best events around you.
+        </p>
+        <div
+          className="flex flex-col md:flex-row items-center text-black gap-2"
+          data-aos="flip-up"
+        >
+          <input
+            type="text"
+            placeholder="Search events..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="rounded-sm h-10 md:w-[22rem] px-3 font-semibold"
+          />
+        </div>
       </div>
     </div>
   );

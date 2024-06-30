@@ -39,9 +39,9 @@ function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[99]">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative h-[90%] overflow-auto">
+      <div className="bg-white flex flex-col p-6 rounded-lg shadow-lg max-w-lg w-full relative h-[90%] overflow-auto">
         <button
-          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+          className=" self-end top-2 right-2 text-gray-600 hover:text-gray-800 text-3xl mb-2"
           onClick={onClose}
         >
           &times;

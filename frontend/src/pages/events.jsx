@@ -68,7 +68,7 @@ function EventsPage() {
                 style={{ backgroundImage: `url(${event.images[1]})` }}
               ></div>
               <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
-                <h3 className="text-xl font-sans font-semibold mb-2">{event.name}</h3>
+                <h3 className="text-xl font-sans text-white font-semibold mb-2">{event.name}</h3>
               </div>
             </div>
           ))}
