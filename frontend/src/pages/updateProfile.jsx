@@ -7,7 +7,7 @@ import { deletePaymentRequestAction } from "../features/payments/deletePaymentRe
 
 const UserProfile = () => {
   const { data, loading, error } = useSelector((state) => state.login);
-  const { loading: deleteLoading } = useSelector(
+  const { loading: deleteLoading, success: deleteSuccess } = useSelector(
     (state) => state.deletePaymentRequest
   );
   const {
@@ -17,10 +17,14 @@ const UserProfile = () => {
   } = useSelector((state) => state.getUserPayments);
   const dispatch = useDispatch();
   const [editing, setEditing] = useState(false);
+  const [localPaymentsData, setLocalPaymentsData] = useState([]);
 
   const handleEditClick = () => {
     setEditing(!editing);
   };
+  useEffect(() => {
+    setLocalPaymentsData(paymentsData);
+  }, [paymentsData]);
 
   const formik = useFormik({
     initialValues: {
@@ -44,7 +48,9 @@ const UserProfile = () => {
 
   const handleDelete = (id) => {
     dispatch(deletePaymentRequestAction({ id, userID: data.id }));
-    console.log(id);
+    setLocalPaymentsData(
+      localPaymentsData.filter((payment) => payment.id !== id)
+    );
   };
 
   useEffect(() => {
@@ -163,7 +169,7 @@ const UserProfile = () => {
             </div>
           ) : paymentsError ? (
             <div className="text-red-500">{paymentsError}</div>
-          ) : paymentsData?.length > 0 ? (
+          ) : localPaymentsData?.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
