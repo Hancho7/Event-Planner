@@ -1,4 +1,4 @@
-// import React from "react";
+// Testimonials Data
 import testi3 from "../assets/testi3.jpg";
 import testi1 from "../assets/testi1.jpg";
 import testi2 from "../assets/testi2.jpg";
@@ -21,7 +21,7 @@ export const testimonials = [
     name: "Bob Brown",
     image: testi4,
     rating: 5,
-    feedback: "A truly wonderful experience from start to finish.",
+    feedback: "A truly wonderful experience.",
   },
   {
     name: "Bob Sandra",
@@ -29,9 +29,11 @@ export const testimonials = [
     rating: 4,
     feedback: "Professional and seamless event planning.",
   },
+  {
+    name: "Imar",
+    image: testi4,
+    rating: 5,
+    feedback: "Nice work.",
+  },
   // Add more testimonials as needed
 ];
-
-
-
-
