@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -11,6 +11,7 @@ function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loaded, setLoaded] = useState({}); // Track loaded images
 
   useEffect(() => {
     dispatch(getAllEventsAction());
@@ -32,6 +33,10 @@ function EventsPage() {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleImageLoad = (id) => {
+    setLoaded((prev) => ({ ...prev, [id]: true }));
   };
 
   const filteredEvents = data?.filter((event) =>
@@ -67,10 +72,17 @@ function EventsPage() {
               data-aos="fade-up"
               onClick={() => openModal(event)}
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-                style={{ backgroundImage: `url(${event.images[1]})` }}
-              ></div>
+              {!loaded[event.eventID] && (
+                <div className="absolute inset-0 bg-gray-300 animate-pulse"></div>
+              )}
+              <img
+                src={event.images[1]}
+                alt={event.name}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                  loaded[event.eventID] ? "opacity-100" : "opacity-0"
+                }`}
+                onLoad={() => handleImageLoad(event.eventID)}
+              />
               <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
                 <h3 className="text-xl font-sans text-white font-semibold mb-2">
                   {event.name}

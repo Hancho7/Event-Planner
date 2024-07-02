@@ -14,6 +14,7 @@ function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loaded, setLoaded] = useState({}); // Track loaded images
 
   const openModal = (event) => {
     setSelectedEvent(event);
@@ -35,6 +36,10 @@ function Home() {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleImageLoad = (id) => {
+    setLoaded((prev) => ({ ...prev, [id]: true }));
   };
 
   const filteredEvents = data?.filter((event) =>
@@ -60,10 +65,15 @@ function Home() {
                 onClick={() => openModal(event)}
                 data-aos="fade-up"
               >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${event.images[0]})` }}
-                ></div>
+                {!loaded[event.eventID] && (
+                  <div className="absolute inset-0 bg-gray-300 animate-pulse"></div>
+                )}
+                <img
+                  src={event.images[0]}
+                  alt={event.name}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${loaded[event.eventID] ? 'opacity-100' : 'opacity-0'}`}
+                  onLoad={() => handleImageLoad(event.eventID)}
+                />
                 <div className="relative p-4 bg-opacity-50 text-black-900 h-full flex flex-col justify-end transition-opacity duration-300 group-hover:bg-opacity-70">
                   <h3 className="text-xl text-white font-sans font-semibold mb-2">
                     {event.name}
