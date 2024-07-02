@@ -7,6 +7,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEventsAction } from "../features/events/getAllEvents";
+import Steps from "../components/Steps";
 
 function Home() {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ function Home() {
         <div className="h-screen px-2" data-aos="fade-up">
           <ResponsiveSlider testimonials={testimonials} />
         </div>
+        <Steps />
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
