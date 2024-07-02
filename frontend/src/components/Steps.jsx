@@ -1,8 +1,14 @@
 // import React from "react";
+import { useEffect } from "react";
 import event1b from "../assets/event1b.jpg";
 import "animate.css";
+import Aos from "aos";
+
 
 function Steps() {
+    useEffect(() => {
+      Aos.init({ duration: 1000 });
+    }, []);
   return (
     <section className="relative py-12 bg-gray-100">
       <div className="container mx-auto px-6 lg:px-12">
@@ -25,7 +31,10 @@ function Steps() {
               </div>
               <div className="faq-accordion space-y-6">
                 <div className="accrodion active animate__animated animate__fadeInRight">
-                  <div className="accrodion-inner bg-gray-600 p-4 rounded-lg shadow-lg">
+                  <div
+                    className="accrodion-inner bg-gray-600 p-4 rounded-lg shadow-lg"
+                    data-aos="fade-left"
+                  >
                     <div className="accrodion-title">
                       <h4 className="text-xl font-semibold text-white">
                         1. Create an Account
@@ -42,9 +51,13 @@ function Steps() {
                 </div>
                 <div
                   className="accrodion animate__animated animate__fadeInRight"
+                  data-aos="fade-left"
                   style={{ animationDelay: "300ms" }}
                 >
-                  <div className="accrodion-inner bg-gray-600 p-4 rounded-lg shadow-lg">
+                  <div
+                    className="accrodion-inner bg-gray-600 p-4 rounded-lg shadow-lg"
+                    data-aos="fade-left"
+                  >
                     <div className="accrodion-title">
                       <h4 className="text-xl font-semibold text-white">
                         2. Log in to Book for Event
@@ -52,9 +65,10 @@ function Steps() {
                     </div>
                     <div className="accrodion-content mt-2">
                       <p className="text-white">
-                        You can log in with your Email and the password you have created and verify
-                        via SMS or Email to make an event reservation for the Event
-                        by selecting the Event Type of your Choice.
+                        You can log in with your Email and the password you have
+                        created and verify via SMS or Email to make an event
+                        reservation for the Event by selecting the Event Type of
+                        your Choice.
                       </p>
                     </div>
                   </div>
@@ -63,7 +77,10 @@ function Steps() {
                   className="accrodion animate__animated animate__fadeInRight"
                   style={{ animationDelay: "600ms" }}
                 >
-                  <div className="accrodion-inner bg-gray-600 p-4 rounded-lg shadow-lg">
+                  <div
+                    className="accrodion-inner bg-gray-600 p-4 rounded-lg shadow-lg"
+                    data-aos="fade-left"
+                  >
                     <div className="accrodion-title">
                       <h4 className="text-xl font-semibold text-white">
                         3. Log in at any time to retrieve booking information.

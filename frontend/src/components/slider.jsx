@@ -60,19 +60,19 @@ function ResponsiveSlider({ testimonials }) {
           <div
             key={index}
             className="bg-gray-600 p-6 rounded-lg shadow-md mx-4 flex flex-col items-center"
-            style={{ height: "350px", }} 
+            style={{ height: "350px", margin:"20px" }} 
           >
             <img
               src={testimonial.image}
               alt={testimonial.name}
               className="w-20 h-20 rounded-full object-cover"
             />
-            <h3 className="text-xl font-semibold text-center mt-4">
+            <h3 className="text-xl text-white font-semibold text-center mt-4">
               {testimonial.name}
             </h3>
             <div className="flex justify-center mt-2">
               {Array.from({ length: testimonial.rating }, (_, i) => (
-                <span key={i} className="text-yellow-500">
+                <span key={i} className="text-yellow-300">
                   ★
                 </span>
               ))}
