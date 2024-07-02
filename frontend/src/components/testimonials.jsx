@@ -9,7 +9,7 @@ export const testimonials = [
     name: "John Doe",
     image: testi3,
     rating: 5,
-    feedback: "Amazing event management service. Everything was perfect!",
+    feedback: "Amazing event management service.",
   },
   {
     name: "Jane Smith",

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+// import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -60,7 +60,7 @@ function ResponsiveSlider({ testimonials }) {
           <div
             key={index}
             className="bg-gray-600 p-6 rounded-lg shadow-md mx-4 flex flex-col items-center"
-            style={{ height: "350px" }} // Fixed height for consistency
+            style={{ height: "350px", }} 
           >
             <img
               src={testimonial.image}
