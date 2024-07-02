@@ -1,11 +1,13 @@
+// BecomeAPlanner.js
+import { useEffect, useState } from "react";
 import planner from "../assets/planner.jpg";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { plannerRequestAction } from "../features/payments/initializePlanner";
 import { ClipLoader } from "react-spinners";
+import {PaymentModal} from "../components/Modal"; // Assuming PaymentModal is your modal component
 
 function BecomeAPlanner() {
   const dispatch = useDispatch();
@@ -13,14 +15,17 @@ function BecomeAPlanner() {
   const {
     data: paystack,
     loading,
-    
+    success,
   } = useSelector((state) => state.plannerRequest);
+
+  const [isPaymentRequested, setIsPaymentRequested] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     Aos.init({ duration: 3000 });
   }, []);
 
-  const handleCLick = () => {
+  const handleClick = () => {
     dispatch(
       plannerRequestAction({
         userID: data.id,
@@ -28,18 +33,24 @@ function BecomeAPlanner() {
         type: "PLANNER_REQUEST",
       })
     );
+    setIsPaymentRequested(true); // Set payment request initiated
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close modal
+    setIsPaymentRequested(false); // Reset payment request status
   };
 
   useEffect(() => {
-    if (paystack && paystack.authorization_url) {
-      window.location.href = paystack.authorization_url;
+    if (success && paystack && paystack.authorization_url) {
+      setIsModalOpen(true); // Open modal on successful payment request
     }
-  }, [paystack]);
+  }, [success, paystack]);
 
   return (
     <div>
       <div
-        className=" h-[70vh] flex items-center justify-center"
+        className="h-[70vh] flex items-center justify-center"
         style={{
           backgroundImage: `url(${planner})`,
           backgroundSize: "cover",
@@ -174,7 +185,7 @@ function BecomeAPlanner() {
           </div>
           <div className="flex w-full justify-end my-8">
             <button
-              onClick={handleCLick}
+              onClick={handleClick}
               className=" w-32 bg-[#5870c5] flex flex-row items-center justify-center gap-3 py-2 rounded text-white font-semibold hover:bg-[#9fafe8]"
             >
               Proceed {loading && <ClipLoader size={15} color="#fff" />}
@@ -186,6 +197,13 @@ function BecomeAPlanner() {
           </p>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={isModalOpen && isPaymentRequested}
+        closeModal={closeModal}
+        url={paystack && paystack.authorization_url}
+      />
     </div>
   );
 }
