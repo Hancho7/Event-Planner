@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import header from "../assets/header.jpg";
+import headerLowRes from "../assets/header-lowres.jpg";
 import header2 from "../assets/header 2.jpg";
 import header3 from "../assets/header 3.jpg";
 import header4 from "../assets/header 4.jpg";
@@ -8,9 +9,15 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 
 function Hero({ searchQuery, handleSearchChange }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   useEffect(() => {
     Aos.init({ duration: 3000 });
   }, []);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   return (
     <div
@@ -22,18 +29,19 @@ function Hero({ searchQuery, handleSearchChange }) {
       }}
     >
       <img
-      loading="lazy"
-      className=" object-cover h-full w-full"
-      src={header}
+        loading="lazy"
+        className={`object-cover h-full w-full transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+        src={header}
+        alt="Header"
+        onLoad={handleImageLoad}
       />
-      {/* <style>{`
-        @keyframes slideshow {
-          0%, 100% { background-image: url(${header}); }
-          25% { background-image: url(${header2}); }
-          50% { background-image: url(${header3}); }
-          75% { background-image: url(${header4}); }
-        }
-      `}</style> */}
+      {!imageLoaded && (
+        <img
+          className="object-cover h-full w-full absolute inset-0 filter blur-lg"
+          src={headerLowRes}
+          alt="Header Low Res"
+        />
+      )}
       <div className="flex items-center flex-col absolute">
         <h1
           className="text-3xl lg:text-5xl font-bold text-center mb-4"
