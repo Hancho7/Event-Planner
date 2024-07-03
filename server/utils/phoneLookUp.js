@@ -1,11 +1,10 @@
 require('dotenv').config();
-const requireESM = require('esm')(module);
 
 let Numlookupapi;
 
 async function initializeClient() {
   if (!Numlookupapi) {
-    const module = await requireESM('@everapi/numlookupapi-js');
+    const module = await import('@everapi/numlookupapi-js');
     Numlookupapi = module.default;
   }
 }
