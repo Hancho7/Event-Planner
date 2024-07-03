@@ -32,8 +32,13 @@ module.exports = {
 
       // Create a subaccount for the user
       const carrier = await validatePhoneNumber(user.phone_number);
-
-      console.log("carrier", carrier);
+      if (!carrier) {
+        await sendSMS(
+          user.phone_number,
+          `Your phone number should be either from MTN Ghana or Vodafone`
+        );
+        throw new Error("Invalid phone number");
+      }
       const newSubAccount = await createSubAccount(
         user.name,
         carrier,
@@ -49,7 +54,7 @@ module.exports = {
       // Update the user's secret key with the subaccount code
       user.secretKey = newSubAccount.subaccount.data.subaccount_code;
       console.log("sub account secret key in the hook", user.secretKey);
-      await user.save();
+      await user.save({ transaction });
 
       // Commit the transaction
       await transaction.commit();
@@ -63,6 +68,7 @@ module.exports = {
       );
     } catch (error) {
       // Rollback the transaction in case of an error
+      await transaction.rollback();
       console.error("Error updating user role and creating subaccount:", error);
     }
   },
