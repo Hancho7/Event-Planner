@@ -32,13 +32,8 @@ module.exports = {
 
       // Create a subaccount for the user
       const carrier = await validatePhoneNumber(user.phone_number);
-      if (!carrier) {
-        await sendSMS(
-          user.phone_number,
-          `Your phone number should be either from MTN Ghana or Vodafone`
-        );
-        throw new Error("Invalid phone number");
-      }
+
+      console.log("carrier", carrier);
       const newSubAccount = await createSubAccount(
         user.name,
         carrier,
