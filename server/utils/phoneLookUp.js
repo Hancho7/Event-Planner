@@ -1,19 +1,10 @@
 require('dotenv').config();
 
-let Numlookupapi;
-
-async function initializeClient() {
-  if (!Numlookupapi) {
-    const module = await import('@everapi/numlookupapi-js');
-    Numlookupapi = module.default;
-  }
-}
+const Numlookupapi = require('@everapi/numlookupapi-js').default;
 
 module.exports = {
   validatePhoneNumber: async function (phoneNumber) {
     try {
-      await initializeClient();
-
       const client = new Numlookupapi(process.env.NUMBERLOOKUP_API_KEY);
 
       const response = await client.validate(phoneNumber, {
