@@ -90,7 +90,7 @@ async function sendVerificationMessages(
       }),
       sendSMS(
         formattedPhoneNumber,
-        `Your verification code is: ${token.smsCode}`
+        `Your EventCenter verification code is: ${token.smsCode}`
       ),
     ]);
 
