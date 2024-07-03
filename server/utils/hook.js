@@ -49,7 +49,7 @@ module.exports = {
       // Update the user's secret key with the subaccount code
       user.secretKey = newSubAccount.subaccount.data.subaccount_code;
       console.log("sub account secret key in the hook", user.secretKey);
-      await user.save({ transaction });
+      await user.save();
 
       // Commit the transaction
       await transaction.commit();
@@ -63,7 +63,6 @@ module.exports = {
       );
     } catch (error) {
       // Rollback the transaction in case of an error
-      await transaction.rollback();
       console.error("Error updating user role and creating subaccount:", error);
     }
   },
