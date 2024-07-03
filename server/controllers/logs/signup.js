@@ -32,15 +32,7 @@ async function userExists(email, phone_number, transaction) {
 }
 
 // Function to create a new planner
-async function createUser(
-  name,
-  email,
-  phone_number,
-  password,
-  transaction
-) {
-  
-
+async function createUser(name, email, phone_number, password, transaction) {
   const hashedPassword = await hashText(password, 10);
   return await Users.create(
     {
@@ -90,7 +82,7 @@ async function sendVerificationMessages(
       }),
       sendSMS(
         formattedPhoneNumber,
-        `Your EventCenter verification code is: ${token.smsCode}`
+        `Hello ${name}, This is from EventCenter.Your verification code is: ${token.smsCode}. Please do not share this code with anyone as this will be used to validate your account`
       ),
     ]);
 
@@ -126,11 +118,7 @@ async function signup(req, res) {
   const transaction = await db.sequelize.transaction(); // Declare transaction variable
 
   try {
-    const existingUser = await userExists(
-      email,
-      phone_number,
-      transaction
-    );
+    const existingUser = await userExists(email, phone_number, transaction);
     console.log("existingUser", existingUser);
     if (existingUser) {
       if (existingUser.verified) {
@@ -187,10 +175,7 @@ async function signup(req, res) {
       password,
       transaction
     );
-    const token = await generateVerificationToken(
-      newUser.userID,
-      transaction
-    );
+    const token = await generateVerificationToken(newUser.userID, transaction);
     // Inside the signUp function
     const sendResult = await sendVerificationMessages(
       newUser.name,
