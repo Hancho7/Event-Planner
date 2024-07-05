@@ -31,6 +31,7 @@ module.exports = {
       if (!updatedUser) {
         throw new Error("Failed to update user role");
       }
+      console.log("phone number", user.phone_number);
 
       // Create a subaccount for the user
       const carrier = await validatePhoneNumber(user.phone_number);
