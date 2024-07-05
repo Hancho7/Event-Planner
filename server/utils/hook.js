@@ -51,12 +51,13 @@ module.exports = {
       );
       console.log("sub account in the hook", newSubAccount);
 
-      if (!newSubAccount || newSubAccount.subaccount.status !== true) {
+      if (!newSubAccount || newSubAccount.status !== true) {
         throw new Error("Failed to create subaccount");
       }
 
       // Update the user's secret key with the subaccount code
-      user.secretKey = newSubAccount.subaccount.data.subaccount_code;
+      user.secretKey = newSubAccount.data.subaccount_code;
+      console.log("secret key ", user.secretKey);
       console.log("sub account secret key in the hook", user.secretKey);
       await user.save({ transaction });
 
