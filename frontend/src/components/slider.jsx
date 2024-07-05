@@ -16,12 +16,15 @@ function Arrow(props) {
 }
 
 function ResponsiveSlider({ testimonials }) {
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
     initialSlide: 0,
     nextArrow: <Arrow />,
     prevArrow: <Arrow />,
@@ -54,35 +57,34 @@ function ResponsiveSlider({ testimonials }) {
   };
 
   return (
-    <div className="slider-container px-6 py-8">
-      <Slider {...settings}>
-        {testimonials.map((testimonial, index) => (
-          <div
-            key={index}
-            className="bg-gray-600 p-6 rounded-lg shadow-md mx-4 flex flex-col items-center"
-            style={{ height: "350px", margin:"20px" }} 
-          >
-            <img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="w-20 h-20 rounded-full object-cover"
-            />
-            <h3 className="text-xl text-white font-semibold text-center mt-4">
-              {testimonial.name}
-            </h3>
-            <div className="flex justify-center mt-2">
-              {Array.from({ length: testimonial.rating }, (_, i) => (
-                <span key={i} className="text-yellow-300">
-                  ★
-                </span>
-              ))}
+    <div className="w-3/4 m-auto">
+      <div className="mt-20">
+        <Slider {...settings}>
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="bg-white h-[450px] text-black rounded-xl">
+              <div className='h-56 bg-gray-500 flex justify-center items-center rounded-t-xl'>
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="h-44 w-44 rounded-full"
+                />
+              </div>
+
+              <div className="flex flex-col items-center justify-center gap-4 p-4">
+                <p className="text-xl font-semibold">{testimonial.name}</p>
+                <div className="flex justify-center mt-2">
+                  {Array.from({ length: testimonial.rating }, (_, i) => (
+                    <span key={i} className="text-yellow-300">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="text-center">{testimonial.feedback}</p>
+              </div>
             </div>
-            <p className="text-white mt-4 text-center flex-grow">
-              {testimonial.feedback}
-            </p>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 }
