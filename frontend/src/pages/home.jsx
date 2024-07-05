@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import Modal from "../components/Modal";
-import { testimonials } from "../components/testimonials";
-import ResponsiveSlider from "../components/slider";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEventsAction } from "../features/events/getAllEvents";
 import Steps from "../components/Steps";
+import WhyChooseUs from "./whyChooseUS";
 
 function Home() {
   const dispatch = useDispatch();
@@ -84,8 +83,8 @@ function Home() {
             ))}
           </div>
         </div>
-        <div className="h-screen px-2" data-aos="fade-up">
-          <ResponsiveSlider testimonials={testimonials} />
+        <div className="h-screen" data-aos="fade-up">
+        <WhyChooseUs />
         </div>
         <Steps />
         <Modal
