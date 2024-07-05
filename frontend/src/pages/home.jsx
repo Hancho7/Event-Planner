@@ -51,7 +51,7 @@ function Home() {
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <Hero searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
-        <div className="py-8 bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+        {/* <div className="py-8 bg-gray-100 min-h-screen flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold font-sans text-center mb-6">
             Latest Awesome Events
           </h2>
@@ -83,7 +83,7 @@ function Home() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="h-screen px-2" data-aos="fade-up">
           <ResponsiveSlider testimonials={testimonials} />
         </div>

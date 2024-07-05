@@ -20,52 +20,55 @@ function Hero({ searchQuery, handleSearchChange }) {
   };
 
   return (
-    <div
-      className="w-full relative font-sans h-screen text-white flex flex-col justify-center items-center"
-      style={{
-        animation: "slideshow 16s infinite",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <img
-        loading="lazy"
-        className={`object-cover h-full w-full transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-        src={header}
-        alt="Header"
-        onLoad={handleImageLoad}
-      />
-      {!imageLoaded && (
-        <img
-          className="object-cover h-full w-full absolute inset-0 filter blur-lg"
-          src={headerLowRes}
-          alt="Header Low Res"
-        />
-      )}
-      <div className="flex items-center flex-col absolute">
-        <h1
-          className="text-3xl lg:text-5xl font-bold text-center mb-4"
-          data-aos="fade-left"
-        >
-          Welcome to Event Center
-        </h1>
-        <p className="text-lg text-center mb-6" data-aos="fade-right">
-          Find and register for the best events around you.
-        </p>
-        <div
-          className="flex flex-col md:flex-row items-center text-black gap-2"
-          data-aos="flip-up"
-        >
-          <input
-            type="text"
-            placeholder="Search events..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="rounded-sm h-10 md:w-[22rem] px-3 font-semibold"
-          />
-        </div>
-      </div>
+    <div>
+      hello
     </div>
+    // <div
+    //   className="w-full relative font-sans h-screen text-white flex flex-col justify-center items-center"
+    //   style={{
+    //     animation: "slideshow 16s infinite",
+    //     backgroundSize: "cover",
+    //     backgroundPosition: "center",
+    //   }}
+    // >
+    //   <img
+    //     loading="lazy"
+    //     className={`object-cover h-full w-full transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+    //     src={header}
+    //     alt="Header"
+    //     onLoad={handleImageLoad}
+    //   />
+    //   {!imageLoaded && (
+    //     <img
+    //       className="object-cover h-full w-full absolute inset-0 filter blur-lg"
+    //       src={headerLowRes}
+    //       alt="Header Low Res"
+    //     />
+    //   )}
+    //   <div className="flex items-center flex-col absolute">
+    //     <h1
+    //       className="text-3xl lg:text-5xl font-bold text-center mb-4"
+    //       data-aos="fade-left"
+    //     >
+    //       Welcome to Event Center
+    //     </h1>
+    //     <p className="text-lg text-center mb-6" data-aos="fade-right">
+    //       Find and register for the best events around you.
+    //     </p>
+    //     <div
+    //       className="flex flex-col md:flex-row items-center text-black gap-2"
+    //       data-aos="flip-up"
+    //     >
+    //       <input
+    //         type="text"
+    //         placeholder="Search events..."
+    //         value={searchQuery}
+    //         onChange={handleSearchChange}
+    //         className="rounded-sm h-10 md:w-[22rem] px-3 font-semibold"
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 
