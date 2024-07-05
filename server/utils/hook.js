@@ -24,6 +24,8 @@ module.exports = {
       // Update the user's role to "Planner"
       user.role = "Planner";
 
+      console.log("user role updated", user.role);
+
       const updatedUser = await user.save({ transaction });
       console.log("updated User in the hook", updatedUser);
       if (!updatedUser) {
@@ -32,6 +34,7 @@ module.exports = {
 
       // Create a subaccount for the user
       const carrier = await validatePhoneNumber(user.phone_number);
+      console.log("carrier", carrier);
       if (!carrier) {
         await sendSMS(
           user.phone_number,
