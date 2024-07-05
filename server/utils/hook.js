@@ -51,7 +51,7 @@ module.exports = {
       );
       console.log("sub account in the hook", newSubAccount);
 
-      if (!newSubAccount || newSubAccount.subaccount.status !== true) {
+      if (!newSubAccount || newSubAccount.status !== true) {
         throw new Error("Failed to create subaccount");
       }
 
