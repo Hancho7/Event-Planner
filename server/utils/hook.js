@@ -56,7 +56,8 @@ module.exports = {
       }
 
       // Update the user's secret key with the subaccount code
-      user.secretKey = newSubAccount.subaccount.data.subaccount_code;
+      user.secretKey = newSubAccount.data.subaccount_code;
+      console.log("secret key ", user.secretKey);
       console.log("sub account secret key in the hook", user.secretKey);
       await user.save({ transaction });
 
