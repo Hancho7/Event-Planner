@@ -1,7 +1,7 @@
 // import React from "react";
 import { useEffect } from "react";
 import event1b from "../assets/event1b.jpg";
-import "animate.css";
+// import "animate.css";
 import Aos from "aos";
 
 
