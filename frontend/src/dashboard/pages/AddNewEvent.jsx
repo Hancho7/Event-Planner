@@ -1,13 +1,15 @@
 import { useFormik } from "formik";
 import eventSchema from "../../schema/event";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewEventAction } from "../../features/events/addNewEvents";
+import { addNewEventAction, resetEvent } from "../../features/events/addNewEvents";
 import { ClipLoader } from "react-spinners";
+import Notification from "../../components/notification";
+import { CiCircleCheck } from "react-icons/ci";
 
 const AddEvent = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.login);
-  const { loading, success, message } = useSelector(
+  const { loading, success } = useSelector(
     (state) => state.addNewEvent
   );
   const formik = useFormik({
@@ -48,8 +50,22 @@ const AddEvent = () => {
     formik.setFieldValue("images", filesArray);
   };
 
+  const handleNotificationDismiss = () => {
+    dispatch(resetEvent());
+  };
+
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded shadow-md">
+       {success && (
+        <Notification onDismiss={handleNotificationDismiss}>
+          <div className="flex flex-row items-center gap-1">
+            <div>
+              <CiCircleCheck className="text-green-500" />
+            </div>
+            <p>Your event has successfully been created!</p>
+          </div>
+        </Notification>
+      )}
       <h2 className="text-2xl text-[#1F2937] font-bold mb-6 text-center">
         Add Event
       </h2>

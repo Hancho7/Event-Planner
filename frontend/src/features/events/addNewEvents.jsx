@@ -41,9 +41,18 @@ const addNewEventSlice = createSlice({
       state.status = action.payload.status;
       state.message = action.payload.message;
     },
+    resetEvent:(state)=>{
+      state.loading = false;
+      state.error = false;
+      state.status = null;
+      state.code = null;
+      state.message = null;
+      state.data = null;
+      state.success = false;
+    }
   },
 });
 
-export const { addNewEventError, addNewEventPending, addNewEventSuccess } =
+export const { addNewEventError, addNewEventPending, addNewEventSuccess, resetEvent } =
   addNewEventSlice.actions;
 export default addNewEventSlice.reducer;

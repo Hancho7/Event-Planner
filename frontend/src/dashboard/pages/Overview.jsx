@@ -6,7 +6,7 @@ const Overview = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl text-black font-bold mb-4">Overview</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+      <div className="flex flex-row justify-between gap-6 mb-6">
         <div className="bg-blue-600 p-4 rounded-md shadow-md transition-transform transform hover:scale-105">
           <h2 className="text-xl text-black font-semibold mb-2">
             Total Events
