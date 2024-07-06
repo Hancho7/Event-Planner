@@ -186,7 +186,7 @@ function BecomeAPlanner() {
           <div className="flex w-full justify-end my-8">
             <button
               onClick={handleClick}
-              className=" w-32 bg-[#5870c5] flex flex-row items-center justify-center gap-3 py-2 rounded text-white font-semibold hover:bg-[#9fafe8]"
+              className=" w-32 bg-[#1F2937] flex flex-row items-center justify-center gap-3 py-2 rounded text-white font-semibold hover:bg-[#3f5472]"
             >
               Proceed {loading && <ClipLoader size={15} color="#fff" />}
             </button>

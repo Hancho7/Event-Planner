@@ -7,10 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        sans: [ 'Lato','Helvetica', 'Arial', 'sans-serif'],
         serif: ['Georgia', 'Times New Roman', 'serif'],
         mono: ['Courier New', 'Courier', 'monospace'],
         custom: ['"Your Custom Font"', 'Sans-serif'],
+        lato:[]
       },
     },
   },

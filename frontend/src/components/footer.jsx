@@ -38,13 +38,13 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href="mailto:info@example.com" className="hover:underline">
+                <a href="mailto:info@example.com" className="hover:underline flex items-center">
                   <FaEnvelope className="text-[#ffdd50] mr-3" />
                   info@eventcenter2.com
                 </a>
               </li>
               <li>
-                <a href="tel:+1234567890" className="hover:underline">
+                <a href="tel:+1234567890" className="hover:underline flex items-center">
                   <FaPhoneAlt className="text-[#ffdd50] mr-3" />
                   +233 549 671 479
                 </a>

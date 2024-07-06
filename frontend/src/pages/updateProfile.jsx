@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { getUserPaymentsAction } from "../features/payments/getUserPayments";
 import { ClipLoader } from "react-spinners";
 import { deletePaymentRequestAction } from "../features/payments/deletePaymentRequest";
+import TableSkeleton from "../components/skeleton";
 
 const UserProfile = () => {
   const { data, loading, error } = useSelector((state) => state.login);
@@ -65,7 +66,7 @@ const UserProfile = () => {
     <div className="md:flex flex-col md:flex-row items-center justify-around px-6 gap-8 py-10 min-h-screen bg-gray-100">
       {loading ? (
         <div className="flex items-center justify-center">
-          <ClipLoader />
+         <TableSkeleton/>
         </div>
       ) : error ? (
         <div className="text-red-500">{paymentsError}</div>

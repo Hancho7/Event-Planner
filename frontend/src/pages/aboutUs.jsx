@@ -51,7 +51,7 @@ function AboutUsPage() {
       </div>
 
       <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-        <h4 className="md:text-2xl font-semibold">Know More About Us</h4>
+        <h4 className="text-xl md:text-2xl font-semibold">Know More About Us</h4>
         <div className="max-w-4xl mx-auto">
           <p className="mt-4 md:text-lg">
             At <span className="text-black">Event</span><span className="text-[#ffdd50]">Center</span>, we specialize in transforming events into
