@@ -1,12 +1,22 @@
-import  { useState, useContext } from "react";
-import { AdminContext } from "../../Context/AdminContext.jsx";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const AdminProfile = () => {
-  const { admin, setAdmin } = useContext(AdminContext); // Use AdminContext
+  const { data } = useSelector((state) => state.login);
+  const [admin, setAdmin] = useState({
+    username: data.name,
+    email: data.email,
+    phone: data.phone,
+    profilePic: data.pic, // Assuming this is the profile picture URL
+  });
+  const [originalAdmin, setOriginalAdmin] = useState({ ...admin }); // Store original admin data
   const [editing, setEditing] = useState(false);
 
   const handleEditClick = () => {
-    setEditing(!editing);
+    if (!editing) {
+      setOriginalAdmin({ ...admin }); // Save current admin data as original
+      setEditing(true);
+    }
   };
 
   const handleChange = (e) => {
@@ -36,6 +46,11 @@ const AdminProfile = () => {
     setEditing(false);
   };
 
+  const handleCancel = () => {
+    setAdmin({ ...originalAdmin }); // Restore admin data from original
+    setEditing(false);
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -52,12 +67,6 @@ const AdminProfile = () => {
           </div>
         </div>
         <div className="px-6 py-4">
-          <button
-            onClick={handleEditClick}
-            className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-400"
-          >
-            {editing ? "Cancel" : "Edit Profile"}
-          </button>
           {editing && (
             <div className="mt-4">
               <label className="block text-sm font-medium text-gray-700">
@@ -104,13 +113,29 @@ const AdminProfile = () => {
                 onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
-              <button
-                onClick={handleSave}
-                className="mt-4 bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-400"
-              >
-                Save Changes
-              </button>
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={handleCancel}
+                  className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSave}
+                  className="bg-[#1F2937] text-white px-4 py-2 rounded shadow hover:bg-[#536a8a]"
+                >
+                  Save Changes
+                </button>
+              </div>
             </div>
+          )}
+          {!editing && (
+            <button
+              onClick={handleEditClick}
+              className="mt-4 bg-[#1F2937] text-white px-4 py-2 rounded shadow hover:bg-[#536a8a]"
+            >
+              Edit Profile
+            </button>
           )}
         </div>
       </div>

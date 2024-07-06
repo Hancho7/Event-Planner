@@ -50,7 +50,7 @@ const AddEvent = () => {
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h2 className="text-2xl text-[#ffdd50] font-bold mb-6 text-center">
+      <h2 className="text-2xl text-[#1F2937] font-bold mb-6 text-center">
         Add Event
       </h2>
       <p className=" text-sm text-center">
@@ -231,7 +231,7 @@ const AddEvent = () => {
           </span>
         </div>
         <button
-          className="flex justify-center items-center gap-3 flex-row w-full bg-blue-700 hover:bg-blue-500 h-9 text-white font-semibold py-3 rounded-sm"
+          className="flex justify-center items-center gap-3 flex-row w-full bg-[#1F2937] hover:bg-[#536a8a] h-9 text-white font-semibold py-3 rounded-sm"
           type="submit"
         >
           Add {loading && <ClipLoader color="white" size={20} />}

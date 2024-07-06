@@ -11,12 +11,10 @@ import { GrOverview } from "react-icons/gr";
 import { PiStudentBold } from "react-icons/pi";
 import { BiLogOut } from "react-icons/bi";
 import DropdownMenu from "./menu";
-import { AdminContext } from "../Context/AdminContext.jsx";
 import { useSelector } from "react-redux";
 
 export default function Admin() {
   const { pathname } = useLocation();
-  const { admin } = useContext(AdminContext);
   const { data } = useSelector((state) => state.login);
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
@@ -139,7 +137,7 @@ export default function Admin() {
           onClick={() => setOpen(!open)}
         />
         <div className="flex items-center justify-center text-white gap-2">
-          <img src={admin.profilePic} className="w-11 h-11 rounded-full" />
+          <img src={data.pic} className="w-11 h-11 rounded-full" />
           <span
             className={`${
               !open && " hidden"

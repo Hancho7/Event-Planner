@@ -15,6 +15,8 @@ function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loaded, setLoaded] = useState({}); // Track loaded images
+ // Local state for notification
+   // Local state to track if notification was shown
 
   const openModal = (event) => {
     setSelectedEvent(event);
@@ -34,19 +36,24 @@ function Home() {
     dispatch(getAllEventsAction());
   }, [dispatch]);
 
+ 
+
   const handleImageLoad = (id) => {
     setLoaded((prev) => ({ ...prev, [id]: true }));
   };
 
+  
+
   return (
     <div className="flex flex-col min-h-screen">
+      
       <div className="flex-grow">
         <Hero />
         {loading ? (
           <div className="h-screen flex items-center justify-center">
             <BarLoader />
           </div>
-        ) : data.length > 0 ? (
+        ) : data && data.length > 0 ? (
           <div className="py-8 bg-gray-100 min-h-screen flex flex-col items-center justify-center">
             <h2 className="text-xl md:text-3xl font-bold font-sans text-center mb-6">
               Latest Awesome Events
@@ -84,10 +91,9 @@ function Home() {
           </div>
         ) : (
           <div className="h-screen flex items-center justify-center">
-            <p>No event avalaible at the moment!</p>
+            <p>No event available at the moment!</p>
           </div>
         )}
-
         <WhyChooseUs />
         <Steps />
         <Modal

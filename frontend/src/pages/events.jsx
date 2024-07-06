@@ -49,7 +49,7 @@ function EventsPage() {
   }
 
   if (!data || data.length === 0) {
-    return <div>No events available at the moment.</div>;
+    return <div className="flex justify-center items-center h-screen">No events available at the moment.</div>;
   }
 
   const filteredEvents = data.filter((event) =>
@@ -105,7 +105,7 @@ function EventsPage() {
               </div>
             ))
           ) : (
-            <div className="text-center text-xl md:text-2xl font-bold ">
+            <div className="text-center  text-xl md:text-2xl font-bold ">
               <p>No event exists with the name {searchQuery}.</p>
             </div>
           )}
