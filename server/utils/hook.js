@@ -109,7 +109,7 @@ module.exports = {
             ? event.attendeeList.length === 0
               ? [user.userID]
               : [...event.attendeeList, user.userID]
-            : [user.userID],
+            : [user.id],
           numberOfAttendees: event.numberOfAttendees - 1,
         },
         { transaction }
