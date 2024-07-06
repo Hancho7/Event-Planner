@@ -107,8 +107,8 @@ module.exports = {
         {
           attendeeList: event.attendeeList
             ? event.attendeeList.length === 0
-              ? [user.id]
-              : [...event.attendeeList, user.id]
+              ? [user.userID]
+              : [...event.attendeeList, user.userID]
             : [user.id],
           numberOfAttendees: event.numberOfAttendees - 1,
         },
