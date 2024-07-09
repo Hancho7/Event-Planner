@@ -7,7 +7,9 @@ import { ClipLoader } from "react-spinners";
 import { useEffect } from "react";
 
 function LoginPage() {
-  const { loading, success } = useSelector((state) => state.login);
+  const { loading, success, error } = useSelector(
+    (state) => state.login
+  );
   console.log({ loading, success });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,12 +32,14 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-     
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md border border-gray-300">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Log in to your account
           </h2>
+          {error && (
+            <p className="text-red-500 text-sm text-center">Invalid email or password</p>
+          )}
         </div>
         <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
           <input type="hidden" name="remember" value="true" />
@@ -107,7 +111,8 @@ function LoginPage() {
             </button>
           </div>
         </form>
-        <div className="text-sm text-center mt-4">
+
+        <div className="text-sm text-center mt-2">
           Not a member?{" "}
           <Link
             to="/register"
