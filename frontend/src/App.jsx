@@ -23,6 +23,7 @@ import Notification from "./components/notification.jsx";
 import { CiCircleCheck } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import UpdatePassword from "./pages/Updatepassword.jsx";
 
 function App() {
   
@@ -61,6 +62,7 @@ function App() {
           <Route path="/update-profile" element={<UserProfile />} />
           <Route path="/planner-request" element={<BecomeAPlanner />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/update-password" element={<UpdatePassword />} />
         </Route>
 
         <Route path="/admin" element={<Admin />}>
