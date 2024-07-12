@@ -10,6 +10,8 @@ import getUserPaymentsReducer from "../features/payments/getUserPayments";
 import deletePaymentRequestReducer from "../features/payments/deletePaymentRequest";
 import attendEventReducer from "../features/events/attendEvent";
 import verifyEmailReducer from "../features/auth/verifyEmail";
+import forgetPasswordReducer from "../features/auth/forgetPassword";
+import updatePasswordReducer from "../features/auth/updatePassword";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,6 +21,8 @@ const store = configureStore({
     register: registerReducer,
     login: loginReducer,
     verifyEmail: verifyEmailReducer,
+    forgetPassword: forgetPasswordReducer,
+    updatePassword: updatePasswordReducer,
 
     //payments
     plannerRequest: plannerRequestReducer,

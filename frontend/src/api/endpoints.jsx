@@ -1,5 +1,7 @@
 export const signUp = "/logs/sign-up";
 export const login = "/logs/sign-in";
+export const forgetPassword = '/logs/forgot-password'
+export const updatePassword = '/logs/upadate-password'
 
 export const getAllEvents = "/events/get-all-events";
 export const addNewEvents = "/events/add-new-event";

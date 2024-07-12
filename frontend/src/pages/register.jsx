@@ -1,14 +1,19 @@
-import {  ClipLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaPhoneAlt } from "react-icons/fa";
 import userSchema from "../schema/register.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAction } from "../features/auth/registerSlice.jsx";
+import { useEffect, useState } from "react";
+import { CiCircleCheck } from "react-icons/ci";
+import Notification from "../components/notification.jsx";
 
 function Register() {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.register);
+  const { loading, success, error, message } = useSelector(
+    (state) => state.register
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -25,11 +30,37 @@ function Register() {
     },
   });
 
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationShown, setNotificationShown] = useState(false);
+
+  const handleNotificationDismiss = () => {
+    setShowNotification(false); // Hide the notification locally
+  };
+  useEffect(() => {
+    if (success && !notificationShown) {
+      setShowNotification(true);
+      setNotificationShown(true);
+    }
+  }, [success, notificationShown]);
+
   return (
     <div>
       <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
+        {showNotification && (
+          <Notification onDismiss={handleNotificationDismiss}>
+            <div className="flex flex-row items-center gap-1">
+              <div>
+                <CiCircleCheck className="text-green-500" />
+              </div>
+              <p>Email and SMS successfully sent!</p>
+            </div>
+          </Notification>
+        )}
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+          {error && (
+            <p className="text-red-500 text-sm text-center">{message}</p>
+          )}
           <form onSubmit={formik.handleSubmit} className="space-y-4">
             <div className="flex flex-col">
               <div className="flex items-center border-b border-gray-300 py-2">
@@ -148,7 +179,10 @@ function Register() {
           <div className="text-center mt-4">
             <p className="text-sm text-gray-600">
               I have an account,{" "}
-              <Link to="/login" className="text-[#1F2937] hover:text-[#45556b] font-semibold hover:underline">
+              <Link
+                to="/login"
+                className="text-[#1F2937] hover:text-[#45556b] font-semibold hover:underline"
+              >
                 login here
               </Link>
             </p>

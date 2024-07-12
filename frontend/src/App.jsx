@@ -62,7 +62,7 @@ function App() {
           <Route path="/update-profile" element={<UserProfile />} />
           <Route path="/planner-request" element={<BecomeAPlanner />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/update-password" element={<UpdatePassword />} />
+          
         </Route>
 
         <Route path="/admin" element={<Admin />}>
@@ -81,6 +81,7 @@ function App() {
           path="/email-verification/:userID/:tokenLink"
           element={<EmailVerification />}
         />
+        <Route path="/update-password/:userID/:tokenLink" element={<UpdatePassword />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
       </Routes>

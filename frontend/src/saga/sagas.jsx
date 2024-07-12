@@ -1,5 +1,7 @@
+import { watchForgetPassword } from "./auth/forgetPassword";
 import { watchLogin } from "./auth/login";
 import { watchRegister } from "./auth/register";
+import { watchUpdatePassword } from "./auth/updatePassword";
 import { watchVerifyEmail } from "./auth/verifyEmail";
 import { watchAddNewEvent } from "./events/addnewEvent";
 import { watchAttendEvent } from "./events/attendEvent";
@@ -13,6 +15,8 @@ export const sagas = [
   watchRegister(),
   watchLogin(),
   watchVerifyEmail(),
+  watchForgetPassword(),
+  watchUpdatePassword(),
 
   //events
   watchGetAllEvents(),
