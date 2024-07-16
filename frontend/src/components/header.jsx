@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaUserPlus, FaSignInAlt, FaUser } from "react-icons/fa";
+import { FaUserPlus, FaSignInAlt, FaUser, FaCalendarAlt } from "react-icons/fa"; // Import FaCalendarAlt
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Events", href: "/events", current: false },
-  { name: "About Us", href: "/about-us", icon: null, current: false },
+  { name: "About Us", href: "/about-us", current: false },
 ];
 
 function classNames(...classes) {
@@ -81,6 +81,12 @@ export default function Header() {
           <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white">
             <FaUserPlus className="mr-2" />
             <span>Register</span>
+          </button>
+        </Link>
+        <Link to="/events">
+          <button className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white">
+            <FaCalendarAlt className="mr-2" />
+            <span>Book Event</span>
           </button>
         </Link>
       </>
