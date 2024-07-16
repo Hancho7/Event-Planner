@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import header from "../assets/header.jpg";
 import header2 from "../assets/header 2.jpg";
-import header3 from "../assets/header 4.jpg";
+import header12 from "../assets/header 12.jpeg";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
@@ -37,8 +37,8 @@ function Hero() {
         <img
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
-          src={header3}
-          alt="Header 3"
+          src={header12}
+          alt="Header 12"
         />
       </div>
       <div className="absolute flex flex-col items-center justify-center text-white text-center z-10">
