@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaUserPlus, FaSignInAlt, FaUser, FaCalendarAlt } from "react-icons/fa"; // Import FaCalendarAlt
+import { FaUserPlus, FaSignInAlt, FaUser, FaCalendarAlt } from "react-icons/fa"; 
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
@@ -40,19 +40,25 @@ export default function Header() {
     }
   };
 
-  const renderLoggedInNav = () => {
+  const renderLoggedInNav = (close) => {
     if (data) {
       if (data.role === "Planner") {
         return (
           <>
             <Link to="/admin">
-              <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+              <button
+                onClick={close}
+                className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
                 <FaUser className="mr-2" />
                 <span>Dashboard</span>
               </button>
             </Link>
             <Link to="/update-profile">
-              <button className="bg-gray-500 flex items-center rounded-sm h-8 px-2 hover:bg-gray-600 text-white">
+              <button
+                onClick={close}
+                className="bg-gray-500 flex items-center rounded-sm h-8 px-2 hover:bg-gray-600 text-white"
+              >
                 <FaUser className="mr-2" />
                 <span>Profile</span>
               </button>
@@ -63,13 +69,19 @@ export default function Header() {
         return (
           <>
             <Link to="/planner-request">
-              <button className="bg-[#504ee0] flex items-center rounded-md h-8 px-2 hover:bg-[#6563d4]  text-white">
+              <button
+                onClick={close}
+                className="bg-[#504ee0] flex items-center rounded-md h-8 px-2 hover:bg-[#6563d4]  text-white"
+              >
                 <FaUser className="mr-2" />
                 <span>Become a Planner</span>
               </button>
             </Link>
             <Link to="/update-profile">
-              <button className="bg-gray-500 flex items-center rounded-sm h-8 px-2 hover:bg-gray-600 text-white">
+              <button
+                onClick={close}
+                className="bg-gray-500 flex items-center rounded-sm h-8 px-2 hover:bg-gray-600 text-white"
+              >
                 <FaUser className="mr-2" />
                 <span>Profile</span>
               </button>
@@ -81,13 +93,19 @@ export default function Header() {
     return (
       <>
         <Link to="/login">
-          <button className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+          <button
+            onClick={close}
+            className="flex items-center rounded-sm h-8 px-2 text-gray-300 hover:bg-gray-700 hover:text-white"
+          >
             <FaSignInAlt className="mr-2" />
             <span>Log In</span>
           </button>
         </Link>
         <Link to="/register">
-          <button className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white">
+          <button
+            onClick={close}
+            className="bg-green-500 flex items-center rounded-sm h-8 px-2 hover:bg-green-600 text-white"
+          >
             <FaUserPlus className="mr-2" />
             <span>Register</span>
           </button>
@@ -106,7 +124,7 @@ export default function Header() {
   return (
     <div className={sticky ? "sticky top-0 z-50" : ""}>
       <Disclosure as="nav" className="bg-gray-800">
-        {({ open }) => (
+        {({ open, close }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-20 items-center justify-between">
@@ -152,7 +170,7 @@ export default function Header() {
                     </div>
                   </div>
                   <div className="hidden sm:flex items-center space-x-4">
-                    {renderLoggedInNav()}
+                    {renderLoggedInNav(close)}
                   </div>
                 </div>
               </div>
@@ -174,6 +192,7 @@ export default function Header() {
                     aria-current={
                       location.pathname === item.href ? "page" : undefined
                     }
+                    onClick={close}
                   >
                     {item.icon}
                     {item.name}
@@ -182,7 +201,7 @@ export default function Header() {
               </div>
               <div className="px-2 pb-3 pt-2">
                 <div className="flex flex-col items-start gap-2">
-                  {renderLoggedInNav()}
+                  {renderLoggedInNav(close)}
                 </div>
               </div>
             </Disclosure.Panel>
