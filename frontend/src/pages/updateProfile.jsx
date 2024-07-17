@@ -7,7 +7,7 @@ import { deletePaymentRequestAction } from "../features/payments/deletePaymentRe
 import TableSkeleton from "../components/skeleton";
 import { logOut } from "../features/auth/loginSlice";
 import { useNavigate } from "react-router-dom";
-
+import Tabs from "../components/tabs"
 const UserProfile = () => {
   const { data, loading, error } = useSelector((state) => state.login);
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const [editing, setEditing] = useState(false);
   const [localPaymentsData, setLocalPaymentsData] = useState([]);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleEditClick = () => {
     setEditing(!editing);
@@ -70,6 +71,11 @@ const UserProfile = () => {
     navigate("/login");
   };
 
+  const tabs = [
+    { title: 'Update Profile' },
+    { title: 'Payment History' },
+  ];
+
   return (
     <div className="flex flex-col bg-gray-100 py-6">
       <div className=" mr-6 self-end">
@@ -81,102 +87,108 @@ const UserProfile = () => {
           Logout
         </button>
       </div>
-      <div className="md:flex flex-col md:flex-row items-center justify-around px-6 gap-8 py-10 min-h-screen ">
-        {loading ? (
-          <div className="flex items-center justify-center">
-            <TableSkeleton />
-          </div>
-        ) : error ? (
-          <div className="text-red-500">{paymentsError}</div>
-        ) : data ? (
-          <div className="md:w-[43%] bg-white shadow-lg rounded-lg overflow-hidden">
-            <div className="sm:flex sm:items-center px-6 py-4">
-              <img
-                className="block mx-auto sm:mx-0 sm:flex-shrink-0 h-24 w-24 rounded-full object-cover"
-                src={data.pic}
-                alt={`${data.name[0]}`}
-              />
-              <div className="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
-                <p className="text-xl leading-tight">{data.name}</p>
-                <p className="text-sm leading-tight text-gray-600">
-                  {data.email}
-                </p>
-                <p className="text-sm leading-tight text-gray-600">
-                  {data.phone}
-                </p>
-              </div>
-            </div>
-            <div className="px-6 py-4">
-              <div className="flex items-center space-x-4">
-                {!editing && (
-                  <button
-                    onClick={handleEditClick}
-                    className="bg-[#1F2937] text-white px-4 py-2 rounded shadow hover:bg-[#4f6380]"
-                  >
-                    Edit Profile
-                  </button>
-                )}
-              </div>
 
-              {editing && (
-                <div className="mt-4 px-8 ">
-                  <label className="block text-sm font-medium text-gray-700 mt-4">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder={`${data.name}`}
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      <div className="container mx-auto">
+        <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
+        {activeTab === 0 && (
+          <div className="md:flex flex-col md:flex-row items-center justify-around px-6 gap-8 py-10 min-h-screen">
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <TableSkeleton />
+              </div>
+            ) : error ? (
+              <div className="text-red-500">{paymentsError}</div>
+            ) : data ? (
+              <div className="md:w-[43%] bg-white shadow-lg rounded-lg overflow-hidden">
+                <div className="sm:flex sm:items-center px-6 py-4">
+                  <img
+                    className="block mx-auto sm:mx-0 sm:flex-shrink-0 h-24 w-24 rounded-full object-cover"
+                    src={data.pic}
+                    alt={`${data.name[0]}`}
                   />
-                  <label className="block text-sm font-medium text-gray-700 mt-4">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formik.values.email}
-                    placeholder={`${data.email}`}
-                    onChange={formik.handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
-                  <label className="block text-sm font-medium text-gray-700 mt-4">
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formik.values.phone}
-                    placeholder={`${data.phone}`}
-                    onChange={formik.handleChange}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
-                  {editing && (
-                    <div className="flex items-center justify-between my-4">
-                      <button
-                        onClick={handleSave}
-                        className="bg-[#1F2937] text-white px-4 py-2 rounded shadow hover:bg-green-400"
-                      >
-                        Save
-                      </button>
+                  <div className="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                    <p className="text-xl leading-tight">{data.name}</p>
+                    <p className="text-sm leading-tight text-gray-600">
+                      {data.email}
+                    </p>
+                    <p className="text-sm leading-tight text-gray-600">
+                      {data.phone}
+                    </p>
+                  </div>
+                </div>
+                <div className="px-6 py-4">
+                  <div className="flex items-center space-x-4">
+                    {!editing && (
                       <button
                         onClick={handleEditClick}
-                        className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-400"
+                        className="bg-[#1F2937] text-white px-4 py-2 rounded shadow hover:bg-[#4f6380]"
                       >
-                        Cancel
+                        Edit Profile
                       </button>
+                    )}
+                  </div>
+
+                  {editing && (
+                    <div className="mt-4 px-8 ">
+                      <label className="block text-sm font-medium text-gray-700 mt-4">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder={`${data.name}`}
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
+                      <label className="block text-sm font-medium text-gray-700 mt-4">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formik.values.email}
+                        placeholder={`${data.email}`}
+                        onChange={formik.handleChange}
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
+                      <label className="block text-sm font-medium text-gray-700 mt-4">
+                        Phone
+                      </label>
+                      <input
+                        type="text"
+                        name="phone"
+                        value={formik.values.phone}
+                        placeholder={`${data.phone}`}
+                        onChange={formik.handleChange}
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
+                      {editing && (
+                        <div className="flex items-center justify-between my-4">
+                          <button
+                            onClick={handleSave}
+                            className="bg-[#1F2937] text-white px-4 py-2 rounded shadow hover:bg-green-400"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={handleEditClick}
+                            className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-400"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div>You have not yet been signed in</div>
+            )}
           </div>
-        ) : (
-          <div>You have not yet been signed in</div>
         )}
-        {paymentsData?.length > 0 ? (
+        {activeTab === 1 && (
           <div className=" mt-6 md:mt-0 md:flex-1">
             <h1 className="text-2xl mb-4 text-center">
               Payments History{" "}
@@ -246,8 +258,6 @@ const UserProfile = () => {
               <div>No payments found.</div>
             )}
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </div>

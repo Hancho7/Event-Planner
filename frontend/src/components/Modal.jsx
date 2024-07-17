@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import { ClipLoader } from "react-spinners";
-import { attendEventAction } from "../features/events/attendEvent";
+import { attendEventAction, resetAttendance } from "../features/events/attendEvent";
 import { formatDate } from "../utils/formatDate";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Notification from "./notification";
+import { CiCircleCheck } from "react-icons/ci";
 
 function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
   const { data } = useSelector((state) => state.login);
@@ -14,8 +15,9 @@ function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
     loading: attendEventLoading,
     success: attendEventSuccess,
   } = useSelector((state) => state.attendEvent);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   const handleBookNow = () => {
     if (data) {
@@ -30,15 +32,31 @@ function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
   };
 
   useEffect(() => {
-    if (attendEventSuccess) {
-      window.open(attendEventData.authorization_url, "_blank");
+    if (attendEventData) {
+      setPaymentUrl(attendEventData.authorization_url);
+      setPaymentModalOpen(true);
     }
   }, [attendEventSuccess, attendEventData]);
 
   if (!isOpen) return null;
 
+  const handleDismiss = () => {
+    dispatch(resetAttendance());
+    setPaymentModalOpen(false);
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[99]">
+      {attendEventSuccess && !attendEventData && (
+        <Notification onDismiss={handleDismiss}>
+          <div className="flex flex-row items-center gap-1">
+            <div>
+              <CiCircleCheck className="text-green-500" />
+            </div>
+            <p>You have successfully booked the event!</p>
+          </div>
+        </Notification>
+      )}
       <div className="bg-white flex flex-col p-6 rounded-lg shadow-lg max-w-lg w-full relative h-[90%] overflow-auto">
         <button
           className=" self-end top-2 right-2 text-gray-600 hover:text-gray-800 text-3xl mb-2"
@@ -57,22 +75,14 @@ function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
         >
           {event.images.map((image, idx) => (
             <div key={idx}>
-              <img
-                src={image}
-                alt={event.name}
-                className="w-full h-auto mb-4"
-              />
+              <img src={image} alt={event.name} className="w-full h-auto mb-4" />
             </div>
           ))}
         </Carousel>
 
         <div className="mt-4">
-          <h2 className="text-xl font-semibold mb-4 text-center">
-            {event.name}
-          </h2>
-          {event.location && (
-            <p className="mb-2 font-medium">{event.location}</p>
-          )}
+          <h2 className="text-xl font-semibold mb-4 text-center">{event.name}</h2>
+          {event.location && <p className="mb-2 font-medium">{event.location}</p>}
           <div className="flex flex-col">
             {event.startOfDate && (
               <div className="mb-2 text-black-900">
@@ -102,16 +112,18 @@ function Modal({ isOpen, onClose, event, isLoggedIn, onLogin }) {
             </div>
           )}
           <button
-            className="mt-4 flex items-center gap-3 font-semibold justify-center bg-blue-500 text-white py-2 px-4 rounded"
+            className="mt-4 flex items-center gap-3 font-semibold justify-center bg-[#1F2937] hover:bg-[#3a4a61] text-white py-2 px-4 rounded"
             onClick={handleBookNow}
           >
             Book Now {attendEventLoading && <ClipLoader color="white" size={20} />}
           </button>
         </div>
       </div>
+      <PaymentModal isOpen={paymentModalOpen} closeModal={handleDismiss} url={paymentUrl} />
     </div>
   );
 }
+
 
 export const PaymentModal = ({ isOpen, closeModal, url }) => {
   return (

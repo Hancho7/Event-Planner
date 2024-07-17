@@ -41,9 +41,19 @@ const attendEventSlice = createSlice({
       state.status = action.payload.status;
       state.message = action.payload.message;
     },
+    resetAttendance:(state)=>{
+      state.loading = false;
+      state.error = false;
+      state.status = null;
+      state.code = null;
+      state.message = null;
+      state.data = null;
+      state.success = false;
+
+    }
   },
 });
 
-export const { attendEventError, attendEventPending, attendEventSuccess } =
+export const { attendEventError, attendEventPending, attendEventSuccess, resetAttendance } =
   attendEventSlice.actions;
 export default attendEventSlice.reducer;

@@ -10,13 +10,13 @@ const initialState = {
   success: false,
 };
 
-export const addNewEventAction = createAction("addNewEvent/action");
+export const updatePasswordAction = createAction("updatePassword/action");
 
-const addNewEventSlice = createSlice({
-  name: "addNewEvent",
+const updatePasswordSlice = createSlice({
+  name: "updatePassword",
   initialState,
   reducers: {
-    addNewEventPending: (state) => {
+    updatePasswordPending: (state) => {
       state.loading = true;
       state.error = null;
       state.status = null;
@@ -25,7 +25,7 @@ const addNewEventSlice = createSlice({
       state.data = null;
       state.success = false;
     },
-    addNewEventSuccess: (state, action) => {
+    updatePasswordSuccess: (state, action) => {
       state.loading = false;
       state.error = null;
       state.code = action.payload.code;
@@ -34,25 +34,15 @@ const addNewEventSlice = createSlice({
       state.message = action.payload.message;
       state.success = true;
     },
-    addNewEventError: (state, action) => {
+    updatePasswordError: (state, action) => {
       state.loading = false;
       state.error = true;
       state.code = action.payload.code;
       state.status = action.payload.status;
       state.message = action.payload.message;
     },
-    resetEvent:(state)=>{
-      state.loading = false;
-      state.error = false;
-      state.status = null;
-      state.code = null;
-      state.message = null;
-      state.data = null;
-      state.success = false;
-    }
   },
 });
 
-export const { addNewEventError, addNewEventPending, addNewEventSuccess, resetEvent } =
-  addNewEventSlice.actions;
-export default addNewEventSlice.reducer;
+export const { updatePasswordError, updatePasswordPending, updatePasswordSuccess } = updatePasswordSlice.actions;
+export default updatePasswordSlice.reducer;

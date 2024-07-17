@@ -43,7 +43,7 @@ function AboutUsPage() {
           />
         )}
         <h1
-          className="text-3xl lg:text-7xl text-center font-extrabold opacity-[0.7] absolute"
+          className="text-3xl lg:text-7xl text-white text-center font-extrabold opacity-[0.7] absolute"
           data-aos="fade-down"
         >
           About Us

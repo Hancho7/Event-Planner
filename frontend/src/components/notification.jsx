@@ -13,7 +13,7 @@ const Notification = ({ children, onDismiss }) => {
       } else {
         setProgress((prevProgress) => Math.min(prevProgress + 1, 100));
       }
-    }, 10); // Adjust interval for progress speed (milliseconds)
+    }, 30); // Adjust interval for progress speed (milliseconds)
 
     return () => clearInterval(timer);
   }, [progress, onDismiss]);
