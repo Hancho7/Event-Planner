@@ -32,7 +32,15 @@ export default function Header() {
     };
   }, []);
 
-  const renderLoggedInNav = () => {
+  const handleBookEventClick = () => {
+    if (!data) {
+      navigate("/login");
+    } else {
+      navigate("/events");
+    }
+  };
+
+  const renderLoggedInNav = (close) => {
     if (data) {
       if (data.role === "Planner") {
         return (
