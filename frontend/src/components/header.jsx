@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaUserPlus, FaSignInAlt, FaUser } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaUserPlus, FaSignInAlt, FaUser, FaCalendarAlt } from "react-icons/fa"; 
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Events", href: "/events", current: false },
-  { name: "About Us", href: "/about-us", icon: null, current: false },
+  { name: "About Us", href: "/about-us", current: false },
 ];
 
 function classNames(...classes) {
@@ -18,6 +18,7 @@ function classNames(...classes) {
 export default function Header() {
   const { data } = useSelector((state) => state.login);
   const location = useLocation();
+  const navigate = useNavigate();
   const [sticky, setSticky] = useState(false);
 
   useEffect(() => {
@@ -30,6 +31,14 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleBookEventClick = () => {
+    if (!data) {
+      navigate("/login");
+    } else {
+      navigate("/events");
+    }
+  };
 
   const renderLoggedInNav = (close) => {
     if (data) {
@@ -101,6 +110,13 @@ export default function Header() {
             <span>Register</span>
           </button>
         </Link>
+        <button
+          onClick={handleBookEventClick}
+          className="bg-blue-500 flex items-center rounded-sm h-8 px-2 hover:bg-blue-600 text-white"
+        >
+          <FaCalendarAlt className="mr-2" />
+          <span>Book Event</span>
+        </button>
       </>
     );
   };
