@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TeamMember from "../components/TeamMember";
 import team1 from "../assets/jose.jpg";
 import team2 from "../assets/mathias.jpg";
-import team3 from "../assets/nana.jpeg";
+import team3 from "../assets/nana2.jpg";
 import aboutus from "../assets/aboutUs.jpg";
 import aboutusLowRes from "../assets/aboutusLowRes.jpg";
 import Aos from "aos";
